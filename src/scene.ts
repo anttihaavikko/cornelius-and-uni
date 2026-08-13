@@ -4,17 +4,19 @@ import { Dude } from './dude';
 import { Container } from './engine/container';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
-import { distance, offset } from './engine/vector';
+import { TextEntity } from './engine/text';
+import { distance, offset, ZERO } from './engine/vector';
 import { House } from './house';
 import { Item } from './item';
 import { Tree } from './tree';
 
 export class Scene extends Container {
-
     private dude: Dude;
     private dog: Dog;
     private items: Item[] = [];
     private houses: House[] = [];
+    private text: TextEntity;
+    private inside: House;
 
     constructor(game: Game) {
         super(game);
@@ -27,7 +29,13 @@ export class Scene extends Container {
         this.addItem(100, 50);
         this.addItem(150, 50);
 
-        this.add(new Tree(game, 100, 300, 50, 100));
+        this.add(new Tree(game, 100, 300, 0, 0));
+        this.add(new Tree(game, 1027, 207, 0, 0));
+        this.add(new Tree(game, 1090, 93, 0, 0));
+        this.add(new Tree(game, 1169, 165, 0, 0));
+
+        this.text = new TextEntity(game, '', 16, 0, 0, -1, ZERO, { shadow: 1.5 });
+        this.add(this.text);
 
         this.houses.push(new House(game, 550, 100, 400, 200));
         this.houses.forEach(h => h.createWalls());
@@ -36,8 +44,14 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             if (e.key == ' ') {
+                this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
+                this.text.p = offset(this.dude.p, 0, -70);
+                this.text.d = this.dude.d + 10;
                 if (this.dude.held) {
                     const pos = offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40);
+                    if (this.game.colliders.some(c => c.isInside(pos, 20))) {
+                        return;
+                    }
                     if (distance(pos, this.dog.p) < 50 && !this.dog.held) {
                         this.dog.held = this.dude.held;
                         this.dog.held.shadowShown = false;
@@ -71,7 +85,9 @@ export class Scene extends Container {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
-        this.dog.target = this.dude.p;
+        if (distance(this.dog.target, this.dude.p) > 60) {
+            this.dog.target = this.dude.p;
+        }
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -80,26 +96,37 @@ export class Scene extends Container {
 
         ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25)
 
-        let inside = null;
+        const wasInside = this.inside;
+        this.inside = null;
+
         this.houses.forEach(h => {
             h.entered = false;
             if (h.isInside(this.dude.p, 10)) {
-                inside = h;
+                this.inside = h;
                 h.entered = true;
             }
         });
 
-        inside?.drawInterior(ctx);
-
-        for (const item of this.getChildren()) {
-            if (!item['shadowShown']) continue;
-            ctx.fillStyle = inside ? '#435667' : COLORS.shadow;
-            ctx.beginPath();
-            ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
-            ctx.fill();
+        if (!wasInside && this.inside) {
+            this.dog.p = offset(this.dude.p, 0, 100);
         }
 
+        if (wasInside && !this.inside) {
+            this.dog.p = offset(this.dude.p, 0, -50);
+        }
+
+        this.inside?.drawInterior(ctx);
+
+        ctx.beginPath();
+        for (const item of this.getChildren()) {
+            if (!item['shadowShown']) continue;
+            ctx.fillStyle = '#00000022';
+            ctx.moveTo(item.p.x, item.p.y);
+            ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
+        }
+        ctx.fill();
+
         super.draw(ctx);
-        inside?.drawExterior(ctx);
+        this.inside?.drawExterior(ctx);
     }
 }

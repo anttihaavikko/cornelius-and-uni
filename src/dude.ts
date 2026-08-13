@@ -1,8 +1,7 @@
 import { COLORS } from './colors';
-import { Entity } from './engine/entity';
 import { Face } from './engine/face';
 import { Game } from './engine/game';
-import { clamp, clamp01 } from './engine/math';
+import { clamp01 } from './engine/math';
 import { Mouse } from './engine/mouse';
 import { magnitude, normalize, offset, Vector } from './engine/vector';
 import { Item } from './item';
@@ -10,8 +9,7 @@ import { Limbs } from './limbs';
 import { Shadowed } from './shadowed';
 
 export class Dude extends Shadowed {
-    private speed = 0;
-
+    protected speed = 0;
     protected limbs = new Limbs([[10, 0], [-10, 0]], [[15, 0], [-15, 0]]);
     protected maxSpeed = 5;
     protected face: Face;
@@ -40,6 +38,13 @@ export class Dude extends Shadowed {
         this.face.update(tick, mouse);
         this.d = this.p.y;
 
+        this.limbs.walking = magnitude(this.velocity) > 0;
+
+        const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);
+        if (!this.game.colliders.some(c => c.isInside(next, 20))) {
+            this.p = next;
+        }
+
         if (!this.controlled) return;
         this.velocity = { x: 0, y: 0 };
         if (this.game.held['ArrowLeft'] || this.game.held['a']) this.velocity.x -= 1;
@@ -52,12 +57,6 @@ export class Dude extends Shadowed {
             this.speed = clamp01(this.speed + this.delta * 0.005);
         } else {
             this.speed = 0;
-        }
-        this.limbs.walking = magnitude(this.velocity) > 0;
-
-        const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);
-        if (!this.game.colliders.some(c => c.isInside(next, 20))) {
-            this.p = next;
         }
     }
 

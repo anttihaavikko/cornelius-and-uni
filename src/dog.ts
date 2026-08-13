@@ -2,12 +2,14 @@ import { Dude } from './dude';
 import { roundRect } from './engine/drawing';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
-import { Vector } from './engine/vector';
+import { random } from './engine/random';
+import { magnitude, normalize, offset, Vector, ZERO } from './engine/vector';
 import { Limbs } from './limbs';
 
 export class Dog extends Dude {
     public target: Vector = { x: 0, y: 0 };
     public wandering = false;
+    private waiting = false;
 
     constructor(game: Game, x: number, y: number) {
         super(game, x, y);
@@ -23,15 +25,22 @@ export class Dog extends Dude {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
-
+        if (this.waiting) {
+            return;
+        }
         const dx = this.target.x - this.p.x;
         const dy = this.target.y - this.p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        this.limbs.walking = distance > 100;
-        if (distance > 100) {
-            this.p.x += dx / distance * this.maxSpeed;
-            this.p.y += dy / distance * this.maxSpeed;
+        this.velocity = normalize(offset(this.velocity, dx * 0.1, dy * 0.1));
+        if (distance < 50) {
+            // this.velocity = Math.random() < 0.4 ? randomVector(random(0.5, 1)) : ZERO;
+            this.velocity = ZERO;
+            this.waiting = true;
+            // this.target = offset(this.target, random(-500, 500), random(-500, 500));
+            setTimeout(() => this.waiting = false, random(500, 1500));
         }
+        this.speed = magnitude(this.velocity) > 0 ? 1 : 0;
+        this.limbs.walking = magnitude(this.velocity) > 0;
     }
 
     drawBody(ctx: CanvasRenderingContext2D, phase: number): void {
