@@ -18,6 +18,7 @@ export class Dog extends Dude {
         this.face.setEyeColor('#000');
         this.face.p.y = -8;
         this.shadowWidth = 30;
+        this.holdPos = -25;
     }
 
     update(tick: number, mouse: Mouse): void {

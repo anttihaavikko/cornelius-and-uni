@@ -17,7 +17,7 @@ export class Limbs {
         this.legs.forEach((l, i) => {
             const rise = this.walking ? Math.min(this.walkPhase * 5 * (i % 2 == 0 ? -1 : 1), 0) : 0;
             ctx.moveTo(l[0], l[1] + rise);
-            ctx.quadraticCurveTo(l[0] * 1.2 + rise, this.root + rise, l[0] * 0.5 - rise, this.root);
+            ctx.quadraticCurveTo(l[0] * 1.2 + rise * Math.sign(l[0]), this.root + rise, -rise * Math.sign(l[0]), this.root);
         })
         this.arms.forEach(l => {
             ctx.moveTo(l[0], l[1] + this.mid + this.root + this.armPos);

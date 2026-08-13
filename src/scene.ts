@@ -34,7 +34,13 @@ export class Scene extends Container {
         this.game.onKeyUp(e => {
             if (e.key == ' ') {
                 if (this.dude.held) {
-                    this.dude.held.drop(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40));
+                    const pos = offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40);
+                    if (distance(pos, this.dog.p) < 50 && !this.dog.held) {
+                        this.dog.held = this.dude.held;
+                        this.dog.held.shadowShown = false;
+                    } else {
+                        this.dude.held.drop(pos);
+                    }
                     this.dude.held = null;
                     this.dude.carry(false);
                     return;
@@ -43,6 +49,9 @@ export class Scene extends Container {
                     return distance(this.dude.p, a.p) < distance(this.dude.p, b.p) ? a : b;
                 });
                 if (distance(closest.p, this.dude.p) > 50) return;
+                if (this.dog.held == closest) {
+                    this.dog.held = null;
+                }
                 this.dude.held = closest;
                 closest.held = true;
                 closest.shadowShown = false;

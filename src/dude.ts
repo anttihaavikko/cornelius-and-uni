@@ -17,6 +17,7 @@ export class Dude extends Shadowed {
     protected face: Face;
     protected skin = COLORS.skin;
     protected velocity: Vector = { x: 0, y: 0 };
+    protected holdPos = -30;
 
     public controlled: boolean;
     public held: Item;
@@ -98,8 +99,8 @@ export class Dude extends Shadowed {
         this.face.draw(ctx);
 
         if (this.held) {
-            this.held.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, -30 + phase);
-            this.held.d += 100;
+            this.held.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase);
+            this.held.d = this.d + 10;
         }
 
         ctx.restore();
