@@ -1,0 +1,48 @@
+{
+  "name": "js13k-webpack-typescript-party",
+  "version": "2.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "precheck-file-size": "advzip -z ./zipped/game.zip",
+    "check-file-size": "node ./scripts/check-file-size.js",
+    "strip-errors": "node ./scripts/strip-errors.js",
+    "build-zipped": "npm run build && node ./scripts/zip-file.js",
+    "closure": "npm run build && google-closure-compiler -O ADVANCED --js ./dist/main.js --js_output_file ./dist/main.min.js && node ./scripts/roll.js && node ./scripts/zip-file.js && npm run check-file-size",
+    "roadroll": "npm run build && npx roadroller -O1 ./dist/main.js -o ./dist/main.min.js && node ./scripts/roll.js && node ./scripts/zip-file.js && npm run check-file-size",
+    "roadroll:find": "npm run build && npx roadroller -O2 ./dist/main.js -o ./dist/main.min.js && node ./scripts/roll.js && node ./scripts/zip-file.js && npm run check-file-size",
+    "roadroll:dig": "npm run build && npx roadroller -OO ./dist/main.js -o ./dist/main.min.js && node ./scripts/roll.js && node ./scripts/zip-file.js && npm run check-file-size",
+    "party": "npm run build-zipped && npm run check-file-size",
+    "preupload": "npm run build-zipped",
+    "upload": "scp ./dist/index.html sahaqiel@sahaqiel.com:public_html/games/404.html",
+    "release": "cp ./dist/index.html ./itch/index.html && butler push ./itch anttihaavikko/catculus:html5",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "archiver": "^3.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^8.52.0",
+    "google-closure-compiler": "^20230802.0.0",
+    "html-minimizer-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^5.0.0",
+    "raw-loader": "^4.0.0",
+    "roadroller": "^2.1.0",
+    "ts-loader": "^9.0.0",
+    "typescript": "^5.0.0",
+    "url-loader": "^4.1.0",
+    "webpack": "^5.0.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^4.13.1",
+    "webpack-merge": "^5.1.1"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.2",
+    "@tauri-apps/plugin-fs": "^2.0.0",
+    "tauri-plugin-gamepad-api": "^0.0.4"
+  }
+}

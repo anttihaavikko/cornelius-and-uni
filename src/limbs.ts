@@ -1,0 +1,27 @@
+export class Limbs {
+    public root = 10;
+    public mid = -12;
+    public walking = true;
+    public walkPhase = 0;
+
+    constructor(private legs: number[][], private arms: number[][]) {
+    }
+
+    update(tick: number): void {
+        this.walkPhase = Math.sin(tick * 0.02);
+    }
+
+    draw(ctx: CanvasRenderingContext2D): void {
+        ctx.beginPath();
+        this.legs.forEach((l, i) => {
+            const rise = this.walking ? Math.min(this.walkPhase * 5 * (i % 2 == 0 ? -1 : 1), 0) : 0;
+            ctx.moveTo(l[0], l[1] + rise);
+            ctx.quadraticCurveTo(l[0] * 1.2 + rise, this.root + rise, l[0] * 0.5 - rise, this.root);
+        })
+        this.arms.forEach(l => {
+            ctx.moveTo(l[0], l[1] + this.mid + this.root + 10);
+            ctx.quadraticCurveTo(l[0], l[1] + this.mid * 1.2 + this.root, 0, this.root + this.mid);
+        })
+        ctx.stroke();
+    }
+}
