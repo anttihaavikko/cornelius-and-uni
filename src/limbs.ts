@@ -3,6 +3,7 @@ export class Limbs {
     public mid = -12;
     public walking = true;
     public walkPhase = 0;
+    public armPos = 10;
 
     constructor(private legs: number[][], private arms: number[][]) {
     }
@@ -19,7 +20,7 @@ export class Limbs {
             ctx.quadraticCurveTo(l[0] * 1.2 + rise, this.root + rise, l[0] * 0.5 - rise, this.root);
         })
         this.arms.forEach(l => {
-            ctx.moveTo(l[0], l[1] + this.mid + this.root + 10);
+            ctx.moveTo(l[0], l[1] + this.mid + this.root + this.armPos);
             ctx.quadraticCurveTo(l[0], l[1] + this.mid * 1.2 + this.root, 0, this.root + this.mid);
         })
         ctx.stroke();

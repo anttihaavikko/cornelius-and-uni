@@ -1,10 +1,10 @@
 import { COLORS } from './colors';
 
 export const drawBg = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = COLORS.bg;
+    ctx.fillStyle = COLORS.green;
     ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
-    
-    ctx.strokeStyle = COLORS.dark;
+
+    ctx.strokeStyle = '#000';
     ctx.setLineDash([0, 53]);
     ctx.lineDashOffset = 5;
     ctx.lineWidth = 60;
