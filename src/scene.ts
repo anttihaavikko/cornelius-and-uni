@@ -7,6 +7,7 @@ import { Mouse } from './engine/mouse';
 import { distance, offset } from './engine/vector';
 import { House } from './house';
 import { Item } from './item';
+import { Tree } from './tree';
 
 export class Scene extends Container {
 
@@ -25,6 +26,8 @@ export class Scene extends Container {
         this.addItem(50, 50);
         this.addItem(100, 50);
         this.addItem(150, 50);
+
+        this.add(new Tree(game, 100, 300, 50, 100));
 
         this.houses.push(new House(game, 550, 100, 400, 200));
         this.houses.forEach(h => h.createWalls());
