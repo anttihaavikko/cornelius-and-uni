@@ -13,6 +13,7 @@ export class Game extends Entity {
     public usingPad: boolean;
     public usingTouch: boolean;
     public held = {};
+    public colliders: Entity[] = [];
 
     private keyDownListeners: ((event: KeyboardEvent) => void)[] = [];
     private keyUpListeners: ((event: KeyboardEvent) => void)[] = [];

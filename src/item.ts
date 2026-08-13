@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Game } from './engine/game';
 import { Vector } from './engine/vector';
 import { Shadowed } from './shadowed';

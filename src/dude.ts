@@ -53,8 +53,11 @@ export class Dude extends Shadowed {
             this.speed = 0;
         }
         this.limbs.walking = magnitude(this.velocity) > 0;
-        this.p.x += this.velocity.x * this.maxSpeed * this.speed;
-        this.p.y += this.velocity.y * this.maxSpeed * this.speed;
+
+        const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);
+        if (!this.game.colliders.some(c => c.isInside(next, 20))) {
+            this.p = next;
+        }
     }
 
     drawBody(ctx: CanvasRenderingContext2D, phase: number): void {

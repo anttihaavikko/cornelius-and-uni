@@ -5,6 +5,7 @@ import { Container } from './engine/container';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { distance, offset } from './engine/vector';
+import { House } from './house';
 import { Item } from './item';
 
 export class Scene extends Container {
@@ -12,6 +13,7 @@ export class Scene extends Container {
     private dude: Dude;
     private dog: Dog;
     private items: Item[] = [];
+    private houses: House[] = [];
 
     constructor(game: Game) {
         super(game);
@@ -23,6 +25,11 @@ export class Scene extends Container {
         this.addItem(50, 50);
         this.addItem(100, 50);
         this.addItem(150, 50);
+
+        this.houses.push(new House(game, 550, 100, 400, 200));
+        this.houses.forEach(h => h.createWalls());
+        this.add(...this.houses);
+        this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
             if (e.key == ' ') {
@@ -59,14 +66,28 @@ export class Scene extends Container {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
+        ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25)
+
+        let inside = null;
+        this.houses.forEach(h => {
+            h.entered = false;
+            if (h.isInside(this.dude.p, 10)) {
+                inside = h;
+                h.entered = true;
+            }
+        });
+
+        inside?.drawInterior(ctx);
+
         for (const item of this.getChildren()) {
             if (!item['shadowShown']) continue;
-            ctx.fillStyle = COLORS.shadow;
+            ctx.fillStyle = inside ? '#435667' : COLORS.shadow;
             ctx.beginPath();
             ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
             ctx.fill();
         }
 
         super.draw(ctx);
+        inside?.drawExterior(ctx);
     }
 }
