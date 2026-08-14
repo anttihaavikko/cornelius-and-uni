@@ -10,6 +10,9 @@ export enum ItemType {
     Key,
     Battery,
     Package,
+    Chicken,
+    Fox,
+    Wheat
 }
 
 export class Item extends Shadowed {
@@ -40,6 +43,84 @@ export class Item extends Shadowed {
         ctx.lineWidth = 2.5;
         ctx.fillStyle = '#fff';
         ctx.strokeStyle = '#000';
+
+        if (this.itemType == ItemType.Chicken) {
+            ctx.lineWidth = 5;
+            ctx.ellipse(0, -30, 10, 10, 0, 0, 2 * Math.PI);
+            ctx.moveTo(-14, 0);
+            ctx.bezierCurveTo(-14, -35, 14, -35, 14, 0);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = COLORS.red;
+            ctx.ellipse(0, -45, 2, 5, 0, 0, 2 * Math.PI);
+            ctx.moveTo(0, -20);
+            ctx.ellipse(0, -18, 2, 5, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = COLORS.brown;
+            ctx.moveTo(-3, -28);
+            ctx.lineTo(0, -20);
+            ctx.lineTo(3, -28);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+        }
+
+        if (this.itemType == ItemType.Fox) {
+            ctx.lineWidth = 10;
+            ctx.fillStyle = COLORS.red;
+            ctx.moveTo(12, -5);
+            ctx.quadraticCurveTo(12, -20, 20, -30);
+            ctx.stroke();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = COLORS.red;
+            ctx.stroke();
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.strokeStyle = '#fff';
+            ctx.moveTo(20, -30);
+            ctx.lineTo(18, -28);
+            ctx.stroke();
+            ctx.strokeStyle = '#000';
+            ctx.beginPath();
+            ctx.moveTo(-10, -30);
+            ctx.ellipse(-10, -30, 10, 10, 0, Math.PI * 1.25, 0.95 * Math.PI);
+            ctx.closePath();
+            ctx.moveTo(-14, 0);
+            ctx.bezierCurveTo(-14, -35, 14, -35, 14, 0);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+        }
+
+        if (this.itemType == ItemType.Wheat) {
+            ctx.lineWidth = 5;
+            ctx.fillStyle = COLORS.yellow;
+            ctx.moveTo(-14, 0);
+            ctx.lineTo(-7, -20);
+            ctx.lineTo(0, -25);
+            ctx.lineTo(7, -20);
+            ctx.lineTo(14, 0);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+            ctx.beginPath();
+            const dotAt = (x: number, y: number) => {
+                ctx.moveTo(x, -y);
+                ctx.lineTo(x, -y);
+            };
+            dotAt(-8, 5);
+            dotAt(5, 8);
+            dotAt(3, 16);
+            dotAt(-3, 18);
+            dotAt(-2, 12);
+            dotAt(9, 4);
+            ctx.strokeStyle = '#00000022';
+            ctx.stroke();
+        }
 
         if (this.itemType == ItemType.Key) {
             ctx.lineWidth = 8;

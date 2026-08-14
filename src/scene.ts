@@ -23,14 +23,18 @@ export class Scene extends Container {
     private tree: Vector = { x: 125, y: 478 };
     private machine: Machine;
 
+    private chicken: Item;
+    private fox: Item;
+    private wheat: Item;
+
     constructor(game: Game) {
         super(game);
 
         // eslint-disable-next-line no-sparse-arrays
 
-        // this.dude = new Dude(game, 300, 500); // outside
+        this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 650, 200); // main house
 
         this.dude.controlled = true;
         this.dude.scene = this;
@@ -41,6 +45,10 @@ export class Scene extends Container {
 
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
+
+        this.chicken = this.addItem(800, 541, ItemType.Chicken);
+        this.fox = this.addItem(850, 541, ItemType.Fox);
+        this.wheat = this.addItem(900, 541, ItemType.Wheat);
 
         this.machine = new Machine(game, 471, 70);
         this.game.colliders.push(new Collider(game, this.machine.p.x - 40, 70 - 30, 80, 30));
@@ -179,8 +187,10 @@ export class Scene extends Container {
         this.add(item);
     }
 
-    private addItem(x: number, y: number, itemType: number, letter?: string): void {
-        this.createItem(new Item(this.game, x, y, itemType, letter));
+    private addItem(x: number, y: number, itemType: number, letter?: string): Item {
+        const item = new Item(this.game, x, y, itemType, letter);
+        this.createItem(item);
+        return item;
     }
 
     update(tick: number, mouse: Mouse): void {
