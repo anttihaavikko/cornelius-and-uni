@@ -7,9 +7,13 @@
 * Made it compileable with TypeScript.
 */
 
+/* eslint-disable indent */
+/* eslint-disable @typescript-eslint/keyword-spacing */
+/* eslint-disable semi */
+/* eslint-disable prefer-const */
 
 // zzfx() - the universal entry point -- returns a AudioBufferSourceNode
-export const zzfx=(...t)=>zzfxP(zzfxG(...t))
+export const zzfx = (...t) => zzfxP(zzfxG(...t))
 
 // zzfxP() - the sound player -- returns a AudioBufferSourceNode
 export const zzfxP=(...t)=>{let e=zzfxX.createBufferSource(),f=zzfxX.createBuffer(t.length,t[0].length,zzfxR);t.map((d,i)=>f.getChannelData(i).set(d)),e.buffer=f,e.connect(zzfxX.destination),e.start();return e}

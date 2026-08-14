@@ -8,7 +8,6 @@ import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { random } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
-import { zzfxM, zzfxP } from './engine/zzfxm';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
