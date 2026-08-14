@@ -1,4 +1,5 @@
 import { COLORS } from './colors';
+import { Bubble } from './engine/bubble';
 import { quadEaseInOut } from './engine/easings';
 import { Face } from './engine/face';
 import { Game } from './engine/game';
@@ -24,6 +25,7 @@ export class Dude extends Shadowed {
     public held: Item;
     public aim: Vector = { x: 0, y: 0 };
     public mount: Dude;
+    public bubble: Bubble;
 
     private animating = false;
 
@@ -32,6 +34,12 @@ export class Dude extends Shadowed {
         this.face = new Face(game, { width: 1, mouthColor: '#000', mouthThickness: 12, blush: COLORS.red });
         this.face.setEyeColor('#000');
         this.face.p.y = -18;
+        this.bubble = new Bubble(game, '', 0, -50, { direction: 'center' });
+    }
+
+    talk(text: string): void {
+        this.bubble.setText('');
+        this.bubble.continueText(text);
     }
 
     carry(state: boolean): void {
@@ -45,6 +53,7 @@ export class Dude extends Shadowed {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
+        this.bubble.update(tick, mouse);
         this.limbs.update(tick);
         this.face.update(tick, mouse);
         this.d = this.p.y;
@@ -52,6 +61,10 @@ export class Dude extends Shadowed {
         if (this.animating) return;
 
         this.limbs.walking = magnitude(this.velocity) > 0 && !this.mount;
+
+        if (this.limbs.walking) {
+            this.bubble.setText('');
+        }
 
         const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);
         if (!this.collides(next)) {
@@ -144,14 +157,18 @@ export class Dude extends Shadowed {
         ctx.lineWidth = 4;
         this.limbs.draw(ctx);
 
+        ctx.save();
         ctx.translate(this.face.p.x, this.face.p.y + phase);
         ctx.scale(0.1, 0.1);
         this.face.draw(ctx);
+        ctx.restore();
 
         if (this.held) {
             this.held.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase);
             this.held.d = this.d + this.carryOffset;
         }
+
+        this.bubble.draw(ctx);
 
         ctx.restore();
     }

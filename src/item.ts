@@ -1,3 +1,4 @@
+import { Dude } from './dude';
 import { font } from './engine/constants';
 import { Game } from './engine/game';
 import { Vector } from './engine/vector';
@@ -5,10 +6,14 @@ import { Shadowed } from './shadowed';
 
 export class Item extends Shadowed {
     public held: boolean;
+    public locked: boolean;
 
     constructor(game: Game, x: number, y: number, public itemType: number, public letter?: string) {
         super(game, x, y, 0, 0);
         this.d = this.p.y;
+    }
+
+    public act(dude: Dude): void {
     }
 
     public drop(pos: Vector): void {

@@ -9,6 +9,7 @@ import { TextEntity } from './engine/text';
 import { distance, offset, Vector, ZERO } from './engine/vector';
 import { House } from './house';
 import { Item } from './item';
+import { Sign } from './sign';
 import { Tree } from './tree';
 
 export class Scene extends Container {
@@ -22,6 +23,7 @@ export class Scene extends Container {
 
     constructor(game: Game) {
         super(game);
+        // this.dude = new Dude(game, 300, 500); // outside
         this.dude = new Dude(game, 1377, 0); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         this.dude.controlled = true;
@@ -30,11 +32,17 @@ export class Scene extends Container {
 
         this.moveDog();
 
+        this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
+        this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
+
         this.addTree(125, 478);
 
         this.addItem(150, 50, 0, 'u');
         this.addItem(200, 50, 0, 'n');
         this.addItem(250, 50, 0, 'i');
+
+        this.addItem(1258, 92, 0, 'b');
+        this.addItem(1481, -28, 0, 'k');
 
         this.addTree(100, 300);
         this.addTree(1027, 207);
@@ -61,6 +69,10 @@ export class Scene extends Container {
                 this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             }
             if (e.key == ' ') {
+                if (this.dude.bubble.isShown()) {
+                    this.dude.bubble.setText('');
+                    return;
+                }
                 // this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
                 this.text.p = offset(this.dude.p, 0, -70);
                 this.text.d = this.dude.d + 10;
@@ -98,6 +110,10 @@ export class Scene extends Container {
                 if (this.dog.held == closest) {
                     this.dog.held = null;
                 }
+                if (closest.locked) {
+                    closest.act(this.dude);
+                    return;
+                }
                 this.dude.held = closest;
                 closest.held = true;
                 closest.shadowShown = false;
@@ -120,10 +136,13 @@ export class Scene extends Container {
         this.add(new Tree(this.game, x, y, 0, 0));
     }
 
-    private addItem(x: number, y: number, itemType: number, letter?: string): void {
-        const item = new Item(this.game, x, y, itemType, letter);
+    private createItem(item: Item): void {
         this.items.push(item);
         this.add(item);
+    }
+
+    private addItem(x: number, y: number, itemType: number, letter?: string): void {
+        this.createItem(new Item(this.game, x, y, itemType, letter));
     }
 
     update(tick: number, mouse: Mouse): void {

@@ -24,12 +24,12 @@ export class Bubble extends Entity {
 
     public onWord: () => void;
     public onDone: () => void;
-    
+
     constructor(
         game: Game,
         content: string,
         x: number,
-        y: number, 
+        y: number,
         options: BubbleOptions = {}
     ) {
         super(game, x, y, 0, 0);
@@ -127,5 +127,9 @@ export class Bubble extends Entity {
 
     public setSound(sound: () => void): void {
         this.options.sound = sound;
+    }
+
+    public isShown(): boolean {
+        return !!this.text.content;
     }
 }
