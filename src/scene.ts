@@ -144,12 +144,14 @@ export class Scene extends Container {
             }
         });
 
+        const pp = this.dude.p;
+
         if (!wasInside && this.inside && !this.dude.riding) {
-            this.dog.p = offset(this.dude.p, 0, 100);
+            setTimeout(() => this.dog.p = offset(pp, 0, 100), 500);
         }
 
         if (wasInside && !this.inside && !this.dude.riding) {
-            this.dog.p = offset(this.dude.p, 0, -50);
+            setTimeout(() => this.dog.p = offset(pp, 0, 20), 500);
         }
 
         this.inside?.drawInterior(ctx);
