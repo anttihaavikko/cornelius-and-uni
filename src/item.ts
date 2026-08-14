@@ -19,13 +19,21 @@ export class Item extends Shadowed {
     public held: boolean;
     public locked: boolean;
 
+    private origin: Vector;
+
     constructor(game: Game, x: number, y: number, public itemType: number, public letter?: string) {
         super(game, x, y, 0, 0);
         this.d = this.p.y;
+        this.origin = this.p;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public act(dude: Dude): void {
+    }
+
+    public reset(): void {
+        this.p = this.origin;
+        this.d = this.p.y;
     }
 
     public drop(pos: Vector): void {

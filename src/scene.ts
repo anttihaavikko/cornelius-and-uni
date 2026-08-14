@@ -26,6 +26,10 @@ export class Scene extends Container {
     private chicken: Item;
     private fox: Item;
     private wheat: Item;
+    private puzzleCompleted = false;
+
+    private puzzleStart: Vector = { x: 800, y: 540 };
+    private puzzleEnd: Vector = { x: 400, y: 540 };
 
     constructor(game: Game) {
         super(game);
@@ -46,9 +50,9 @@ export class Scene extends Container {
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
 
+        this.wheat = this.addItem(750, 541, ItemType.Wheat);
         this.chicken = this.addItem(800, 541, ItemType.Chicken);
         this.fox = this.addItem(850, 541, ItemType.Fox);
-        this.wheat = this.addItem(900, 541, ItemType.Wheat);
 
         this.machine = new Machine(game, 471, 70);
         this.game.colliders.push(new Collider(game, this.machine.p.x - 40, 70 - 30, 80, 30));
@@ -112,6 +116,7 @@ export class Scene extends Container {
                     this.dude.held = null;
                     this.dude.carry(false);
                     this.machine.evaluate();
+                    this.checkPuzzle();
                     return;
                 }
                 const closest = this.items.reduce((a, b) => {
@@ -149,6 +154,7 @@ export class Scene extends Container {
                 closest.shadowShown = false;
                 this.dude.carry(true);
                 this.machine.evaluate();
+                this.checkPuzzle();
             }
         });
     }
@@ -203,6 +209,44 @@ export class Scene extends Container {
         }
     }
 
+    checkPuzzle(): void {
+        if (this.puzzleCompleted) return;
+
+        const getPos = (item: Entity): number => {
+            if (distance(item.p, this.puzzleStart) < 80) return 1;
+            if (distance(item.p, this.puzzleEnd) < 80) return 2;
+            return 0;
+        };
+
+        const cp = getPos(this.chicken);
+        const fp = getPos(this.fox);
+        const wp = getPos(this.wheat);
+        const pp = getPos(this.dude);
+
+        if (cp == 2 && fp == 2 && wp == 2) {
+            this.puzzleCompleted = true;
+
+            setTimeout(() => {
+                this.addItem(this.chicken.p.x, this.chicken.p.y, 0, 'c');
+                this.addItem(this.fox.p.x, this.fox.p.y, 0, 'f');
+                this.addItem(this.wheat.p.x, this.wheat.p.y, 0, 'w');
+                this.remove(this.chicken);
+                this.remove(this.fox);
+                this.remove(this.wheat);
+            }, 200);
+            return;
+        }
+
+        if (cp == 0 || fp == 0 || wp == 0 || (cp == fp && fp != pp) || (cp == wp && wp != pp)) {
+            setTimeout(() => {
+                if (!this.chicken.held) this.chicken.reset();
+                if (!this.fox.held) this.fox.reset();
+                if (!this.wheat.held) this.wheat.reset();
+            }, 200);
+            return;
+        }
+    }
+
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = COLORS.green;
         ctx.lineJoin = 'round';
@@ -236,6 +280,17 @@ export class Scene extends Container {
 
         this.inside?.drawInterior(ctx);
 
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#ffffff66';
+        ctx.setLineDash([5, 10])
+        ctx.beginPath();
+        ctx.ellipse(this.puzzleStart.x, this.puzzleStart.y, 80, 60, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(this.puzzleEnd.x, this.puzzleEnd.y, 80, 60, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
         ctx.beginPath();
         for (const item of this.getChildren()) {
             if (!item['shadowShown']) continue;
@@ -244,6 +299,8 @@ export class Scene extends Container {
             ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
         }
         ctx.fill();
+
+        ctx.strokeStyle = '#000';
 
         if (this.dog.locked) {
             ctx.beginPath();
