@@ -127,6 +127,7 @@ export class Dude extends Shadowed {
         }
 
         ctx.rotate(this.limbs.walking ? -this.limbs.walkPhase * 0.1 : 0);
+        ctx.translate(0, this.limbs.walking ? -Math.abs(this.limbs.walkPhase) * 2 : 0);
 
         const phase = this.animationPhaseAbs * -5 - 10;
         this.limbs.root = phase;

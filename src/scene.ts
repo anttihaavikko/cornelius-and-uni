@@ -4,8 +4,9 @@ import { Dude } from './dude';
 import { Container } from './engine/container';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
+import { random } from './engine/random';
 import { TextEntity } from './engine/text';
-import { distance, offset, ZERO } from './engine/vector';
+import { distance, offset, Vector, ZERO } from './engine/vector';
 import { House } from './house';
 import { Item } from './item';
 import { Tree } from './tree';
@@ -17,14 +18,17 @@ export class Scene extends Container {
     private houses: House[] = [];
     private text: TextEntity;
     private inside: House;
+    private tree: Vector = { x: 125, y: 478 };
 
     constructor(game: Game) {
         super(game);
         this.dude = new Dude(game, 1377, 0); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         this.dude.controlled = true;
-        this.dog = new Dog(game, 0, 200);
+        this.dog = new Dog(game, 214, 510);
         this.add(this.dude, this.dog);
+
+        this.moveDog();
 
         this.addTree(125, 478);
 
@@ -52,6 +56,7 @@ export class Scene extends Container {
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
+            if (e.key == 'u') this.dog.locked = false;
             if (e.key == 't') {
                 this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             }
@@ -77,7 +82,7 @@ export class Scene extends Container {
                 const closest = this.items.reduce((a, b) => {
                     return distance(this.dude.p, a.p) < distance(this.dude.p, b.p) ? a : b;
                 });
-                if (distance(this.dude.p, this.dog.p) < 50 && !this.dog.held) {
+                if (distance(this.dude.p, this.dog.p) < 50 && !this.dog.held && !this.dog.locked) {
                     if (!this.dude.riding) {
                         this.dude.hop(offset(this.dog.p, 0, -40));
                     }
@@ -101,6 +106,11 @@ export class Scene extends Container {
         })
     }
 
+    private moveDog(): void {
+        this.dog.target = offset(this.tree, random(-150, 150), random(0, 100));
+        setTimeout(() => this.moveDog(), random(1000, 3000));
+    }
+
     private addTree(x: number, y: number, log: boolean = false): void {
         if (log) {
             const msg = `this.addTree(${x}, ${y});`;
@@ -118,7 +128,7 @@ export class Scene extends Container {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
-        if (distance(this.dog.target, this.dude.p) > 60) {
+        if (distance(this.dog.target, this.dude.p) > 60 && !this.dog.locked) {
             this.dog.target = this.dude.p;
         }
         if (this.dude.mount) {
@@ -129,6 +139,7 @@ export class Scene extends Container {
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = COLORS.green;
         ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
         ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25)
@@ -144,14 +155,16 @@ export class Scene extends Container {
             }
         });
 
-        const pp = this.dude.p;
+        if (!this.dog.locked) {
+            const pp = this.dude.p;
 
-        if (!wasInside && this.inside && !this.dude.riding) {
-            setTimeout(() => this.dog.p = offset(pp, 0, 100), 500);
-        }
+            if (!wasInside && this.inside && !this.dude.riding) {
+                setTimeout(() => this.dog.p = offset(pp, 0, 100), 500);
+            }
 
-        if (wasInside && !this.inside && !this.dude.riding) {
-            setTimeout(() => this.dog.p = offset(pp, 0, 20), 500);
+            if (wasInside && !this.inside && !this.dude.riding) {
+                setTimeout(() => this.dog.p = offset(pp, 0, 20), 500);
+            }
         }
 
         this.inside?.drawInterior(ctx);
@@ -164,6 +177,21 @@ export class Scene extends Container {
             ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
         }
         ctx.fill();
+
+        if (this.dog.locked) {
+            ctx.beginPath();
+            const mid = {
+                x: (this.tree.x + this.dog.p.x) / 2 + this.animationPhase * 5,
+                y: (this.tree.y + this.dog.p.y) / 2 + 20 + this.animationPhaseAbs * 5
+            };
+            ctx.moveTo(this.tree.x, this.tree.y - 10);
+            ctx.quadraticCurveTo(mid.x, mid.y, this.dog.p.x, this.dog.p.y - 20);
+            ctx.lineWidth = 7;
+            ctx.stroke();
+            ctx.strokeStyle = COLORS.red;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
 
         super.draw(ctx);
         this.inside?.drawExterior(ctx);

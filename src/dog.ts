@@ -9,7 +9,7 @@ import { Limbs } from './limbs';
 
 export class Dog extends Dude {
     public target: Vector = { x: 0, y: 0 };
-    public wandering = false;
+    public locked = true;
     private waiting = false;
 
     constructor(game: Game, x: number, y: number) {
@@ -20,7 +20,7 @@ export class Dog extends Dude {
         this.limbs = new Limbs([[10, 0], [20, 0], [-20, 0], [-10, 0]], []);
         this.face.setEyeColor('#000');
         this.face.p.y = -8;
-        this.shadowWidth = 30;
+        this.shadowWidth = 33;
         this.holdPos = -25;
         this.carryOffset = -3;
     }
@@ -28,6 +28,7 @@ export class Dog extends Dude {
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
         this.face.p.x = this.animationPhase * 5;
+        // if (this.locked) return;
         if (this.waiting || this.riding) {
             return;
         }
@@ -43,6 +44,7 @@ export class Dog extends Dude {
             setTimeout(() => this.waiting = false, random(500, 1500));
         }
         this.speed = magnitude(this.velocity) > 0 ? 1 : 0;
+        if (this.locked) this.speed *= 0.5;
         this.limbs.walking = magnitude(this.velocity) > 0;
     }
 
