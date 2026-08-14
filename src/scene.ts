@@ -70,6 +70,10 @@ export class Scene extends Container {
         this.addItem(313, 323, 0, 'n');
         this.addItem(250, 50, 0, 'i');
 
+        this.addItem(800, 440, 0, 'k');
+        this.addItem(850, 440, 0, 'e');
+        this.addItem(900, 440, 0, 'y');
+
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
 
@@ -193,7 +197,7 @@ export class Scene extends Container {
         this.add(item);
     }
 
-    private addItem(x: number, y: number, itemType: number, letter?: string): Item {
+    public addItem(x: number, y: number, itemType: number, letter?: string): Item {
         const item = new Item(this.game, x, y, itemType, letter);
         this.createItem(item);
         return item;

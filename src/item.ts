@@ -2,6 +2,7 @@ import { COLORS } from './colors';
 import { Dude } from './dude';
 import { font } from './engine/constants';
 import { Game } from './engine/game';
+import { Mouse } from './engine/mouse';
 import { Vector } from './engine/vector';
 import { Shadowed } from './shadowed';
 
@@ -12,7 +13,10 @@ export enum ItemType {
     Package,
     Chicken,
     Fox,
-    Wheat
+    Wheat,
+    Egg,
+    Eye,
+    Dude
 }
 
 export class Item extends Shadowed {
@@ -20,11 +24,16 @@ export class Item extends Shadowed {
     public locked: boolean;
 
     private origin: Vector;
+    private dude: Dude;
 
     constructor(game: Game, x: number, y: number, public itemType: number, public letter?: string) {
         super(game, x, y, 0, 0);
         this.d = this.p.y;
         this.origin = this.p;
+
+        if (itemType == ItemType.Dude) {
+            this.dude = new Dude(game, 0, 0);
+        }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,6 +52,11 @@ export class Item extends Shadowed {
         this.shadowShown = true;
     }
 
+    public update(tick: number, mouse: Mouse): void {
+        super.update(tick, mouse);
+        this.dude?.update(tick, mouse);
+    }
+
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
         ctx.translate(this.p.x, this.p.y);
@@ -51,6 +65,8 @@ export class Item extends Shadowed {
         ctx.lineWidth = 2.5;
         ctx.fillStyle = '#fff';
         ctx.strokeStyle = '#000';
+
+        this.dude?.draw(ctx);
 
         if (this.itemType == ItemType.Chicken) {
             ctx.lineWidth = 5;

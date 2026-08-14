@@ -20,11 +20,17 @@ export class Machine extends Shadowed {
     private word: string = '';
     private lines: string[] = [];
 
-    private commands = [
-        { commands: ['uni'], act: (s: Scene) => s.free() },
-        { commands: ['gun', 'gin'], act: (s: Scene) => this.spawn(s) },
+    private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
+        { commands: ['uni'], act: s => s.free() },
+        { commands: ['gun', 'gin', 'keg', 'wine', 'nuke', 'kiwi', 'kink', 'ink', 'yen', 'ice'], act: (s: Scene) => this.spawn(s) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
+        { commands: ['kick', 'fuck'], out: 'YOU BETTER WATCH OUT!' },
         { commands: ['in'], out: 'YES, AWAITING INPUT!' },
+        { commands: ['ign'], out: 'HAHA, NO... ;)' },
+        { commands: ['key'], act: s => this.addItem(s, ItemType.Key) },
+        { commands: ['egg'], act: s => this.addItem(s, ItemType.Egg) },
+        { commands: ['eye'], act: s => this.addItem(s, ItemType.Eye) },
+        { commands: ['guy', 'wife'], act: s => this.addItem(s, ItemType.Dude) },
     ];
 
     constructor(game: Game, x: number, y: number) {
@@ -32,8 +38,17 @@ export class Machine extends Shadowed {
         this.evaluate();
     }
 
+    private addItem(scene: Scene, type: ItemType, letter?: string): void {
+        const p = this.getSpawnPos();
+        scene.addItem(p.x, p.y, type, letter);
+    }
+
+    private getSpawnPos(): Vector {
+        return offset(this.spots[0], this.p.x, this.p.y + 10);
+    }
+
     private spawn(scene: Scene): void {
-        return scene.createPackage(offset(this.spots[0], this.p.x, this.p.y + 10), this.word);
+        return scene.createPackage(this.getSpawnPos(), this.word);
     }
 
     public snap(pos: Vector, item: Item): Vector {
