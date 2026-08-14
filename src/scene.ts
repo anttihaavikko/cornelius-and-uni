@@ -11,6 +11,7 @@ import { TextEntity } from './engine/text';
 import { distance, offset, Vector, ZERO } from './engine/vector';
 import { House } from './house';
 import { Item, ItemType } from './item';
+import { Machine } from './machine';
 import { Sign } from './sign';
 import { Tree } from './tree';
 
@@ -22,12 +23,15 @@ export class Scene extends Container {
     private text: TextEntity;
     private inside: House;
     private tree: Vector = { x: 125, y: 478 };
+    private machine: Machine;
 
     constructor(game: Game) {
         super(game);
+
         // this.dude = new Dude(game, 300, 500); // outside
-        this.dude = new Dude(game, 1377, -50); // intro shed
-        // this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 1377, -50); // intro shed
+        this.dude = new Dude(game, 650, 200); // main house
+
         this.dude.controlled = true;
         this.dude.scene = this;
         this.dog = new Dog(game, 214, 510);
@@ -38,6 +42,10 @@ export class Scene extends Container {
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
 
+        this.machine = new Machine(game, 471, 70);
+        this.game.colliders.push(new Collider(game, this.machine.p.x - 40, 70 - 30, 80, 30));
+        this.add(this.machine);
+
         const door = new Collider(game, 1376 - 160, 147 - 15, 320, 30);
         door.door = true;
         this.game.colliders.push(door);
@@ -45,7 +53,7 @@ export class Scene extends Container {
 
         this.addTree(125, 478);
 
-        this.addItem(150, 50, 0, 'u');
+        this.addItem(771, 155, 0, 'u');
         this.addItem(313, 323, 0, 'n');
         this.addItem(250, 50, 0, 'i');
 
@@ -88,7 +96,7 @@ export class Scene extends Container {
                 this.text.p = offset(this.dude.p, 0, -70);
                 this.text.d = this.dude.d + 10;
                 if (this.dude.held) {
-                    const pos = offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40);
+                    const pos = this.machine.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
                     if (this.dude.collides(pos)) {
                         return;
                     }
@@ -100,6 +108,7 @@ export class Scene extends Container {
                     }
                     this.dude.held = null;
                     this.dude.carry(false);
+                    this.machine.evaluate();
                     return;
                 }
                 const closest = this.items.reduce((a, b) => {
@@ -117,7 +126,13 @@ export class Scene extends Container {
                     this.dude.mount = this.dude.riding ? this.dog : null;
                     return;
                 }
-                if (distance(closest.p, this.dude.p) > 50) return;
+                if (distance(closest.p, this.dude.p) > 50) {
+                    if (distance(this.dude.p, this.machine.p) < 50 && !this.dude.held) {
+                        this.machine.operate();
+                        return;
+                    }
+                    return;
+                }
                 if (this.dog.held == closest) {
                     this.dog.held = null;
                 }
@@ -125,10 +140,12 @@ export class Scene extends Container {
                     closest.act(this.dude);
                     return;
                 }
+                this.machine.remove(closest);
                 this.dude.held = closest;
                 closest.held = true;
                 closest.shadowShown = false;
                 this.dude.carry(true);
+                this.machine.evaluate();
             }
         })
     }
