@@ -7,8 +7,7 @@ import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { random } from './engine/random';
-import { TextEntity } from './engine/text';
-import { distance, offset, Vector, ZERO } from './engine/vector';
+import { distance, offset, Vector } from './engine/vector';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
@@ -20,7 +19,6 @@ export class Scene extends Container {
     private dog: Dog;
     private items: Item[] = [];
     private houses: House[] = [];
-    private text: TextEntity;
     private inside: House;
     private tree: Vector = { x: 125, y: 478 };
     private machine: Machine;
@@ -54,6 +52,7 @@ export class Scene extends Container {
         this.addTree(125, 478);
 
         this.addItem(771, 155, 0, 'u');
+        this.addItem(891, 155, 0, 'g');
         this.addItem(313, 323, 0, 'n');
         this.addItem(250, 50, 0, 'i');
 
@@ -69,9 +68,6 @@ export class Scene extends Container {
         this.addTree(1717, 185);
         this.addTree(1800, 103);
         this.addTree(1866, 224);
-
-        this.text = new TextEntity(game, '', 16, 0, 0, -1, ZERO, { shadow: 1.5 });
-        this.add(this.text);
 
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
@@ -92,9 +88,6 @@ export class Scene extends Container {
                     this.dude.bubble.setText('');
                     return;
                 }
-                // this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
-                this.text.p = offset(this.dude.p, 0, -70);
-                this.text.d = this.dude.d + 10;
                 if (this.dude.held) {
                     const pos = this.machine.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
                     if (this.dude.collides(pos)) {
@@ -128,7 +121,7 @@ export class Scene extends Container {
                 }
                 if (distance(closest.p, this.dude.p) > 50) {
                     if (distance(this.dude.p, this.machine.p) < 50 && !this.dude.held) {
-                        this.machine.operate(this.dog);
+                        this.machine.operate(this);
                         return;
                     }
                     return;
@@ -147,7 +140,16 @@ export class Scene extends Container {
                 this.dude.carry(true);
                 this.machine.evaluate();
             }
-        })
+        });
+    }
+
+    public createPackage(pos: Vector, text: string): void {
+        this.addItem(pos.x, pos.y, ItemType.Package, text);
+    }
+
+    public free(): void {
+        if (this.dog.locked) this.dog.p = { x: 650, y: 363 };
+        this.dog.locked = false;
     }
 
     public remove(item: Entity): void {
@@ -195,7 +197,7 @@ export class Scene extends Container {
         ctx.lineCap = 'round';
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
-        ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25)
+        ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25);
 
         const wasInside = this.inside;
         this.inside = null;

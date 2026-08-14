@@ -1,8 +1,8 @@
 import { COLORS } from './colors';
-import { Dog } from './dog';
 import { Game } from './engine/game';
 import { distance, offset, Vector } from './engine/vector';
-import { Item } from './item';
+import { Item, ItemType } from './item';
+import { Scene } from './scene';
 import { Shadowed } from './shadowed';
 
 export class Machine extends Shadowed {
@@ -16,18 +16,23 @@ export class Machine extends Shadowed {
         { x: 250, y: 0 }
     ];
 
-    private slots = [null, null, null, null, null];
+    private slots: Item[] = [null, null, null, null, null];
     private word: string = '';
     private lines: string[] = [];
 
     private commands = [
-        { commands: ['uni'], act: (d: Dog) => d.free() },
+        { commands: ['uni'], act: (s: Scene) => s.free() },
+        { commands: ['gun', 'gin'], act: (s: Scene) => this.spawn(s) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
     ];
 
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 80, 30);
         this.evaluate();
+    }
+
+    private spawn(scene: Scene): void {
+        return scene.createPackage(offset(this.spots[0], this.p.x, this.p.y + 10), this.word);
     }
 
     public snap(pos: Vector, item: Item): Vector {
@@ -42,7 +47,7 @@ export class Machine extends Shadowed {
     }
 
     public evaluate(): void {
-        this.word = this.slots.slice(1).map(s => s?.letter).join('').trim();
+        this.word = this.slots.slice(1).filter(s => s?.itemType === ItemType.Letter).map(s => s?.letter).join('').trim();
         this.lines = ['FABRICATOR MODULE ONLINE!', 'AWAITING INPUT...', 'IN:~> ' + this.word.toUpperCase()];
     }
 
@@ -91,12 +96,12 @@ export class Machine extends Shadowed {
         ctx.restore();
     }
 
-    operate(dog: Dog): void {
+    operate(scene: Scene): void {
         let line = 'ERROR, UNKNOWN COMMAND!';
         const cmd = this.commands.find(c => c.commands.includes(this.word));
         if (cmd && cmd.out) line = cmd.out;
         if (cmd && cmd.act) {
-            cmd.act(dog);
+            cmd.act(scene);
             line = 'SUCCESS!';
         }
         this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', line];

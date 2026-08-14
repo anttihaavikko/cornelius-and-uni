@@ -9,6 +9,7 @@ export enum ItemType {
     Letter,
     Key,
     Battery,
+    Package,
 }
 
 export class Item extends Shadowed {
@@ -64,14 +65,25 @@ export class Item extends Shadowed {
             ctx.stroke();
         }
 
-        if (this.itemType == ItemType.Letter) {
-            ctx.rect(-15, -30, 30, 30);
+        if (this.itemType == ItemType.Letter || this.itemType == ItemType.Package) {
+            const size = this.itemType == ItemType.Letter ? 30 : 50;
+            ctx.fillStyle = this.itemType == ItemType.Letter ? '#fff' : COLORS.brown;
+            ctx.rect(-size * 0.5, -size, size, size);
             ctx.fill();
             ctx.stroke();
+            if (this.itemType == ItemType.Package) {
+                ctx.beginPath();
+                ctx.translate(0, -10);
+                ctx.rect(-size * 0.5, -25, size, 20);
+                ctx.translate(0, -1.5);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+                ctx.stroke()
+            }
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.font = `20px ${font}`;
+            ctx.font = `${this.itemType == ItemType.Letter ? 20 : 15}px ${font}`;
             ctx.fillText(this.letter.toUpperCase(), 0, -12);
         }
 
