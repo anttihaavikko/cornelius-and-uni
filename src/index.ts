@@ -48,13 +48,13 @@ window.onresize = resize;
 let isFull = false;
 document.onfullscreenchange = () => isFull = !isFull;
 
-const move = (x: number, y: number): void => {
-    mouse.x = (isFull ? (x - x) / ratio : x) / upScale;
-    mouse.y = (isFull ? (y - y) / ratio : y) / upScale;
-};
+// const move = (x: number, y: number): void => {
+//     mouse.x = (isFull ? (x - x) / ratio : x) / upScale;
+//     mouse.y = (isFull ? (y - y) / ratio : y) / upScale;
+// };
 
-document.onmousemove = (e: MouseEvent) => move(e.offsetX, e.offsetY);
-canvas.ontouchmove = (e: TouchEvent) => move(e.touches[0].clientX / ratio - x, e.touches[0].clientY / ratio - y);
+// document.onmousemove = (e: MouseEvent) => move(e.offsetX, e.offsetY);
+// canvas.ontouchmove = (e: TouchEvent) => move(e.touches[0].clientX / ratio - x, e.touches[0].clientY / ratio - y);
 
 window.onkeydown = (e: KeyboardEvent) => {
     // audio.startMusic();
@@ -68,23 +68,23 @@ window.onkeyup = (e: KeyboardEvent) => {
     game.held[e.key] = false;
 };
 
-document.onmousedown = (e: MouseEvent) => {
-    // if (!audio.isPlaying()) audio.startMusic();
-    mouse.pressing = true;
-    mouse.holding = true;
-    game.click(mouse, !!e);
-};
+// document.onmousedown = (e: MouseEvent) => {
+//     // if (!audio.isPlaying()) audio.startMusic();
+//     mouse.pressing = true;
+//     mouse.holding = true;
+//     game.click(mouse, !!e);
+// };
 
-canvas.ontouchstart = (e: TouchEvent) => {
-    game.usingTouch = true;
-    move(e.touches[0].clientX / ratio - x, e.touches[0].clientY / ratio - y);
-    document.onmousedown(null);
-};
+// canvas.ontouchstart = (e: TouchEvent) => {
+//     game.usingTouch = true;
+//     move(e.touches[0].clientX / ratio - x, e.touches[0].clientY / ratio - y);
+//     document.onmousedown(null);
+// };
 
-document.onmouseup = canvas.ontouchcancel = canvas.ontouchend = () => {
-    mouse.pressing = false;
-    mouse.holding = false;
-};
+// document.onmouseup = canvas.ontouchcancel = canvas.ontouchend = () => {
+//     mouse.pressing = false;
+//     mouse.holding = false;
+// };
 
 const tick = (t: number) => {
     requestAnimationFrame(tick);
