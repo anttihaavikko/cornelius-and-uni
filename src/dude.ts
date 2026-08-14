@@ -17,6 +17,7 @@ export class Dude extends Shadowed {
     protected skin = COLORS.skin;
     protected velocity: Vector = { x: 0, y: 0 };
     protected holdPos = -30;
+    protected carryOffset = 5;
 
     public controlled = false;
     public riding = false;
@@ -101,6 +102,7 @@ export class Dude extends Shadowed {
 
     dismount(): void {
         if (!this.mount) return;
+        // this.mount.hop(this.mount.p);
         const spot = offset(this.mount.p, this.mount.aim.x * 40, this.mount.aim.y * 40);
         const alt = offset(this.mount.p, this.mount.aim.x * -40, this.mount.aim.y * -40);
         // this.p = this.collides(spot) ? alt : spot;
@@ -147,7 +149,7 @@ export class Dude extends Shadowed {
 
         if (this.held) {
             this.held.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase);
-            this.held.d = this.d + 5;
+            this.held.d = this.d + this.carryOffset;
         }
 
         ctx.restore();

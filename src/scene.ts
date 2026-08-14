@@ -29,10 +29,10 @@ export class Scene extends Container {
         this.addItem(100, 50);
         this.addItem(150, 50);
 
-        this.add(new Tree(game, 100, 300, 0, 0));
-        this.add(new Tree(game, 1027, 207, 0, 0));
-        this.add(new Tree(game, 1090, 93, 0, 0));
-        this.add(new Tree(game, 1169, 165, 0, 0));
+        this.addTree(100, 300);
+        this.addTree(1027, 207);
+        this.addTree(1090, 93);
+        this.addTree(1169, 165);
 
         this.text = new TextEntity(game, '', 16, 0, 0, -1, ZERO, { shadow: 1.5 });
         this.add(this.text);
@@ -43,6 +43,9 @@ export class Scene extends Container {
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
+            if (e.key == 't') {
+                this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
+            }
             if (e.key == ' ') {
                 // this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
                 this.text.p = offset(this.dude.p, 0, -70);
@@ -87,6 +90,15 @@ export class Scene extends Container {
                 this.dude.carry(true);
             }
         })
+    }
+
+    private addTree(x: number, y: number, log: boolean = false): void {
+        if (log) {
+            const msg = `this.addTree(${x}, ${y});`;
+            console.log(msg);
+            navigator.clipboard.writeText(msg);
+        }
+        this.add(new Tree(this.game, x, y, 0, 0));
     }
 
     private addItem(x: number, y: number): void {

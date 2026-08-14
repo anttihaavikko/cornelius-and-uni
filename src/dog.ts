@@ -22,6 +22,7 @@ export class Dog extends Dude {
         this.face.p.y = -8;
         this.shadowWidth = 30;
         this.holdPos = -25;
+        this.carryOffset = -3;
     }
 
     update(tick: number, mouse: Mouse): void {
