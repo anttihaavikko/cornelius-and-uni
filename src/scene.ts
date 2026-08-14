@@ -44,7 +44,7 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             if (e.key == ' ') {
-                this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
+                // this.text.content = `(${Math.round(this.dude.p.x)}, ${Math.round(this.dude.p.y)})`;
                 this.text.p = offset(this.dude.p, 0, -70);
                 this.text.d = this.dude.d + 10;
                 if (this.dude.held) {
@@ -66,9 +66,14 @@ export class Scene extends Container {
                     return distance(this.dude.p, a.p) < distance(this.dude.p, b.p) ? a : b;
                 });
                 if (distance(this.dude.p, this.dog.p) < 50 && !this.dog.held) {
+                    if (!this.dude.riding) {
+                        this.dude.hop(offset(this.dog.p, 0, -40));
+                    }
+                    this.dog.lockFor();
                     this.dude.riding = !this.dude.riding;
                     this.dog.riding = !this.dog.riding;
                     this.dude.shadowShown = !this.dude.shadowShown;
+                    this.dude.dismount();
                     this.dude.mount = this.dude.riding ? this.dog : null;
                     return;
                 }

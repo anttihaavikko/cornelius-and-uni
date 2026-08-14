@@ -1,4 +1,5 @@
 import { COLORS } from './colors';
+import { quadEaseInOut } from './engine/easings';
 import { Face } from './engine/face';
 import { Game } from './engine/game';
 import { clamp01 } from './engine/math';
@@ -23,6 +24,8 @@ export class Dude extends Shadowed {
     public aim: Vector = { x: 0, y: 0 };
     public mount: Dude;
 
+    private animating = false;
+
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 5, 5);
         this.face = new Face(game, { width: 1, mouthColor: '#000', mouthThickness: 12, blush: COLORS.red });
@@ -35,6 +38,7 @@ export class Dude extends Shadowed {
     }
 
     moveWithMount(): void {
+        if (this.animating) return;
         this.p = offset(this.mount.p, 0, 2 + this.mount.animationPhaseAbs * -5);
     }
 
@@ -44,10 +48,12 @@ export class Dude extends Shadowed {
         this.face.update(tick, mouse);
         this.d = this.p.y;
 
-        this.limbs.walking = magnitude(this.velocity) > 0;
+        if (this.animating) return;
+
+        this.limbs.walking = magnitude(this.velocity) > 0 && !this.mount;
 
         const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);
-        if (!this.game.colliders.some(c => c.isInside(next, 20))) {
+        if (!this.collides(next)) {
             this.p = next;
         }
 
@@ -68,6 +74,10 @@ export class Dude extends Shadowed {
         }
     }
 
+    collides(pos: Vector): boolean {
+        return this.game.colliders.some(c => c.isInside(pos, 20));
+    }
+
     drawBody(ctx: CanvasRenderingContext2D, phase: number): void {
         ctx.lineWidth = 25;
         ctx.beginPath();
@@ -84,11 +94,32 @@ export class Dude extends Shadowed {
         this.p = offset(dog.p, 0, 2 + dog.animationPhaseAbs * -5);
     }
 
+    lockFor(duration: number = 300): void {
+        this.animating = true;
+        setTimeout(() => this.animating = false, duration);
+    }
+
+    dismount(): void {
+        if (!this.mount) return;
+        const spot = offset(this.mount.p, this.mount.aim.x * 40, this.mount.aim.y * 40);
+        const alt = offset(this.mount.p, this.mount.aim.x * -40, this.mount.aim.y * -40);
+        // this.p = this.collides(spot) ? alt : spot;
+        this.p = offset(this.mount.p, 0, -40);
+        this.hop(this.collides(spot) ? alt : spot);
+    }
+
+    hop(pos: Vector): void {
+        this.lockFor();
+        this.tween.setEase(quadEaseInOut)
+        this.tween.move(pos, 0.3);
+    }
+
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        ctx.translate(this.p.x, this.p.y);
+        ctx.translate(this.p.x, this.p.y - Math.sin(this.tween.time * Math.PI) * 20);
+        // console.log(this.tween.time);
 
-        if (this.mount) {
+        if (this.mount && !this.animating) {
             ctx.rotate(this.mount.limbs.walking ? -this.mount.limbs.walkPhase * 0.075 : 0);
             ctx.translate(0, -40);
         }
