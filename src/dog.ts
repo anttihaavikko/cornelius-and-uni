@@ -1,3 +1,4 @@
+import { COLORS } from './colors';
 import { Dude } from './dude';
 import { roundRect } from './engine/drawing';
 import { Game } from './engine/game';
@@ -25,6 +26,7 @@ export class Dog extends Dude {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
+        this.face.p.x = this.animationPhase * 5;
         if (this.waiting || this.riding) {
             return;
         }
@@ -49,5 +51,42 @@ export class Dog extends Dude {
         roundRect(ctx, -25, -25 + phase, 50, 30, 5);
         ctx.fill();
         ctx.stroke();
+        const drawEar = (dir: number, scale: number = 1) => {
+            ctx.save();
+            ctx.translate(dir * 20, -20 + phase);
+            ctx.scale(scale, scale);
+            // ctx.rotate(dir * Math.PI);
+            ctx.moveTo(dir * -5, -3);
+            ctx.quadraticCurveTo(0, -12, dir * 10, -10 - this.animationPhaseAbs * -3);
+            ctx.quadraticCurveTo(dir * 10, 0, dir * 2, 3);
+            ctx.restore();
+        }
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        drawEar(1);
+        drawEar(-1);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = COLORS.red;
+        drawEar(1, 0.5);
+        drawEar(-1, 0.5);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#000';
+        ctx.fillStyle = '#fff';
+        ctx.lineWidth = 1.6;
+        ctx.save();
+        ctx.translate(this.face.p.x, this.face.p.y - 5 + phase);
+        ctx.rotate(this.face.p.x * 0.05);
+        ctx.moveTo(-3, 0);
+        ctx.lineTo(3, 0);
+        ctx.lineTo(0, -25);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
     }
 }

@@ -102,6 +102,7 @@ export class Scene extends Container {
 
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = COLORS.green;
+        ctx.lineJoin = 'round';
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
         ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25)
