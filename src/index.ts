@@ -60,6 +60,7 @@ window.onkeydown = (e: KeyboardEvent) => {
     // audio.startMusic();
     // game.pressed(e);
     game.held[e.key] = true;
+    game.audio.playMusic();
 };
 
 window.onkeyup = (e: KeyboardEvent) => {

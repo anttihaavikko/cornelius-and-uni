@@ -5,15 +5,19 @@ import { zzfx, zzfxM, zzfxP } from './zzfxm';
 
 export class AudioManager {
     private soundVolume = 1;
+    private buffer: any;
+    private playing: boolean;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructor() {
+        this.buffer = zzfxM(song[0] as any, song[1] as any, song[2] as any, song[3] as any);
     }
 
     public playMusic(): void {
-        const buffer = zzfxM(song[0] as any, song[1] as any, song[2] as any, song[3] as any);
-        const node = zzfxP(...buffer);
+        if (this.playing) return;
+        const node = zzfxP(...this.buffer);
         node.loop = true;
+        this.playing = true;
     }
 
     public play(values: number[]): void {
