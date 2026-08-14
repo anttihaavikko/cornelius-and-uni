@@ -6,6 +6,7 @@ import { Entity } from './engine/entity';
 export class House extends Entity {
     public entered = false;
     public walls: Collider[] = [];
+    public decorations: number[] = [];
 
     createWalls(): void {
         this.walls.push(new Collider(this.game, this.p.x - 10, this.p.y, 20, this.s.y));
@@ -72,10 +73,29 @@ export class House extends Entity {
         ctx.fill();
         ctx.beginPath();
         ctx.rect(0, -this.s.y * 0.5 + 50, this.s.x, 100);
-        ctx.fillStyle = '#97A4AF';
+        ctx.fillStyle = COLORS.light;
         ctx.fill();
         const size = 40 + this.animationPhaseAbs * 2;
         drawEllipse(ctx, { x: this.s.x * 0.5, y: this.s.y + 10 }, size, size, '#ffffff22');
+
+        if (this.decorations.includes(0)) {
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.translate(-5, -20);
+            ctx.rect(50, 50, 20, 20);
+            ctx.rect(20, 80, 20, 20);
+            ctx.rect(50, 80, 20, 20);
+            ctx.rect(80, 80, 20, 20);
+            ctx.translate(30, 0);
+            ctx.rect(20, 120, 80, 20);
+            ctx.moveTo(40, 127);
+            ctx.lineTo(40, 132);
+            ctx.lineTo(80, 132);
+            ctx.lineTo(80, 127);
+            ctx.strokeStyle = '#00000022';
+            ctx.stroke();
+        }
+
         ctx.restore();
     }
 }

@@ -10,7 +10,7 @@ export class Container extends Entity {
         super(game, x, y, 0, 0);
         this.children.push(...entities);
     }
-    
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public ratioChanged(portrait: boolean): void {
     }
@@ -49,6 +49,10 @@ export class Container extends Entity {
         return this.children;
     }
 
+    public removeChild(child: Entity): void {
+        this.children = this.children.filter(c => c !== child);
+    }
+
     public add(...entity: Entity[]): void {
         this.children.push(...entity);
     }
@@ -60,7 +64,7 @@ export class Container extends Entity {
     public getButtons(): ButtonEntity[] {
         return [];
     }
-    
+
     public end(): void {
     }
 }

@@ -1,14 +1,16 @@
+import { Collider } from './collider';
 import { COLORS } from './colors';
 import { Dog } from './dog';
 import { Dude } from './dude';
 import { Container } from './engine/container';
+import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { random } from './engine/random';
 import { TextEntity } from './engine/text';
 import { distance, offset, Vector, ZERO } from './engine/vector';
 import { House } from './house';
-import { Item } from './item';
+import { Item, ItemType } from './item';
 import { Sign } from './sign';
 import { Tree } from './tree';
 
@@ -24,9 +26,10 @@ export class Scene extends Container {
     constructor(game: Game) {
         super(game);
         // this.dude = new Dude(game, 300, 500); // outside
-        this.dude = new Dude(game, 1377, 0); // intro shed
+        this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         this.dude.controlled = true;
+        this.dude.scene = this;
         this.dog = new Dog(game, 214, 510);
         this.add(this.dude, this.dog);
 
@@ -35,19 +38,24 @@ export class Scene extends Container {
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
 
+        const door = new Collider(game, 1376 - 160, 147 - 15, 320, 30);
+        door.door = true;
+        this.game.colliders.push(door);
+        this.add(door);
+
         this.addTree(125, 478);
 
         this.addItem(150, 50, 0, 'u');
-        this.addItem(200, 50, 0, 'n');
+        this.addItem(313, 323, 0, 'n');
         this.addItem(250, 50, 0, 'i');
 
-        this.addItem(1258, 92, 0, 'b');
-        this.addItem(1481, -28, 0, 'k');
+        this.addItem(1258, 92, ItemType.Battery, 'b');
+        this.addItem(1481, -28, ItemType.Key, 'k');
 
         this.addTree(100, 300);
         this.addTree(1027, 207);
         this.addTree(1090, 93);
-        this.addTree(1169, 165);
+        this.addTree(1164, 165);
 
         this.addTree(1621, 95);
         this.addTree(1717, 185);
@@ -59,6 +67,9 @@ export class Scene extends Container {
 
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
+
+        this.houses[1].decorations.push(0);
+
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
@@ -78,7 +89,7 @@ export class Scene extends Container {
                 this.text.d = this.dude.d + 10;
                 if (this.dude.held) {
                     const pos = offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40);
-                    if (this.game.colliders.some(c => c.isInside(pos, 20))) {
+                    if (this.dude.collides(pos)) {
                         return;
                     }
                     if (distance(pos, this.dog.p) < 50 && !this.dog.held) {
@@ -120,6 +131,12 @@ export class Scene extends Container {
                 this.dude.carry(true);
             }
         })
+    }
+
+    public remove(item: Entity): void {
+        this.removeChild(item);
+        this.items = this.items.filter(i => i !== item);
+        this.game.colliders = this.game.colliders.filter(c => c !== item);
     }
 
     private moveDog(): void {

@@ -1,3 +1,4 @@
+import { Collider } from './collider';
 import { COLORS } from './colors';
 import { Bubble } from './engine/bubble';
 import { quadEaseInOut } from './engine/easings';
@@ -6,8 +7,9 @@ import { Game } from './engine/game';
 import { clamp01 } from './engine/math';
 import { Mouse } from './engine/mouse';
 import { magnitude, normalize, offset, Vector } from './engine/vector';
-import { Item } from './item';
+import { Item, ItemType } from './item';
 import { Limbs } from './limbs';
+import { Scene } from './scene';
 import { Shadowed } from './shadowed';
 
 export class Dude extends Shadowed {
@@ -26,6 +28,7 @@ export class Dude extends Shadowed {
     public aim: Vector = { x: 0, y: 0 };
     public mount: Dude;
     public bubble: Bubble;
+    public scene: Scene;
 
     private animating = false;
 
@@ -89,7 +92,18 @@ export class Dude extends Shadowed {
     }
 
     collides(pos: Vector): boolean {
-        return this.game.colliders.some(c => c.isInside(pos, 20));
+        return this.game.colliders.some(c => {
+            const hit = c.isInside(pos, 20);
+            const coll = c as Collider;
+            if (hit && coll.door && !coll.opened && this.held?.itemType === ItemType.Key) {
+                coll.opened = true;
+                this.held.drop(pos);
+                this.carry(false);
+                this.scene.remove(this.held);
+                this.held = null;
+            }
+            return hit && !coll.opened;
+        });
     }
 
     drawBody(ctx: CanvasRenderingContext2D, phase: number): void {
