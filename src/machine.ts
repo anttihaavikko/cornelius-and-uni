@@ -24,6 +24,7 @@ export class Machine extends Shadowed {
         { commands: ['uni'], act: (s: Scene) => s.free() },
         { commands: ['gun', 'gin'], act: (s: Scene) => this.spawn(s) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
+        { commands: ['in'], out: 'YES, AWAITING INPUT!' },
     ];
 
     constructor(game: Game, x: number, y: number) {
