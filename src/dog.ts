@@ -25,7 +25,7 @@ export class Dog extends Dude {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
-        if (this.waiting) {
+        if (this.waiting || this.riding) {
             return;
         }
         const dx = this.target.x - this.p.x;

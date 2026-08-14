@@ -65,6 +65,13 @@ export class Scene extends Container {
                 const closest = this.items.reduce((a, b) => {
                     return distance(this.dude.p, a.p) < distance(this.dude.p, b.p) ? a : b;
                 });
+                if (distance(this.dude.p, this.dog.p) < 50 && !this.dog.held) {
+                    this.dude.riding = !this.dude.riding;
+                    this.dog.riding = !this.dog.riding;
+                    this.dude.shadowShown = !this.dude.shadowShown;
+                    this.dude.mount = this.dude.riding ? this.dog : null;
+                    return;
+                }
                 if (distance(closest.p, this.dude.p) > 50) return;
                 if (this.dog.held == closest) {
                     this.dog.held = null;
@@ -88,6 +95,9 @@ export class Scene extends Container {
         if (distance(this.dog.target, this.dude.p) > 60) {
             this.dog.target = this.dude.p;
         }
+        if (this.dude.mount) {
+            this.dude.moveWithMount();
+        }
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -107,11 +117,11 @@ export class Scene extends Container {
             }
         });
 
-        if (!wasInside && this.inside) {
+        if (!wasInside && this.inside && !this.dude.riding) {
             this.dog.p = offset(this.dude.p, 0, 100);
         }
 
-        if (wasInside && !this.inside) {
+        if (wasInside && !this.inside && !this.dude.riding) {
             this.dog.p = offset(this.dude.p, 0, -50);
         }
 
