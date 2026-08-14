@@ -1,5 +1,6 @@
 import { Collider } from './collider';
 import { COLORS } from './colors';
+import { drawEllipse } from './engine/drawing';
 import { Entity } from './engine/entity';
 
 export class House extends Entity {
@@ -69,6 +70,8 @@ export class House extends Entity {
         ctx.rect(-5000, -10000, 10000, 10000);
         ctx.fillStyle = '#000';
         ctx.fill();
+        const size = 40 + this.animationPhaseAbs * 2;
+        drawEllipse(ctx, { x: this.s.x * 0.5, y: this.s.y + 10 }, size, size, '#ffffff22');
         ctx.restore();
     }
 }

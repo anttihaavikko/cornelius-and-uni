@@ -1,3 +1,4 @@
+import { font } from './engine/constants';
 import { Game } from './engine/game';
 import { Vector } from './engine/vector';
 import { Shadowed } from './shadowed';
@@ -5,7 +6,7 @@ import { Shadowed } from './shadowed';
 export class Item extends Shadowed {
     public held: boolean;
 
-    constructor(game: Game, x: number, y: number) {
+    constructor(game: Game, x: number, y: number, public itemType: number, public letter?: string) {
         super(game, x, y, 0, 0);
         this.d = this.p.y;
     }
@@ -28,6 +29,15 @@ export class Item extends Shadowed {
         ctx.rect(-15, -30, 30, 30);
         ctx.fill();
         ctx.stroke();
+
+        if (this.letter) {
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = `20px ${font}`;
+            ctx.fillText(this.letter.toUpperCase(), 0, -12);
+        }
+
         ctx.restore();
     }
 }

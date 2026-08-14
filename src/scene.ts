@@ -20,24 +20,33 @@ export class Scene extends Container {
 
     constructor(game: Game) {
         super(game);
-        this.dude = new Dude(game, 400, 200);
+        this.dude = new Dude(game, 1377, 0); // intro shed
+        // this.dude = new Dude(game, 650, 200); // main house
         this.dude.controlled = true;
         this.dog = new Dog(game, 0, 200);
         this.add(this.dude, this.dog);
 
-        this.addItem(50, 50);
-        this.addItem(100, 50);
-        this.addItem(150, 50);
+        this.addTree(125, 478);
+
+        this.addItem(150, 50, 0, 'u');
+        this.addItem(200, 50, 0, 'n');
+        this.addItem(250, 50, 0, 'i');
 
         this.addTree(100, 300);
         this.addTree(1027, 207);
         this.addTree(1090, 93);
         this.addTree(1169, 165);
 
+        this.addTree(1621, 95);
+        this.addTree(1717, 185);
+        this.addTree(1800, 103);
+        this.addTree(1866, 224);
+
         this.text = new TextEntity(game, '', 16, 0, 0, -1, ZERO, { shadow: 1.5 });
         this.add(this.text);
 
-        this.houses.push(new House(game, 550, 100, 400, 200));
+        this.houses.push(new House(game, 350, 50, 600, 300));
+        this.houses.push(new House(game, 1227, -100, 300, 300));
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
@@ -101,8 +110,8 @@ export class Scene extends Container {
         this.add(new Tree(this.game, x, y, 0, 0));
     }
 
-    private addItem(x: number, y: number): void {
-        const item = new Item(this.game, x, y);
+    private addItem(x: number, y: number, itemType: number, letter?: string): void {
+        const item = new Item(this.game, x, y, itemType, letter);
         this.items.push(item);
         this.add(item);
     }
