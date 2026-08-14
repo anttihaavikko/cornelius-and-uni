@@ -76,6 +76,7 @@ export class Machine extends Shadowed {
 
         ctx.strokeStyle = '#ffffff33';
         ctx.beginPath();
+        ctx.lineWidth = 3;
         for (const spot of this.spots) {
             ctx.moveTo(0, -10);
             ctx.lineTo(spot.x, -10);
@@ -83,7 +84,6 @@ export class Machine extends Shadowed {
             ctx.rect(spot.x - 22, spot.y, 44, 22);
         }
         ctx.stroke();
-
 
         ctx.beginPath();
         ctx.rotate(this.rotation);

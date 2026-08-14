@@ -14,8 +14,8 @@ canvas.style.touchAction = 'none';
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
 const mouse: Mouse = { x: 0, y: 0 };
 const audio = new AudioManager();
-audio.prepare();
-audio.startMusic();
+// audio.prepare();
+// audio.startMusic();
 const game = new Game(audio, canvas);
 game.scene = new Scene(game);
 
@@ -68,7 +68,7 @@ window.onkeyup = (e: KeyboardEvent) => {
 };
 
 document.onmousedown = (e: MouseEvent) => {
-    if (!audio.isPlaying()) audio.startMusic();
+    // if (!audio.isPlaying()) audio.startMusic();
     mouse.pressing = true;
     mouse.holding = true;
     game.click(mouse, !!e);

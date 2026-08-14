@@ -4,10 +4,10 @@ import { Camera } from './camera';
 import { Container } from './container';
 import { Entity } from './entity';
 import { Mouse } from './mouse';
-import { Pitcher } from './pitcher';
+// import { Pitcher } from './pitcher';
 
 export class Game extends Entity {
-    public pitcher: Pitcher;
+    // public pitcher: Pitcher;
     public scene: Container;
     public camera = new Camera();
     public usingPad: boolean;
@@ -22,7 +22,7 @@ export class Game extends Entity {
 
     constructor(public audio: AudioManager, public canvas: HTMLCanvasElement) {
         super(null, 0, 0, 0, 0);
-        this.pitcher = new Pitcher(audio);
+        // this.pitcher = new Pitcher(audio);
         this.blinders = new Blinders(this, 400);
     }
 
@@ -65,7 +65,7 @@ export class Game extends Entity {
         this.scene?.update(tick, mouse);
         this.camera.update();
         this.blinders.update(tick, mouse);
-        this.pitcher.update(this.delta);
+        // this.pitcher.update(this.delta);
         mouse.pressing = false;
         this.curMouse = { ...mouse };
     }

@@ -8,6 +8,7 @@ import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { random } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
+import { zzfxM, zzfxP } from './engine/zzfxm';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
@@ -25,6 +26,8 @@ export class Scene extends Container {
 
     constructor(game: Game) {
         super(game);
+
+        // eslint-disable-next-line no-sparse-arrays
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
@@ -79,6 +82,9 @@ export class Scene extends Container {
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
+            if (e.key == 'm') {
+                this.game.audio.playMusic();
+            }
             if (e.key == 'u') this.dog.locked = false;
             if (e.key == 't') {
                 this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);

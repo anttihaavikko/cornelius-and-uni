@@ -20,19 +20,19 @@ ZzFX Features
 /*
 
   ZzFX MIT License
-  
+
   Copyright (c) 2019 - Frank Force
-  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-  
+
   The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
-  
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ ZzFX Features
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
-  
+
 */
 
 /*
@@ -58,10 +58,10 @@ export const ZZFX =
 {
     // master volume scale
     volume: .3,
-    
+
     // sample rate for audio
     sampleRate: 44100,
-    
+
     // create shared audio context
     x: new AudioContext,
 
@@ -89,7 +89,7 @@ export const ZZFX =
     // build an array of samples
     buildSamples: function
     (
-        volume = 1, 
+        volume = 1,
         randomness = .05,
         frequency = 220,
         attack = 0,
@@ -97,11 +97,11 @@ export const ZZFX =
         release = .1,
         shape = 0,
         shapeCurve = 1,
-        slide = 0, 
-        deltaSlide = 0, 
-        pitchJump = 0, 
-        pitchJumpTime = 0, 
-        repeatTime = 0, 
+        slide = 0,
+        deltaSlide = 0,
+        pitchJump = 0,
+        pitchJumpTime = 0,
+        repeatTime = 0,
         noise = 0,
         modulation = 0,
         bitCrush = 0,
@@ -134,7 +134,7 @@ export const ZZFX =
             i < length; b[i++] = s)
         {
             if (!(++c%(bitCrush*100|0)))                      // bit crush
-            { 
+            {
                 s = shape? shape>1? shape>2? shape>3?         // wave shape
                     Math.sin((t%PI2)**3) :                    // 4 noise
                     Math.max(Math.min(Math.tan(t),1),-1):     // 3 tan
@@ -158,7 +158,7 @@ export const ZZFX =
                                     0);                                       // post release
 
                 s = delay ? s/2 + (delay > i ? 0 :            // delay
-                    (i<length-delay? 1 : (length-i)/delay) *  // release delay 
+                    (i<length-delay? 1 : (length-i)/delay) *  // release delay
                     b[i-delay|0]/2) : s;                      // sample delay
             }
 
@@ -183,7 +183,7 @@ export const ZZFX =
 
         return b;
     },
-    
+
     // get frequency of a musical note on a diatonic scale
     // getNote: function(semitoneOffset=0, rootNoteFrequency=440)
     // {
