@@ -74,6 +74,10 @@ export class Scene extends Container {
         this.addItem(850, 440, 0, 'e');
         this.addItem(900, 440, 0, 'y');
 
+        this.addItem(950, 440, 0, 'd');
+        this.addItem(1000, 440, 0, 'p');
+        this.addItem(1050, 440, 0, 'l');
+
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
 
@@ -195,6 +199,10 @@ export class Scene extends Container {
     private createItem(item: Item): void {
         this.items.push(item);
         this.add(item);
+    }
+
+    public colorize(): void {
+        this.dude.skin = 'pink';
     }
 
     public addItem(x: number, y: number, itemType: number, letter?: string): Item {

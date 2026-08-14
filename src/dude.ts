@@ -17,11 +17,11 @@ export class Dude extends Shadowed {
     protected limbs = new Limbs([[10, 0], [-10, 0]], [[15, 0], [-15, 0]]);
     protected maxSpeed = 5;
     protected face: Face;
-    protected skin = COLORS.skin;
     protected velocity: Vector = { x: 0, y: 0 };
     protected holdPos = -30;
     protected carryOffset = 5;
 
+    public skin = COLORS.skin;
     public controlled = false;
     public riding = false;
     public held: Item;
