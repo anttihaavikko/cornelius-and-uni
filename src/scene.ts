@@ -128,7 +128,7 @@ export class Scene extends Container {
                 }
                 if (distance(closest.p, this.dude.p) > 50) {
                     if (distance(this.dude.p, this.machine.p) < 50 && !this.dude.held) {
-                        this.machine.operate();
+                        this.machine.operate(this.dog);
                         return;
                     }
                     return;

@@ -1,7 +1,6 @@
 import { COLORS } from './colors';
-import { Bubble } from './engine/bubble';
+import { Dog } from './dog';
 import { Game } from './engine/game';
-import { Mouse } from './engine/mouse';
 import { distance, offset, Vector } from './engine/vector';
 import { Item } from './item';
 import { Shadowed } from './shadowed';
@@ -21,6 +20,11 @@ export class Machine extends Shadowed {
     private word: string = '';
     private lines: string[] = [];
 
+    private commands = [
+        { commands: ['uni'], act: (d: Dog) => d.free() },
+        { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
+    ];
+
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 80, 30);
         this.evaluate();
@@ -38,7 +42,7 @@ export class Machine extends Shadowed {
     }
 
     public evaluate(): void {
-        this.word = this.slots.slice(1).map(s => s?.letter).join('');
+        this.word = this.slots.slice(1).map(s => s?.letter).join('').trim();
         this.lines = ['FABRICATOR MODULE ONLINE!', 'AWAITING INPUT...', 'IN:~> ' + this.word.toUpperCase()];
     }
 
@@ -87,7 +91,14 @@ export class Machine extends Shadowed {
         ctx.restore();
     }
 
-    operate(): void {
-        this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', 'ERROR, UNKNOWN COMMAND!'];
+    operate(dog: Dog): void {
+        let line = 'ERROR, UNKNOWN COMMAND!';
+        const cmd = this.commands.find(c => c.commands.includes(this.word));
+        if (cmd && cmd.out) line = cmd.out;
+        if (cmd && cmd.act) {
+            cmd.act(dog);
+            line = 'SUCCESS!';
+        }
+        this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', line];
     }
 }

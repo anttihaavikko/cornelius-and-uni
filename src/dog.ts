@@ -25,6 +25,11 @@ export class Dog extends Dude {
         this.carryOffset = -3;
     }
 
+    free(): void {
+        if (this.locked) this.p = { x: 650, y: 363 };
+        this.locked = false;
+    }
+
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
         this.face.p.x = this.animationPhase * 5;
