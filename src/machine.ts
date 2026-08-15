@@ -24,7 +24,6 @@ export class Machine extends Shadowed {
     private actModule: Item;
     private battery: Item;
 
-    private wordle: boolean;
     private target: string;
     private solved: boolean;
     private reward: string;
@@ -33,20 +32,20 @@ export class Machine extends Shadowed {
         { commands: ['uni'], act: s => s.free() },
         { commands: ['gun', 'gin', 'keg', 'wine', 'nuke', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'null'], act: (s: Scene) => this.spawn(s) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
-        { commands: ['kick', 'fuck', 'dick', 'dung', 'duel'], out: 'YOU BETTER WATCH OUT!' },
+        { commands: ['kick', 'fuck', 'dick', 'dung', 'duel', 'hell', 'whip'], out: 'YOU BETTER WATCH OUT!' },
         { commands: ['in'], out: 'YES, AWAITING INPUT!' },
         { commands: ['ign'], out: 'HAHA, NO... ;)' },
         { commands: ['key'], act: s => this.addItem(s, ItemType.Key) },
-        { commands: ['egg'], act: s => this.addItem(s, ItemType.Egg) },
-        { commands: ['eye'], act: s => this.addItem(s, ItemType.Eye) },
+        // { commands: ['eye'], act: s => this.addItem(s, ItemType.Eye) },
         { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Eye) },
         { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'edgy', 'geek', 'gene', 'punk', 'unc', 'elf'], act: s => this.addItem(s, ItemType.Dude) },
+        { commands: ['held'], out: '!!!' },
         { commands: ['dupe'], out: '!!!' },
         { commands: ['flip'], out: '!!!' },
-        { commands: ['find', 'clue', 'need'], out: '!!!' },
+        { commands: ['find', 'clue', 'need', 'help'], out: '!!!' },
         { commands: ['fun'], out: '!!!' },
         { commands: ['dye', 'pink'], act: s => s.colorize() },
-        { commands: ['duck'], act: s => this.addItem(s, ItemType.Chicken) },
+        { commands: ['duck', 'chick', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
     ];
@@ -84,7 +83,6 @@ export class Machine extends Shadowed {
 
     public makeWordle(word: string, hint: string, reward: string): void {
         this.reward = reward;
-        this.wordle = true;
         this.target = word;
         this.lines = ['STUCK IN UNKNOWN ROUTINE!', '---', 'AWAITING INPUT...', 'REQUIRED SKILLS: ' + hint.toUpperCase()];
         this.unit.letter = '0/4';

@@ -153,7 +153,7 @@ export class Dude extends Shadowed {
 
         if (this.mount && !this.animating) {
             ctx.rotate(this.mount.limbs.walking ? -this.mount.limbs.walkPhase * 0.075 : 0);
-            ctx.translate(0, -40);
+            ctx.translate(0, -40 - Math.sin(this.mount.tween.time * Math.PI) * 20);
         }
 
         ctx.rotate(this.limbs.walking ? -this.limbs.walkPhase * 0.1 : 0);

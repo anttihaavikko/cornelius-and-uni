@@ -8,6 +8,7 @@ import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { random } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
+import { Hopper } from './hopper';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
@@ -40,6 +41,8 @@ export class Scene extends Container {
     private grass: number[][] = [];
     private dirt: number[][] = [];
 
+    private hoppers: Hopper[] = [];
+
     constructor(game: Game) {
         super(game);
 
@@ -49,7 +52,8 @@ export class Scene extends Container {
         // this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
-        this.dude = new Dude(game, 2872, -100); // milk wordle
+        // this.dude = new Dude(game, 2872, -100); // milk wordle
+        this.dude = new Dude(game, -1113, 721); // other wordle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -64,6 +68,10 @@ export class Scene extends Container {
         this.addItem(2725 + 200, -58, 0, 'e');
 
         this.addItem(853, 302, ItemType.Battery);
+
+        this.addHopSpots(-1873, 961, -2100, 1118);
+        this.addHopSpots(1238, 1298, 1409, 1048);
+        this.addHopSpots(2848, -685, 2641, -840);
 
         this.dude.controlled = true;
         this.dude.scene = this;
@@ -87,6 +95,7 @@ export class Scene extends Container {
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
         this.createItem(new Sign(game, 2200, 101, 'Everything needs to cross safely!'));
+        this.createItem(new Sign(game, -1937, 919, 'A well nourished mount could easily\nleap to the other side from here.'));
 
         this.wheat = this.addItem(2145 - 100, 60, ItemType.Wheat);
         this.chicken = this.addItem(2145 - 50, 60, ItemType.Chicken);
@@ -97,10 +106,12 @@ export class Scene extends Container {
         this.add(this.machine);
 
         this.wordles.push(new Machine(game, 2802, -178));
+        this.wordles.push(new Machine(game, -1243, 580));
         this.add(...this.wordles);
         this.wordles.forEach(w => this.game.colliders.push(new Collider(game, w.p.x - 40, w.p.y - 30, 80, 30)));
 
         this.wordles[0].makeWordle('milk', 'flip', 'e');
+        this.wordles[1].makeWordle('null', 'dupe', 'h');
 
         const door = new Collider(game, 1376 - 150, 147 - 15, 302, 30);
         door.door = true;
@@ -148,6 +159,7 @@ export class Scene extends Container {
         this.houses.push(new House(game, 1227, -100, 300, 300));
         this.houses.push(new House(game, 841, -966, 300, 300));
         this.houses.push(new House(game, 2670, -198, 550, 200));
+        this.houses.push(new House(game, -1389, 560, 550, 400));
 
         this.houses[1].decorations.push(0);
 
@@ -162,6 +174,15 @@ export class Scene extends Container {
                 this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             }
             if (e.key == ' ') {
+                if (this.dude.riding) {
+                    const hop = this.hoppers.some(h => {
+                        if (h.isInside(this.dog.p)) {
+                            this.dog.hop(h.pair.p);
+                            return true;
+                        }
+                    });
+                    if (hop) return;
+                }
                 const operating = distance(this.dude.p, this.machine.p) < 50;
                 if (this.dude.bubble.isShown()) {
                     this.dude.bubble.setText('');
@@ -239,6 +260,15 @@ export class Scene extends Container {
                 this.checkPuzzle();
             }
         });
+    }
+
+    private addHopSpots(x1: number, y1: number, x2: number, y2: number): void {
+        const spot1 = new Hopper(this.game, x1, y1, 50, 20);
+        const spot2 = new Hopper(this.game, x2, y2, 50, 20);
+        spot1.pair = spot2;
+        spot2.pair = spot1;
+        this.add(spot1, spot2);
+        this.hoppers.push(spot1, spot2);
     }
 
     private snap(pos: Vector, item: Item): Vector {
