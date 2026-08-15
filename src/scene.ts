@@ -43,11 +43,15 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        // this.dude = new Dude(game, 650, 200); // main house
-        this.dude = new Dude(game, 2173, 172); // river puzzle
+        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 2173, 172); // river puzzle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
+
+        this.addItem(588, 200, ItemType.Unit, 'act');
+
+        this.addItem(853, 302, ItemType.Battery);
 
         this.dude.controlled = true;
         this.dude.scene = this;
@@ -127,12 +131,27 @@ export class Scene extends Container {
                 this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             }
             if (e.key == ' ') {
+                const operating = distance(this.dude.p, this.machine.p) < 50;
                 if (this.dude.bubble.isShown()) {
                     this.dude.bubble.setText('');
                     return;
                 }
                 if (this.dude.held) {
                     const pos = this.machine.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
+                    if (operating && this.dude.held.itemType == ItemType.Battery) {
+                        this.machine.addBattery();
+                        this.remove(this.dude.held);
+                        this.dude.held = null;
+                        this.dude.carry(false);
+                        return;
+                    }
+                    if (operating && this.dude.held.itemType == ItemType.Unit) {
+                        this.machine.addActModule();
+                        this.remove(this.dude.held);
+                        this.dude.held = null;
+                        this.dude.carry(false);
+                        return;
+                    }
                     if (this.dude.collides(pos)) {
                         return;
                     }
@@ -164,7 +183,7 @@ export class Scene extends Container {
                     return;
                 }
                 if (distance(closest.p, this.dude.p) > 50) {
-                    if (distance(this.dude.p, this.machine.p) < 50 && !this.dude.held) {
+                    if (operating && !this.dude.held) {
                         this.machine.operate(this);
                         return;
                     }
@@ -291,7 +310,7 @@ export class Scene extends Container {
         ctx.lineCap = 'round';
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
-        ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25)
+        ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25);
         if (this.zoomed) ctx.scale(0.25, 0.25);
         ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
 
@@ -323,7 +342,7 @@ export class Scene extends Container {
 
         ctx.lineWidth = 5;
         ctx.strokeStyle = '#ffffff66';
-        ctx.setLineDash([5, 10])
+        ctx.setLineDash([5, 10]);
         ctx.beginPath();
         ctx.ellipse(this.puzzleStart.x, this.puzzleStart.y, 80, 60, 0, 0, 2 * Math.PI);
         ctx.stroke();

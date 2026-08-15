@@ -141,7 +141,7 @@ export class Dude extends Shadowed {
 
     hop(pos: Vector): void {
         this.lockFor();
-        this.tween.setEase(quadEaseInOut)
+        this.tween.setEase(quadEaseInOut);
         this.tween.move(pos, 0.3);
     }
 

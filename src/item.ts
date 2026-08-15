@@ -16,7 +16,8 @@ export enum ItemType {
     Wheat,
     Egg,
     Eye,
-    Dude
+    Dude,
+    Unit
 }
 
 export class Item extends Shadowed {
@@ -170,6 +171,28 @@ export class Item extends Shadowed {
             ctx.stroke();
         }
 
+        if (this.itemType == ItemType.Unit) {
+            ctx.fillStyle = '#000';
+            ctx.rect(-25, -30, 50, 30);
+            ctx.fillStyle = COLORS.gray;
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.rect(-25, -15 - 30, 50, 20);
+            ctx.fillStyle = COLORS.light;
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.rect(-20, -20, 40, 15);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = `8px ${font}`;
+            ctx.fillText(this.letter.toUpperCase(), 0, -12);
+        }
+
         if (this.itemType == ItemType.Letter || this.itemType == ItemType.Package) {
             const size = this.itemType == ItemType.Letter ? 30 : 50;
             ctx.fillStyle = this.itemType == ItemType.Letter ? '#fff' : COLORS.brown;
@@ -183,7 +206,7 @@ export class Item extends Shadowed {
                 ctx.translate(0, -1.5);
                 ctx.fillStyle = '#fff';
                 ctx.fill();
-                ctx.stroke()
+                ctx.stroke();
             }
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';

@@ -20,6 +20,10 @@ export class Machine extends Shadowed {
     private word: string = '';
     private lines: string[] = [];
 
+    private unit: Item;
+    private actModule: Item;
+    private battery: Item;
+
     private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
         { commands: ['uni'], act: s => s.free() },
         { commands: ['gun', 'gin', 'keg', 'wine', 'nuke', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'null'], act: (s: Scene) => this.spawn(s) },
@@ -45,6 +49,7 @@ export class Machine extends Shadowed {
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 80, 30);
         this.evaluate();
+        this.unit = new Item(game, 0, -15, ItemType.Unit, 'fab');
     }
 
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
@@ -72,8 +77,12 @@ export class Machine extends Shadowed {
     }
 
     public evaluate(): void {
+        if (!this.battery) {
+            this.lines = ['EMERGENCY POWER MODE!', '---', 'INSERT BATTERY!'];
+            return;
+        }
         this.word = this.slots.slice(1).filter(s => s?.itemType === ItemType.Letter).map(s => s?.letter).join('').trim();
-        this.lines = ['FABRICATOR MODULE ONLINE!', 'AWAITING INPUT...', 'IN:~> ' + this.word.toUpperCase()];
+        this.lines = [this.actModule ? 'MULTIPLE MODULES ONLINE!' : 'FABRICATOR MODULE ONLINE!', 'AWAITING INPUT...', 'IN:~> ' + this.word.toUpperCase()];
     }
 
     public remove(item: Item): void {
@@ -111,17 +120,38 @@ export class Machine extends Shadowed {
 
         ctx.beginPath();
         ctx.rotate(this.rotation);
+        ctx.strokeStyle = '#000';
         ctx.lineWidth = 2.5;
         ctx.fillStyle = COLORS.brown;
-        ctx.strokeStyle = '#000';
         ctx.rect(-this.s.x * 0.5, -this.s.y, this.s.x, this.s.y);
         ctx.fill();
         ctx.stroke();
+        ctx.fillStyle = COLORS.yellow;
+        ctx.beginPath();
+        ctx.rect(-this.s.x * 0.5, -this.s.y, this.s.x, this.s.y - 9);
+        ctx.fill();
+        ctx.stroke();
+
+        this.battery?.draw(ctx);
+        this.unit.draw(ctx);
+        this.actModule?.draw(ctx);
 
         ctx.restore();
     }
 
+    addBattery(): void {
+        this.battery = new Item(this.game, 12, -20, ItemType.Battery);
+        this.evaluate();
+    }
+
+    addActModule(): void {
+        this.actModule = new Item(this.game, 0, -40, ItemType.Unit, 'act');
+        this.evaluate();
+    }
+
     operate(scene: Scene): void {
+        if (!this.battery) return;
+
         let line = 'ERROR, UNKNOWN COMMAND!';
         const cmd = this.commands.find(c => c.commands.includes(this.word));
         if (cmd && cmd.out) line = cmd.out;

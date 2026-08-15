@@ -63,7 +63,7 @@ export class Dog extends Dude {
             ctx.quadraticCurveTo(0, -12, dir * 10, -10 - this.animationPhaseAbs * -3);
             ctx.quadraticCurveTo(dir * 10, 0, dir * 2, 3);
             ctx.restore();
-        }
+        };
         ctx.lineWidth = 2;
         ctx.beginPath();
         drawEar(1);

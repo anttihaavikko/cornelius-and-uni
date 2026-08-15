@@ -42,7 +42,7 @@ export class River extends Entity {
                 const pp: Vector = {
                     x: lerp(prev[0], p[0], i),
                     y: lerp(prev[1], p[1], i)
-                }
+                };
                 if (distance(point, pp) < 75) {
                     return true;
                 }
