@@ -51,8 +51,8 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        // this.dude = new Dude(game, 650, 200); // main house
-        this.dude = new Dude(game, 2173, 172); // river puzzle
+        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
