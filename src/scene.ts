@@ -11,6 +11,7 @@ import { distance, offset, Vector } from './engine/vector';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
+import { River } from './river';
 import { Sign } from './sign';
 import { Tree } from './tree';
 
@@ -22,6 +23,7 @@ export class Scene extends Container {
     private inside: House;
     private tree: Vector = { x: 125, y: 478 };
     private machine: Machine;
+    private river: River;
 
     private chicken: Item;
     private fox: Item;
@@ -39,6 +41,9 @@ export class Scene extends Container {
         this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
+
+        this.river = new River(game);
+        this.game.colliders.push(this.river);
 
         this.dude.controlled = true;
         this.dude.scene = this;
@@ -213,6 +218,7 @@ export class Scene extends Container {
 
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
+        this.river.update(tick, mouse);
         if (distance(this.dog.target, this.dude.p) > 60 && !this.dog.locked) {
             this.dog.target = this.dude.p;
         }
@@ -265,7 +271,9 @@ export class Scene extends Container {
         ctx.lineCap = 'round';
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
-        ctx.translate(-this.dude.p.x + ctx.canvas.width * 0.25, -this.dude.p.y + 20 + ctx.canvas.height * 0.25);
+        ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25)
+        // ctx.scale(0.25, 0.25);
+        ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
 
         const wasInside = this.inside;
         this.inside = null;
@@ -291,6 +299,8 @@ export class Scene extends Container {
         }
 
         this.inside?.drawInterior(ctx);
+
+        this.river.draw(ctx);
 
         ctx.lineWidth = 5;
         ctx.strokeStyle = '#ffffff66';
