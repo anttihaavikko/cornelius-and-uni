@@ -4,6 +4,7 @@ import { font } from './engine/constants';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
 import { Vector } from './engine/vector';
+import { Raft } from './raft';
 import { Shadowed } from './shadowed';
 
 export enum ItemType {
@@ -23,6 +24,7 @@ export class Item extends Shadowed {
     public held: boolean;
     public locked: boolean;
     public color: string;
+    public raft: Raft;
 
     private origin: Vector;
     private dude: Dude;

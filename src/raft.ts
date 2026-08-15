@@ -3,12 +3,10 @@ import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 
 export class Raft extends Entity {
-    private moving = true;
-    private direction = 1;
+    private moving = false;
 
-    constructor(game: Game, x: number, y: number, width: number, height: number) {
-        super(game, x, y, width, height);
-        this.toggle();
+    constructor(game: Game, x: number, y: number, private dx: number, private dy: number) {
+        super(game, x, y, 60, 60);
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -29,18 +27,29 @@ export class Raft extends Entity {
 
     public move(entities: Entity[]): void {
         if (!this.moving) return;
-        const dir = this.direction * this.delta * -0.15;
-        this.p.x += dir;
+        const dirx = this.dx * this.delta * -0.15;
+        const diry = this.dy * this.delta * -0.15;
+        this.p.x += dirx;
+        this.p.y += diry;
         for (const e of entities) {
             if (this.isInside(e.p)) {
-                e.p.x += dir;
+                e.p.x += dirx;
+                e.p.y += diry;
             }
         }
     }
 
+    public start(): void {
+        // this.moving = false;
+        setTimeout(() => this.toggle(), 1000);
+    }
+
     private toggle(): void {
         this.moving = !this.moving;
-        if (!this.moving) this.direction *= -1;
+        if (!this.moving) {
+            this.dx *= -1;
+            this.dy *= -1;
+        }
         setTimeout(() => this.toggle(), 1000);
     }
 }

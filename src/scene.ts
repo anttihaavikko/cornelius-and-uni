@@ -51,8 +51,8 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        this.dude = new Dude(game, 650, 200); // main house
-        // this.dude = new Dude(game, 2173, 172); // river puzzle
+        // this.dude = new Dude(game, 650, 200); // main house
+        this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
@@ -120,8 +120,13 @@ export class Scene extends Container {
         this.addDoor(1376, 147, 300, 30);
         this.addDoor(-763, -73, 200, 30);
 
-        this.rafts.push(new Raft(game, 2284 - 30, 168 - 30, 60, 60));
+        this.rafts.push(new Raft(game, 2284 - 30, 168 - 30, -1, 0));
+        this.rafts.push(new Raft(game, 44 - 30, 1304 - 30, 0, 1));
+        this.rafts.push(new Raft(game, 1753 - 30, -736 - 30, 0, -1));
         this.game.platforms.push(...this.rafts);
+        this.rafts[0].start();
+        // this.rafts[1].start();
+        // this.rafts[2].start();
 
         this.addTree(125, 478);
 
@@ -134,9 +139,10 @@ export class Scene extends Container {
         this.addItem(1101, -923, 0, 'e');
         this.addItem(900, 440, 0, 'y');
 
-        this.addItem(950, 440, 0, 'd');
+        this.addItem(1768, -745, 0, 'd').raft = this.rafts[2];
+        this.addItem(33, 1319, 0, 'l').raft = this.rafts[1];
+
         this.addItem(-759, -137, 0, 'p');
-        this.addItem(1050, 440, 0, 'l');
 
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
@@ -343,6 +349,10 @@ export class Scene extends Container {
                 if (closest.locked) {
                     closest.act(this.dude);
                     return;
+                }
+                if (closest.raft) {
+                    closest.raft.start();
+                    closest.raft = null;
                 }
                 this.machine.remove(closest);
                 this.wordles.forEach(w => w.remove(closest));
