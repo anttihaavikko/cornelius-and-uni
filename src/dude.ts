@@ -19,7 +19,7 @@ export class Dude extends Shadowed {
     protected face: Face;
     protected velocity: Vector = { x: 0, y: 0 };
     protected holdPos = -30;
-    protected carryOffset = 5;
+    protected carryOffset = 7;
 
     public skin = COLORS.skin;
     public controlled = false;

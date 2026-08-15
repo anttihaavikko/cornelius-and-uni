@@ -24,6 +24,11 @@ export class Machine extends Shadowed {
     private actModule: Item;
     private battery: Item;
 
+    private wordle: boolean;
+    private target: string;
+    private solved: boolean;
+    private reward: string;
+
     private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
         { commands: ['uni'], act: s => s.free() },
         { commands: ['gun', 'gin', 'keg', 'wine', 'nuke', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'null'], act: (s: Scene) => this.spawn(s) },
@@ -50,6 +55,7 @@ export class Machine extends Shadowed {
         super(game, x, y, 80, 30);
         this.evaluate();
         this.unit = new Item(game, 0, -15, ItemType.Unit, 'fab');
+        this.d = this.p.y;
     }
 
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
@@ -76,6 +82,34 @@ export class Machine extends Shadowed {
         return pos;
     }
 
+    public makeWordle(word: string, hint: string, reward: string): void {
+        this.reward = reward;
+        this.wordle = true;
+        this.target = word;
+        this.lines = ['STUCK IN UNKNOWN ROUTINE!', '---', 'AWAITING INPUT...', 'REQUIRED SKILLS: ' + hint.toUpperCase()];
+        this.unit.letter = '0/4';
+    }
+
+    public evaluateWordle(scene: Scene): void {
+        if (this.solved) return;
+        let correct = 0;
+        this.slots.slice(1).forEach((s, i) => {
+            if (this.target.includes(s?.letter)) {
+                s.color = '#F6D7CB';
+            }
+            if (s?.letter == this.target[i]) {
+                s.color = COLORS.yellow;
+                correct++;
+            }
+        });
+        this.unit.letter = correct + '/4';
+        if (correct == 4) {
+            this.solved = true;
+            this.lines = ['ROUTINE COMPLETED!', '---', 'SHUTTING DOWN...'];
+            this.addItem(scene, ItemType.Letter, this.reward);
+        }
+    }
+
     public evaluate(): void {
         if (!this.battery) {
             this.lines = ['EMERGENCY POWER MODE!', '---', 'INSERT BATTERY!'];
@@ -98,6 +132,13 @@ export class Machine extends Shadowed {
         ctx.fillStyle = '#000';
         ctx.rect(50, -110, 240, 80);
         ctx.fill();
+
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 8;
+        ctx.stroke();
+        ctx.strokeStyle = COLORS.gray;
+        ctx.lineWidth = 3;
+        ctx.stroke();
 
         ctx.fillStyle = '#fff';
         ctx.font = '12px monospace';

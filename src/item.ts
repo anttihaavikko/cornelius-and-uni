@@ -23,6 +23,7 @@ export enum ItemType {
 export class Item extends Shadowed {
     public held: boolean;
     public locked: boolean;
+    public color: string;
 
     private origin: Vector;
     private dude: Dude;
@@ -195,7 +196,7 @@ export class Item extends Shadowed {
 
         if (this.itemType == ItemType.Letter || this.itemType == ItemType.Package) {
             const size = this.itemType == ItemType.Letter ? 30 : 50;
-            ctx.fillStyle = this.itemType == ItemType.Letter ? '#fff' : COLORS.brown;
+            ctx.fillStyle = this.color ?? (this.itemType == ItemType.Letter ? '#fff' : COLORS.brown);
             ctx.rect(-size * 0.5, -size, size, size);
             ctx.fill();
             ctx.stroke();

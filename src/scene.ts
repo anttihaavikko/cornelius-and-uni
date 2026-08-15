@@ -24,6 +24,7 @@ export class Scene extends Container {
     private inside: House;
     private tree: Vector = { x: 125, y: 478 };
     private machine: Machine;
+    private wordles: Machine[] = [];
     private river: River;
 
     private chicken: Item;
@@ -43,13 +44,21 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
+        this.dude = new Dude(game, 2872, -100); // milk wordle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
 
         this.addItem(588, 200, ItemType.Unit, 'act');
+        this.addItem(3115, -29, ItemType.Unit, 'act');
+
+        this.addItem(2725, -58, 0, 'm');
+        this.addItem(2725 + 50, -58, 0, 'i');
+        this.addItem(2725 + 100, -58, 0, 'l');
+        this.addItem(2725 + 150, -58, 0, 'k');
+        this.addItem(2725 + 200, -58, 0, 'e');
 
         this.addItem(853, 302, ItemType.Battery);
 
@@ -71,6 +80,12 @@ export class Scene extends Container {
         this.machine = new Machine(game, 471, 70);
         this.game.colliders.push(new Collider(game, this.machine.p.x - 40, 70 - 30, 80, 30));
         this.add(this.machine);
+
+        this.wordles.push(new Machine(game, 2802, -178));
+        this.add(...this.wordles);
+        this.wordles.forEach(w => this.game.colliders.push(new Collider(game, w.p.x - 40, w.p.y - 30, 80, 30)));
+
+        this.wordles[0].makeWordle('milk', 'flip', 'd');
 
         const door = new Collider(game, 1376 - 150, 147 - 15, 302, 30);
         door.door = true;
@@ -117,6 +132,7 @@ export class Scene extends Container {
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
         this.houses.push(new House(game, 841, -966, 300, 300));
+        this.houses.push(new House(game, 2670, -198, 500, 200));
 
         this.houses[1].decorations.push(0);
 
@@ -137,7 +153,7 @@ export class Scene extends Container {
                     return;
                 }
                 if (this.dude.held) {
-                    const pos = this.machine.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
+                    const pos = this.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
                     if (operating && this.dude.held.itemType == ItemType.Battery) {
                         this.machine.addBattery();
                         this.remove(this.dude.held);
@@ -164,6 +180,7 @@ export class Scene extends Container {
                     this.dude.held = null;
                     this.dude.carry(false);
                     this.machine.evaluate();
+                    this.wordles.forEach(w => w.evaluateWordle(this));
                     this.checkPuzzle();
                     return;
                 }
@@ -197,14 +214,22 @@ export class Scene extends Container {
                     return;
                 }
                 this.machine.remove(closest);
+                this.wordles.forEach(w => w.remove(closest));
                 this.dude.held = closest;
                 closest.held = true;
                 closest.shadowShown = false;
                 this.dude.carry(true);
                 this.machine.evaluate();
+                this.wordles.forEach(w => w.evaluateWordle(this));
                 this.checkPuzzle();
             }
         });
+    }
+
+    private snap(pos: Vector, item: Item): Vector {
+        let p = pos;
+        [this.machine, ...this.wordles].forEach(m => p = m.snap(p, item));
+        return p;
     }
 
     public createPackage(pos: Vector, text: string): void {

@@ -43,7 +43,7 @@ export class House extends Entity {
         ctx.lineTo(this.s.x, this.s.y - 100);
         ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
         ctx.lineTo(0, this.s.y - 100);
-        ctx.closePath()
+        ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
@@ -79,7 +79,7 @@ export class House extends Entity {
         ctx.fillStyle = '#000';
         ctx.fill();
         ctx.beginPath();
-        ctx.rect(0, -this.s.y * 0.5 + 50, this.s.x, 100);
+        ctx.rect(0, -100, this.s.x, 100);
         ctx.fillStyle = COLORS.light;
         ctx.fill();
         const size = 40 + this.animationPhaseAbs * 2;
