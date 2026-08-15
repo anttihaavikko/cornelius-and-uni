@@ -344,7 +344,7 @@ export class Scene extends Container {
             this.rainbow = this.rainbow.slice(1);
         }
         if (this.dog.dashing) {
-            this.rainbow.push(this.dog.getActualPosition());
+            this.rainbow.push(offset(this.dog.p, 0, this.dog.getHopOffset() - 10));
         }
     }
 

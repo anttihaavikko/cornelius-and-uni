@@ -134,8 +134,8 @@ export class Dude extends Shadowed {
         }, duration);
     }
 
-    getActualPosition(): Vector {
-        return offset(this.p, 0, -Math.sin(this.tween.time * Math.PI) * 20 - 10);
+    getHopOffset(): number {
+        return -Math.sin(this.tween.time * Math.PI) * 20;
     }
 
     dismount(): void {
@@ -157,12 +157,12 @@ export class Dude extends Shadowed {
 
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        ctx.translate(this.p.x, this.p.y - Math.sin(this.tween.time * Math.PI) * 20);
+        ctx.translate(this.p.x, this.p.y + this.getHopOffset());
         // console.log(this.tween.time);
 
         if (this.mount && !this.animating) {
             ctx.rotate(this.mount.limbs.walking ? -this.mount.limbs.walkPhase * 0.075 : 0);
-            ctx.translate(0, -40 - Math.sin(this.mount.tween.time * Math.PI) * 20);
+            ctx.translate(0, -40 + this.mount.getHopOffset());
         }
 
         ctx.rotate(this.limbs.walking ? -this.limbs.walkPhase * 0.1 : 0);

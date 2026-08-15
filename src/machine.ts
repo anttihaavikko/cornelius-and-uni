@@ -59,7 +59,7 @@ export class Machine extends Shadowed {
     }
 
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
-        if (this.slots[0]) {
+        if (this.slots[0] && !this.reward) {
             this.lines[3] = 'OUTPUT BLOCKED!';
             return;
         }
