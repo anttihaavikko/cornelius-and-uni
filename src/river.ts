@@ -97,6 +97,7 @@ export class River extends Entity {
         ctx.lineWidth = 8;
         ctx.strokeStyle = '#fff';
         ctx.stroke();
+        ctx.setLineDash([]);
         ctx.lineDashOffset = 0;
     }
 }
