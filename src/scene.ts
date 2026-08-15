@@ -385,11 +385,11 @@ export class Scene extends Container {
             ctx.moveTo(g[0], g[1]);
             ctx.ellipse(g[0], g[1], 6, 2, 0, 0, 2 * Math.PI);
             ctx.moveTo(g[0], g[1]);
-            ctx.lineTo(g[0] + this.animationPhase * 2, g[1] - 13);
+            ctx.lineTo(g[0] + this.animationPhase * 2, g[1] - 13 * g[2]);
             ctx.moveTo(g[0] - 3, g[1]);
-            ctx.lineTo(g[0] + this.animationPhase * 2 - 6, g[1] - 10);
+            ctx.lineTo(g[0] + this.animationPhase * 2 - 6, g[1] - 10 * g[2]);
             ctx.moveTo(g[0] + 3, g[1]);
-            ctx.lineTo(g[0] + this.animationPhase * 2 + 6, g[1] - 10);
+            ctx.lineTo(g[0] + this.animationPhase * 2 + 6, g[1] - 10 * g[2]);
         });
         ctx.stroke();
         ctx.fill();
