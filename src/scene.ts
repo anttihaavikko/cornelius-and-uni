@@ -14,6 +14,7 @@ import { Item, ItemType } from './item';
 import { Machine } from './machine';
 import { Raft } from './raft';
 import { River } from './river';
+import { Shadowed } from './shadowed';
 import { Sign } from './sign';
 import { Tree } from './tree';
 
@@ -600,10 +601,10 @@ export class Scene extends Container {
 
         ctx.beginPath();
         for (const item of this.getChildren()) {
-            if (!item['shadowShown']) continue;
+            if (!(item as Shadowed)?.shadowShown) continue;
             ctx.fillStyle = '#00000022';
             ctx.moveTo(item.p.x, item.p.y);
-            ctx.ellipse(item.p.x, item.p.y + 1, item['shadowWidth'], 8, 0, 0, 2 * Math.PI);
+            ctx.ellipse(item.p.x, item.p.y + 1, (item as Shadowed)?.shadowWidth, 8, 0, 0, 2 * Math.PI);
         }
         ctx.fill();
 
