@@ -37,6 +37,9 @@ export class Scene extends Container {
     private zoomed = false;
     private rafts: Raft[] = [];
 
+    private grass: number[][] = [];
+    private dirt: number[][] = [];
+
     constructor(game: Game) {
         super(game);
 
@@ -67,6 +70,18 @@ export class Scene extends Container {
         this.dog = new Dog(game, 214, 510);
         this.add(this.dude, this.dog);
 
+        for (let x = 0; x < 50; x++) {
+            for (let y = 0; y < 50; y++) {
+                if (Math.random() < 0.1) continue;
+                const spot = [x * 200 - 5000 + random(-100, 100), y * 200 - 5000 + random(-100, 100), random(0.7, 1.2)];
+                if (Math.random() < 0.9) {
+                    this.grass.push(spot);
+                } else {
+                    this.dirt.push(spot);
+                }
+            }
+        }
+
         this.moveDog();
 
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
@@ -85,7 +100,7 @@ export class Scene extends Container {
         this.add(...this.wordles);
         this.wordles.forEach(w => this.game.colliders.push(new Collider(game, w.p.x - 40, w.p.y - 30, 80, 30)));
 
-        this.wordles[0].makeWordle('milk', 'flip', 'd');
+        this.wordles[0].makeWordle('milk', 'flip', 'e');
 
         const door = new Collider(game, 1376 - 150, 147 - 15, 302, 30);
         door.door = true;
@@ -132,7 +147,7 @@ export class Scene extends Container {
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
         this.houses.push(new House(game, 841, -966, 300, 300));
-        this.houses.push(new House(game, 2670, -198, 500, 200));
+        this.houses.push(new House(game, 2670, -198, 550, 200));
 
         this.houses[1].decorations.push(0);
 
@@ -361,6 +376,35 @@ export class Scene extends Container {
                 setTimeout(() => this.dog.p = offset(pp, 0, 20), 500);
             }
         }
+
+        ctx.beginPath();
+        ctx.fillStyle = COLORS.shadow;
+        ctx.strokeStyle = COLORS.shadow;
+        ctx.lineWidth = 3;
+        this.grass.forEach(g => {
+            ctx.moveTo(g[0], g[1]);
+            ctx.ellipse(g[0], g[1], 6, 2, 0, 0, 2 * Math.PI);
+            ctx.moveTo(g[0], g[1]);
+            ctx.lineTo(g[0] + this.animationPhase * 2, g[1] - 13);
+            ctx.moveTo(g[0] - 3, g[1]);
+            ctx.lineTo(g[0] + this.animationPhase * 2 - 6, g[1] - 10);
+            ctx.moveTo(g[0] + 3, g[1]);
+            ctx.lineTo(g[0] + this.animationPhase * 2 + 6, g[1] - 10);
+        });
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = COLORS.yellow;
+        ctx.strokeStyle = COLORS.yellow;
+        ctx.lineWidth = 30;
+        ctx.setLineDash([0, 20]);
+        this.dirt.forEach(g => {
+            ctx.moveTo(g[0], g[1]);
+            ctx.ellipse(g[0], g[1], 80 * g[2], 20 * g[2], 0, 0, 2 * Math.PI);
+        });
+        ctx.fill();
+        ctx.stroke();
 
         this.river.draw(ctx);
         this.inside?.drawInterior(ctx);
