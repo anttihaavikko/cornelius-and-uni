@@ -383,7 +383,7 @@ export class Scene extends Container {
         ctx.lineWidth = 3;
         this.grass.forEach(g => {
             ctx.moveTo(g[0], g[1]);
-            ctx.ellipse(g[0], g[1], 6, 2, 0, 0, 2 * Math.PI);
+            ctx.ellipse(g[0], g[1], 6 * g[2], 2 * g[2], 0, 0, 2 * Math.PI);
             ctx.moveTo(g[0], g[1]);
             ctx.lineTo(g[0] + this.animationPhase * 2, g[1] - 13 * g[2]);
             ctx.moveTo(g[0] - 3, g[1]);

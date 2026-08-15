@@ -6,28 +6,76 @@ import { distance, Vector } from './engine/vector';
 
 export class River extends Entity {
     private time = 0;
-    private points: number[][] = [
-        [-166, -754],
-        [-788, -473],
-        [-1561, -277],
-        [-1765, -784],
-        [-2187, -781],
-        [-2103, -11],
-        [-2503, 398],
-        [-1971, 1045],
-        [-1222, 1393],
-        [-270, 1126],
-        [224, 1294],
-        [794, 1088],
-        [1459, 1187],
-        [1943, 799],
-        [2371, 172],
-        [1992, -532],
-        [1428, -817],
-        [1239, -1123],
-        [771, -1119],
-        [532, -764],
-        [-50, -754],
+    private points: number[][][] = [
+        [
+            [-166, -754],
+            [-788, -473],
+            [-1561, -277],
+            [-1765, -784],
+            [-2187, -781],
+            [-2103, -11],
+            [-2503, 398],
+            [-1971, 1045],
+            [-1222, 1393],
+            [-270, 1126],
+            [224, 1294],
+            [794, 1088],
+            [1459, 1187],
+            [1943, 799],
+            [2371, 172],
+            [1992, -532],
+            [1428, -817],
+            [1239, -1123],
+            [771, -1119],
+            [532, -764],
+            [-50, -754],
+        ],
+        [
+            [2012, 762],
+            [2518, 636],
+            [2922, 767],
+            [3383, 482],
+            [3722, 539],
+            [3873, 184],
+            [3665, -188],
+            [3731, -513],
+            [3218, -719],
+            [2807, -818],
+            [2534, -591],
+            [2304, -465],
+            [1995, -522],
+        ],
+        [
+            [2806, -859],
+            [2637, -1161],
+            [2234, -1485],
+            [1806, -1402],
+            [1250, -1146],
+        ],
+        [
+            [-2523, 438],
+            [-2673, 791],
+            [-3080, 1017],
+            [-3460, 1201],
+            [-3329, 1692],
+            [-3418, 2004],
+            [-3099, 2103],
+            [-2693, 2057],
+            [-2397, 2212],
+            [-1857, 2103],
+            [-1485, 2145],
+            [-1099, 2004],
+            [-793, 2142],
+            [-425, 1944],
+            [-42, 1788],
+            [446, 1834],
+            [694, 1691],
+            [694, 1553],
+            [839, 1461],
+            [1047, 1507],
+            [1301, 1469],
+            [1455, 1231],
+        ]
     ];
 
     constructor(game: Game) {
@@ -35,19 +83,22 @@ export class River extends Entity {
     }
 
     public isInside(point: Vector): boolean {
-        let prev = this.points[0];
-        for (const p of this.points.slice(1)) {
-            const segments = distance(this.toVector(p), this.toVector(prev)) / 50;
-            for (let i = 0; i <= 1; i += 1 / segments) {
-                const pp: Vector = {
-                    x: lerp(prev[0], p[0], i),
-                    y: lerp(prev[1], p[1], i)
-                };
-                if (distance(point, pp) < 75) {
-                    return true;
+        for (let i = 0; i < this.points.length; i++) {
+            const s = this.points[i];
+            let prev = s[0];
+            for (const p of s.slice(1)) {
+                const segments = distance(this.toVector(p), this.toVector(prev)) / 50;
+                for (let i = 0; i <= 1; i += 1 / segments) {
+                    const pp: Vector = {
+                        x: lerp(prev[0], p[0], i),
+                        y: lerp(prev[1], p[1], i)
+                    };
+                    if (distance(point, pp) < 75) {
+                        return true;
+                    }
                 }
+                prev = p;
             }
-            prev = p;
         }
         return false;
     }
@@ -60,14 +111,19 @@ export class River extends Entity {
         this.time += this.delta * 0.05;
 
         ctx.beginPath();
-        this.points.forEach((p, i) => {
-            if (i == 0) {
-                ctx.moveTo(p[0], p[1]);
-            } else {
-                ctx.lineTo(p[0], p[1]);
+        this.points.forEach((s, si) => {
+            s.forEach((p, i) => {
+                if (i == 0) {
+                    ctx.moveTo(p[0], p[1]);
+                } else {
+                    ctx.lineTo(p[0], p[1]);
+                }
+            });
+
+            if (si == 0) {
+                ctx.closePath();
             }
         });
-        ctx.closePath();
 
         ctx.setLineDash([0, 50, 0, 30]);
         ctx.strokeStyle = COLORS.brown;
