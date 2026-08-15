@@ -54,7 +54,8 @@ export class Scene extends Container {
         // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
-        this.dude = new Dude(game, -1113, 721); // other wordle
+        // this.dude = new Dude(game, -1113, 721); // other wordle
+        this.dude = new Dude(game, 996, -770); // map house
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -129,8 +130,8 @@ export class Scene extends Container {
         this.addItem(313, 323, 0, 'n');
         this.addItem(1027, 189, 0, 'i');
 
-        this.addItem(800, 440, 0, 'k');
-        this.addItem(850, 440, 0, 'e');
+        this.addItem(-1900, -532, 0, 'k');
+        this.addItem(1101, -923, 0, 'e');
         this.addItem(900, 440, 0, 'y');
 
         this.addItem(950, 440, 0, 'd');
@@ -139,6 +140,12 @@ export class Scene extends Container {
 
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
+
+        this.addTree(-10, 394);
+        this.addTree(-133, 324);
+        this.addTree(-102, 499);
+        this.addTree(-263, 385);
+        this.addTree(-207, 434);
 
         this.addTree(100, 300);
         this.addTree(1027, 207);
@@ -156,13 +163,98 @@ export class Scene extends Container {
         this.addTree(-1960, -162);
         this.addTree(-1854, -62);
 
+        this.addTree(1561, 907);
+        this.addTree(1660, 849);
+        this.addTree(1683, 707);
+        this.addTree(1782, 772);
+        this.addTree(1555, 730);
+        this.addTree(1240, 1022);
+        this.addTree(1309, 921);
+        this.addTree(1087, 993);
+        this.addTree(1155, 869);
+        this.addTree(910, 982);
+        this.addTree(991, 944);
+
+        this.addTree(-1214, 1297);
+        this.addTree(-499, 1078);
+        this.addTree(-139, 1038);
+        this.addTree(-362, 1038);
+        this.addTree(-244, 990);
+
+        this.addTree(-1996, 807);
+        this.addTree(-2035, 749);
+        this.addTree(-2133, 667);
+        this.addTree(-1989, 610);
+        this.addTree(-1913, 710);
+        this.addTree(-2340, 414);
+        this.addTree(-2252, 367);
+
+        this.addTree(-932, -260);
+        this.addTree(-1084, -236);
+        this.addTree(-984, -170);
+        this.addTree(-1210, -237);
+        this.addTree(-648, -375);
+        this.addTree(-541, -425);
+        this.addTree(-419, -476);
+        this.addTree(-332, -403);
+
+        this.addTree(526, -625);
+        this.addTree(410, -591);
+        this.addTree(255, -648);
+        this.addTree(301, -565);
+        this.addTree(360, -484);
+
+        this.addTree(746, -846);
+        this.addTree(1232, -875);
+
+        this.addTree(2018, -869);
+        this.addTree(1925, -935);
+        this.addTree(1787, -1010);
+        this.addTree(1861, -1078);
+        this.addTree(1981, -1078);
+        this.addTree(2104, -1078);
+        this.addTree(2210, -949);
+        this.addTree(2379, -849);
+
+        this.addTree(2224, -344);
+        this.addTree(3571, -418);
+        this.addTree(3469, -475);
+        this.addTree(3547, -330);
+        this.addTree(2969, -649);
+        this.addTree(3056, -611);
+        this.addTree(3314, -140);
+        this.addTree(3383, -49);
+        this.addTree(3643, 412);
+
+        this.addTree(3355, 682);
+        this.addTree(3408, 622);
+
+        this.addTree(-267, 1325);
+        this.addTree(287, 1408);
+        this.addTree(173, 1402);
+        this.addTree(855, 1623);
+        this.addTree(419, 1716);
+        this.addTree(500, 1663);
+        this.addTree(-641, 1389);
+        this.addTree(-717, 1436);
+
+        this.addTree(-1794, 1996);
+        this.addTree(-1934, 2014);
+        this.addTree(-1868, 1952);
+        this.addTree(-1542, 2284);
+        this.addTree(-1437, 2258);
+
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
         this.houses.push(new House(game, 841, -966, 300, 300));
         this.houses.push(new House(game, 2670, -198, 550, 200));
         this.houses.push(new House(game, -1389, 560, 550, 400));
+        this.houses.push(new House(game, -861, -164, 200, 200));
+        this.houses.push(new House(game, -565, 1339, 200, 200));
+        this.houses.push(new House(game, -3108, 1340, 500, 200));
 
         this.houses[1].decorations.push(0);
+        this.houses[2].decorations.push(1);
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);

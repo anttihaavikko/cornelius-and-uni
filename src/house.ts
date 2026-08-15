@@ -103,6 +103,39 @@ export class House extends Entity {
             ctx.stroke();
         }
 
+        if (this.decorations.includes(1)) {
+            ctx.beginPath();
+            ctx.translate(80, -80);
+            ctx.rect(0, 0, 150, 60);
+            ctx.fillStyle = COLORS.skin;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2.5;
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(10, 50);
+            ctx.lineTo(50, 40);
+            ctx.lineTo(40, 10);
+            ctx.lineTo(85, 10);
+            ctx.lineTo(90, 30);
+            ctx.lineTo(140, 20);
+            const drawTree = (x: number, y: number) => {
+                ctx.moveTo(x - 3, y);
+                ctx.lineTo(x, y - 10);
+                ctx.lineTo(x + 3, y);
+            };
+            drawTree(55, 23);
+            drawTree(70, 30);
+            drawTree(80, 40);
+            drawTree(60, 45);
+            drawTree(72, 50);
+            ctx.moveTo(78, 25);
+            ctx.ellipse(70, 25, 8, 8, 0, 0, Math.PI * 2);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = COLORS.gray;
+            ctx.stroke();
+        }
+
         ctx.restore();
     }
 }
