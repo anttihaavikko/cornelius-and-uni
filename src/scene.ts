@@ -51,17 +51,19 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        // this.dude = new Dude(game, 650, 200); // main house
+        this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
-        this.dude = new Dude(game, 996, -770); // map house
+        // this.dude = new Dude(game, 996, -770); // map house
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
 
         this.addItem(588, 200, ItemType.Unit, 'act');
         this.addItem(3115, -29, ItemType.Unit, 'act');
+
+        this.addItem(435, 267, ItemType.Trophy, '1/1');
 
         this.addItem(2725, -58, 0, 'm');
         this.addItem(2725 + 50, -58, 0, 'i');
@@ -115,10 +117,8 @@ export class Scene extends Container {
         this.wordles[0].makeWordle('milk', 'flip', 'e');
         this.wordles[1].makeWordle('null', 'dupe', 'h');
 
-        const door = new Collider(game, 1376 - 150, 147 - 15, 302, 30);
-        door.door = true;
-        this.game.colliders.push(door);
-        this.add(door);
+        this.addDoor(1376, 147, 300, 30);
+        this.addDoor(-763, -73, 200, 30);
 
         this.rafts.push(new Raft(game, 2284 - 30, 168 - 30, 60, 60));
         this.game.platforms.push(...this.rafts);
@@ -135,7 +135,7 @@ export class Scene extends Container {
         this.addItem(900, 440, 0, 'y');
 
         this.addItem(950, 440, 0, 'd');
-        this.addItem(1000, 440, 0, 'p');
+        this.addItem(-759, -137, 0, 'p');
         this.addItem(1050, 440, 0, 'l');
 
         this.addItem(1258, 92, ItemType.Battery, 'b');
@@ -355,6 +355,14 @@ export class Scene extends Container {
                 this.checkPuzzle();
             }
         });
+    }
+
+    private addDoor(x: number, y: number, w: number, h: number) {
+        const door = new Collider(this.game, x - w / 2, y - h / 2, w + 2, h);
+        door.d = door.p.y;
+        door.door = true;
+        this.game.colliders.push(door);
+        this.add(door);
     }
 
     private addHopSpots(x1: number, y1: number, x2: number, y2: number): void {

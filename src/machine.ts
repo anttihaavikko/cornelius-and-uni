@@ -44,6 +44,7 @@ export class Machine extends Shadowed {
         { commands: ['flip'], out: '!!!' },
         { commands: ['find', 'clue', 'need', 'help'], out: '!!!' },
         { commands: ['fun'], out: '!!!' },
+        { commands: ['win', 'end', 'fin', 'n'], act: s => this.addItem(s, ItemType.Trophy, '1/3') },
         { commands: ['dye'], act: s => s.colorize(this.slots[0]) },
         { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3') },
         { commands: ['duck', 'chick', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },

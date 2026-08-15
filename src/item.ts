@@ -15,7 +15,8 @@ export enum ItemType {
     Fox,
     Wheat,
     Dude,
-    Unit
+    Unit,
+    Trophy
 }
 
 export class Item extends Shadowed {
@@ -33,6 +34,18 @@ export class Item extends Shadowed {
 
         if (itemType == ItemType.Dude) {
             this.dude = new Dude(game, 0, 0);
+        }
+
+        if (itemType == ItemType.Trophy) {
+            this.shadowWidth = 22;
+        }
+
+        if (itemType == ItemType.Battery) {
+            this.shadowWidth = 26;
+        }
+
+        if (itemType == ItemType.Unit) {
+            this.shadowWidth = 32;
         }
     }
 
@@ -70,6 +83,9 @@ export class Item extends Shadowed {
         ctx.lineWidth = 2.5;
         ctx.fillStyle = '#fff';
         ctx.strokeStyle = '#000';
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
         this.dude?.draw(ctx);
 
@@ -191,8 +207,6 @@ export class Item extends Shadowed {
             ctx.fillStyle = '#000';
             ctx.fill();
             ctx.fillStyle = this.color ?? '#fff';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
             ctx.font = `8px ${font}`;
             ctx.fillText(this.letter.toUpperCase(), 0, -12);
         }
@@ -213,10 +227,50 @@ export class Item extends Shadowed {
                 ctx.stroke();
             }
             ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+
             ctx.font = `${this.itemType == ItemType.Letter ? 20 : 15}px ${font}`;
             ctx.fillText(this.letter.toUpperCase(), 0, -12);
+        }
+
+        if (this.itemType == ItemType.Trophy) {
+            const drawHandle = (dir: number) => {
+                ctx.moveTo(dir * 18, -35);
+                ctx.quadraticCurveTo(dir * 40, -35, 0, -20);
+            };
+            ctx.fillStyle = this.color ?? COLORS.brown;
+
+            ctx.lineWidth = 8;
+            drawHandle(1);
+            drawHandle(-1);
+            ctx.stroke();
+
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(-15, 0);
+            ctx.lineTo(-3, -10);
+            ctx.lineTo(-3, -20);
+            ctx.quadraticCurveTo(-20, -30, -20, -40);
+            ctx.quadraticCurveTo(0, -50, 20, -40);
+            ctx.quadraticCurveTo(20, -30, 3, -20);
+            ctx.lineTo(3, -10);
+            ctx.lineTo(15, 0);
+            ctx.quadraticCurveTo(0, 5, -15, 0);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.strokeStyle = this.color ?? COLORS.brown;
+            ctx.lineWidth = 3;
+            drawHandle(1);
+            drawHandle(-1);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = `7px ${font}`;
+            ctx.fillText(this.letter.toUpperCase(), 0, -29);
+            ctx.beginPath();
+            ctx.ellipse(0, -38, 15, 3, 0, 0, 2 * Math.PI);
+            ctx.fill();
         }
 
         ctx.restore();
