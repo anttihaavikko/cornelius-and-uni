@@ -14,8 +14,6 @@ export enum ItemType {
     Chicken,
     Fox,
     Wheat,
-    Egg,
-    Eye,
     Dude,
     Unit
 }
@@ -40,6 +38,11 @@ export class Item extends Shadowed {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public act(dude: Dude): void {
+    }
+
+    public colorize(color: string): void {
+        this.color = color;
+        if (this.dude) this.dude.skin = color;
     }
 
     public reset(): void {
@@ -187,7 +190,7 @@ export class Item extends Shadowed {
             ctx.rect(-20, -20, 40, 15);
             ctx.fillStyle = '#000';
             ctx.fill();
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = this.color ?? '#fff';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.font = `8px ${font}`;

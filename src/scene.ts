@@ -6,7 +6,7 @@ import { Container } from './engine/container';
 import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 import { Mouse } from './engine/mouse';
-import { random } from './engine/random';
+import { random, randomInt } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
 import { Hopper } from './hopper';
 import { House } from './house';
@@ -50,10 +50,10 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        // this.dude = new Dude(game, 650, 200); // main house
+        this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
-        this.dude = new Dude(game, -1113, 721); // other wordle
+        // this.dude = new Dude(game, -1113, 721); // other wordle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -277,10 +277,6 @@ export class Scene extends Container {
         return p;
     }
 
-    public createPackage(pos: Vector, text: string): void {
-        this.addItem(pos.x, pos.y, ItemType.Package, text);
-    }
-
     public free(): void {
         if (this.dog.locked) this.dog.p = { x: 650, y: 363 };
         this.dog.locked = false;
@@ -311,8 +307,15 @@ export class Scene extends Container {
         this.add(item);
     }
 
-    public colorize(): void {
-        this.dude.skin = 'pink';
+    public colorize(item?: Item, color?: string): void {
+        const options = [COLORS.red, COLORS.shadow, COLORS.green, COLORS.yellow, COLORS.skin, COLORS.brown];
+        color = color ?? options[randomInt(0, options.length - 1)];
+        if (item) {
+            item.colorize(color);
+        }
+        else {
+            this.dude.skin = color;
+        }
     }
 
     public addItem(x: number, y: number, itemType: number, letter?: string): Item {

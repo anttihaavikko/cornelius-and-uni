@@ -1,5 +1,6 @@
 import { COLORS } from './colors';
 import { Game } from './engine/game';
+import { randomInt } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
 import { Item, ItemType } from './item';
 import { Scene } from './scene';
@@ -30,21 +31,21 @@ export class Machine extends Shadowed {
 
     private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
         { commands: ['uni'], act: s => s.free() },
-        { commands: ['gun', 'gin', 'keg', 'wine', 'nuke', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'null'], act: (s: Scene) => this.spawn(s) },
+        { commands: ['gun', 'gin', 'keg', 'wine', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'null'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
-        { commands: ['kick', 'fuck', 'dick', 'dung', 'duel', 'hell', 'whip'], out: 'YOU BETTER WATCH OUT!' },
+        { commands: ['kick', 'fuck', 'dick', 'dung', 'duel', 'hell', 'whip', 'nuke'], out: 'YOU BETTER WATCH OUT!' },
         { commands: ['in'], out: 'YES, AWAITING INPUT!' },
         { commands: ['ign'], out: 'HAHA, NO... ;)' },
         { commands: ['key'], act: s => this.addItem(s, ItemType.Key) },
-        // { commands: ['eye'], act: s => this.addItem(s, ItemType.Eye) },
-        { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Eye) },
+        { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Letter, randomInt(1, 6).toString()) },
         { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'edgy', 'geek', 'gene', 'punk', 'unc', 'elf'], act: s => this.addItem(s, ItemType.Dude) },
         { commands: ['held'], out: '!!!' },
         { commands: ['dupe'], out: '!!!' },
         { commands: ['flip'], out: '!!!' },
         { commands: ['find', 'clue', 'need', 'help'], out: '!!!' },
         { commands: ['fun'], out: '!!!' },
-        { commands: ['dye', 'pink'], act: s => s.colorize() },
+        { commands: ['dye'], act: s => s.colorize(this.slots[0]) },
+        { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3') },
         { commands: ['duck', 'chick', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
@@ -58,16 +59,16 @@ export class Machine extends Shadowed {
     }
 
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
+        if (this.slots[0]) {
+            this.lines[3] = 'OUTPUT BLOCKED!';
+            return;
+        }
         const p = this.getSpawnPos();
-        scene.addItem(p.x, p.y, type, letter);
+        this.slots[0] = scene.addItem(p.x, p.y, type, letter);
     }
 
     private getSpawnPos(): Vector {
         return offset(this.spots[0], this.p.x, this.p.y + 10);
-    }
-
-    private spawn(scene: Scene): void {
-        return scene.createPackage(this.getSpawnPos(), this.word);
     }
 
     public snap(pos: Vector, item: Item): Vector {
@@ -191,13 +192,12 @@ export class Machine extends Shadowed {
     operate(scene: Scene): void {
         if (!this.battery) return;
 
-        let line = 'ERROR, UNKNOWN COMMAND!';
+        this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', 'ERROR, UNKNOWN COMMAND!'];
         const cmd = this.commands.find(c => c.commands.includes(this.word));
-        if (cmd && cmd.out) line = cmd.out;
+        if (cmd && cmd.out) this.lines[3] = cmd.out;
         if (cmd && cmd.act) {
+            this.lines[3] = 'SUCCESS!';
             cmd.act(scene);
-            line = 'SUCCESS!';
         }
-        this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', line];
     }
 }
