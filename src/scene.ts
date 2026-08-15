@@ -135,7 +135,7 @@ export class Scene extends Container {
         this.addItem(313, 323, 0, 'n');
         this.addItem(1027, 189, 0, 'i');
 
-        this.addItem(-1900, -532, 0, 'k');
+        this.addItem(-1895, -537, 0, 'k');
         this.addItem(1101, -923, 0, 'e');
         this.addItem(900, 440, 0, 'y');
 
@@ -260,7 +260,7 @@ export class Scene extends Container {
         this.houses.push(new House(game, -3108, 1340, 500, 200));
 
         this.houses[1].decorations.push(0);
-        this.houses[2].decorations.push(1);
+        this.houses[6].decorations.push(1);
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);

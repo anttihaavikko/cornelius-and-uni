@@ -105,7 +105,7 @@ export class House extends Entity {
 
         if (this.decorations.includes(1)) {
             ctx.beginPath();
-            ctx.translate(80, -80);
+            ctx.translate(25, -80);
             ctx.rect(0, 0, 150, 60);
             ctx.fillStyle = COLORS.skin;
             ctx.strokeStyle = '#000';
