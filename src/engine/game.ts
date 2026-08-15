@@ -14,6 +14,7 @@ export class Game extends Entity {
     public usingTouch: boolean;
     public held = {};
     public colliders: Entity[] = [];
+    public platforms: Entity[] = [];
 
     private keyDownListeners: ((event: KeyboardEvent) => void)[] = [];
     private keyUpListeners: ((event: KeyboardEvent) => void)[] = [];

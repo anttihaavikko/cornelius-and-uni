@@ -92,6 +92,8 @@ export class Dude extends Shadowed {
     }
 
     collides(pos: Vector): boolean {
+        if (this.game.platforms.some(p => p.isInside(pos))) return false;
+
         return this.game.colliders.some(c => {
             const hit = c.isInside(pos, 20);
             const coll = c as Collider;

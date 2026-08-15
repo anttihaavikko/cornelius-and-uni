@@ -11,6 +11,7 @@ import { distance, offset, Vector } from './engine/vector';
 import { House } from './house';
 import { Item, ItemType } from './item';
 import { Machine } from './machine';
+import { Raft } from './raft';
 import { River } from './river';
 import { Sign } from './sign';
 import { Tree } from './tree';
@@ -33,15 +34,17 @@ export class Scene extends Container {
     private puzzleStart: Vector = { x: 2097, y: 58 };
     private puzzleEnd: Vector = { x: 2500, y: 300 };
     private zoomed = false;
+    private rafts: Raft[] = [];
 
     constructor(game: Game) {
         super(game);
 
         // eslint-disable-next-line no-sparse-arrays
 
-        this.dude = new Dude(game, 300, 500); // outside
+        // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
+        this.dude = new Dude(game, 2173, 172); // river puzzle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -69,6 +72,9 @@ export class Scene extends Container {
         door.door = true;
         this.game.colliders.push(door);
         this.add(door);
+
+        this.rafts.push(new Raft(game, 2284 - 30, 168 - 30, 60, 60));
+        this.game.platforms.push(...this.rafts);
 
         this.addTree(125, 478);
 
@@ -229,6 +235,10 @@ export class Scene extends Container {
     update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
         this.river.update(tick, mouse);
+        this.rafts.forEach(r => {
+            r.update(tick, mouse);
+            r.move([this.dude, this.dog]);
+        });
         if (distance(this.dog.target, this.dude.p) > 60 && !this.dog.locked) {
             this.dog.target = this.dude.p;
         }
@@ -321,6 +331,8 @@ export class Scene extends Container {
         ctx.ellipse(this.puzzleEnd.x, this.puzzleEnd.y, 80, 60, 0, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.setLineDash([]);
+
+        this.rafts.forEach(r => r.draw(ctx));
 
         ctx.beginPath();
         for (const item of this.getChildren()) {

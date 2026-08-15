@@ -1,0 +1,46 @@
+import { COLORS } from './colors';
+import { Entity } from './engine/entity';
+import { Game } from './engine/game';
+
+export class Raft extends Entity {
+    private moving = true;
+    private direction = 1;
+
+    constructor(game: Game, x: number, y: number, width: number, height: number) {
+        super(game, x, y, width, height);
+        this.toggle();
+    }
+
+    public draw(ctx: CanvasRenderingContext2D): void {
+        ctx.save();
+        ctx.translate(this.p.x, this.p.y);
+        ctx.beginPath();
+        const w = (this.s.x + 20) / 5;
+        for (let i = 0; i < 5; i++) {
+            ctx.rect(-10 + i * w, -10, w, this.s.y + 20);
+        }
+        ctx.fillStyle = COLORS.brown;
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#000';
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    public move(entities: Entity[]): void {
+        if (!this.moving) return;
+        const dir = this.direction * this.delta * -0.15;
+        this.p.x += dir;
+        for (const e of entities) {
+            if (this.isInside(e.p)) {
+                e.p.x += dir;
+            }
+        }
+    }
+
+    private toggle(): void {
+        this.moving = !this.moving;
+        if (!this.moving) this.direction *= -1;
+        setTimeout(() => this.toggle(), 1000);
+    }
+}
