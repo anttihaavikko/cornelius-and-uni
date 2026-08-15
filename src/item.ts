@@ -31,7 +31,7 @@ export class Item extends Shadowed {
 
     constructor(game: Game, x: number, y: number, public itemType: number, public letter?: string) {
         super(game, x, y, 0, 0);
-        this.d = this.p.y;
+        this.d = this.p.y - 2;
         this.origin = this.p;
 
         if (itemType == ItemType.Dude) {
@@ -216,7 +216,7 @@ export class Item extends Shadowed {
         if (this.itemType == ItemType.Letter || this.itemType == ItemType.Package) {
             const size = this.itemType == ItemType.Letter ? 30 : 50;
             ctx.fillStyle = this.color ?? (this.itemType == ItemType.Letter ? '#fff' : COLORS.brown);
-            ctx.rect(-size * 0.5, -size, size, size);
+            ctx.rect(-size * 0.5, -size + 2, size, size);
             ctx.fill();
             ctx.stroke();
             if (this.itemType == ItemType.Package) {

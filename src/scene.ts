@@ -49,13 +49,16 @@ export class Scene extends Container {
 
         // eslint-disable-next-line no-sparse-arrays
 
-        // this.dude = new Dude(game, 300, 500); // outside
+        this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
+
+        // const rng = new SeedableRandom(123);
+        // console.log(rng.randomInt(0, 100));
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -421,7 +424,7 @@ export class Scene extends Container {
     }
 
     public colorize(item?: Item, color?: string): void {
-        const options = [COLORS.red, COLORS.shadow, COLORS.green, COLORS.yellow, COLORS.skin, COLORS.brown];
+        const options = [COLORS.red, COLORS.shadow, COLORS.green, COLORS.yellow, COLORS.skin, COLORS.brown, COLORS.purple];
         color = color ?? options[randomInt(0, options.length - 1)];
         if (item) {
             item.colorize(color);
@@ -503,7 +506,8 @@ export class Scene extends Container {
         ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
         ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25);
-        if (this.zoomed) ctx.scale(0.25, 0.25);
+        // if (this.zoomed) ctx.scale(0.25, 0.25);
+        if (this.zoomed) ctx.scale(0.1, 0.1);
         ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
 
         const wasInside = this.inside;

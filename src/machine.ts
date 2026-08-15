@@ -38,18 +38,19 @@ export class Machine extends Shadowed {
         { commands: ['ign'], out: 'HAHA, NO... ;)' },
         { commands: ['key'], act: s => this.addItem(s, ItemType.Key) },
         { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Letter, randomInt(1, 6).toString()) },
-        { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'edgy', 'geek', 'gene', 'punk', 'unc', 'elf'], act: s => this.addItem(s, ItemType.Dude) },
+        { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'geek', 'punk', 'unc', 'elf', 'king'], act: s => this.addItem(s, ItemType.Dude) },
         // { commands: ['held'], out: '!!!' },
         { commands: ['dupe'], act: s => this.dupe(s) },
         { commands: ['flip'], act: () => this.flip() },
         // { commands: ['find', 'clue', 'need', 'help'], out: '!!!' },
         // { commands: ['fun'], out: '!!!' },
+        // { commands: ['ni', 'nu'], out: '!!!' },
         { commands: ['win'], act: s => this.addItem(s, ItemType.Trophy, '1/3') },
         { commands: ['end'], act: s => this.addItem(s, ItemType.Trophy, '2/3') },
         { commands: ['fin'], act: s => this.addItem(s, ItemType.Trophy, '3/3') },
         { commands: ['dye'], act: s => s.colorize(this.slots[0]) },
         { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3') },
-        { commands: ['duck', 'chick', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
+        { commands: ['duck', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
     ];
@@ -217,11 +218,23 @@ export class Machine extends Shadowed {
         this.evaluate();
     }
 
+    // private isColor(color: string): boolean {
+    //     const s = new Option().style;
+    //     s.color = color;
+    //     return s.color !== '';
+    // }
+
     operate(scene: Scene): void {
         if (!this.battery) return;
 
         this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', 'ERROR, UNKNOWN COMMAND!'];
         const cmd = this.commands.find(c => c.commands.includes(this.word));
+
+        // if (!cmd && this.isColor(this.word) || this.isColor('#' + this.word)) {
+        //     this.lines[3] = 'SUCCESS!';
+        //     scene.colorize(this.slots[0], this.word);
+        // }
+
         if (cmd && cmd.out) this.lines[3] = cmd.out;
         if (cmd && cmd.act) {
             this.lines[3] = 'SUCCESS!';
