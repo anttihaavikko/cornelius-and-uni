@@ -17,6 +17,10 @@ export class Hopper extends Entity {
         ctx.setLineDash([]);
     }
 
+    public start(): void {
+        this.tween.scale({ x: 1, y: 1 }, 0.3);
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public isInside(point: Vector, radius?: number): boolean {
         return distance(point, this.p) < 40;

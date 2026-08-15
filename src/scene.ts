@@ -42,6 +42,7 @@ export class Scene extends Container {
     private dirt: number[][] = [];
 
     private hoppers: Hopper[] = [];
+    private rainbow: Vector[] = [];
 
     constructor(game: Game) {
         super(game);
@@ -50,10 +51,10 @@ export class Scene extends Container {
 
         // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
-        this.dude = new Dude(game, 650, 200); // main house
+        // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
-        // this.dude = new Dude(game, -1113, 721); // other wordle
+        this.dude = new Dude(game, -1113, 721); // other wordle
 
         this.river = new River(game);
         this.game.colliders.push(this.river);
@@ -177,7 +178,9 @@ export class Scene extends Container {
                 if (this.dude.riding) {
                     const hop = this.hoppers.some(h => {
                         if (h.isInside(this.dog.p)) {
+                            this.rainbow.push(this.dog.p);
                             this.dog.hop(h.pair.p);
+                            h.start();
                             return true;
                         }
                     });
@@ -337,6 +340,12 @@ export class Scene extends Container {
         if (this.dude.mount) {
             this.dude.moveWithMount();
         }
+        if (this.rainbow.length > 0 && Math.random() < 0.5) {
+            this.rainbow = this.rainbow.slice(1);
+        }
+        if (this.dog.dashing) {
+            this.rainbow.push(this.dog.getActualPosition());
+        }
     }
 
     checkPuzzle(): void {
@@ -441,6 +450,26 @@ export class Scene extends Container {
 
         this.river.draw(ctx);
         this.inside?.drawInterior(ctx);
+
+        if (this.rainbow.length > 0) {
+            ctx.lineCap = 'butt';
+            ctx.beginPath();
+            ctx.moveTo(this.rainbow[0].x, this.rainbow[0].y);
+            this.rainbow.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.lineWidth = 40;
+            ctx.strokeStyle = COLORS.red;
+            ctx.stroke();
+            ctx.lineWidth = 30;
+            ctx.strokeStyle = COLORS.gray;
+            ctx.stroke();
+            ctx.lineWidth = 20;
+            ctx.strokeStyle = COLORS.shadow;
+            ctx.stroke();
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = COLORS.yellow;
+            ctx.stroke();
+            ctx.lineCap = 'round';
+        }
 
         ctx.lineWidth = 5;
         ctx.strokeStyle = '#ffffff66';

@@ -29,6 +29,7 @@ export class Dude extends Shadowed {
     public mount: Dude;
     public bubble: Bubble;
     public scene: Scene;
+    public dashing: boolean;
 
     private animating = false;
 
@@ -127,7 +128,14 @@ export class Dude extends Shadowed {
 
     lockFor(duration: number = 300): void {
         this.animating = true;
-        setTimeout(() => this.animating = false, duration);
+        setTimeout(() => {
+            this.animating = false;
+            this.dashing = false;
+        }, duration);
+    }
+
+    getActualPosition(): Vector {
+        return offset(this.p, 0, -Math.sin(this.tween.time * Math.PI) * 20 - 10);
     }
 
     dismount(): void {
@@ -141,6 +149,7 @@ export class Dude extends Shadowed {
     }
 
     hop(pos: Vector): void {
+        this.dashing = true;
         this.lockFor();
         this.tween.setEase(quadEaseInOut);
         this.tween.move(pos, 0.3);
