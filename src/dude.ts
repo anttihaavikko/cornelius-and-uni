@@ -110,6 +110,8 @@ export class Dude extends Shadowed {
             const hit = c.isInside(pos, 20);
             const coll = c as Collider;
             if (hit && coll.door && !coll.opened && this.held?.itemType === ItemType.Key) {
+                this.game.audio.house();
+                this.game.audio.beep();
                 coll.opened = true;
                 this.held.drop(pos);
                 this.carry(false);

@@ -162,7 +162,7 @@ export class Scene extends Container {
         this.addItem(1768, -745, 0, 'd').raft = this.rafts[2];
         this.addItem(33, 1319, 0, 'l').raft = this.rafts[1];
 
-        this.addItem(1258, 92, ItemType.Battery, 'b');
+        this.addItem(1278, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
 
         this.addTreeCluster(-70, 297);
@@ -172,7 +172,7 @@ export class Scene extends Container {
         this.addTreeCluster(2049, -1019);
         this.addTreeCluster(1139, 777);
         this.addTreeCluster(1734, -12);
-        this.addTreeCluster(402, -255);
+        this.addTreeCluster(352, -275);
         this.addTreeCluster(-397, -287);
         this.addTreeCluster(264, 1017);
         this.addTreeCluster(-2577, 1065);
@@ -591,6 +591,11 @@ export class Scene extends Container {
                 h.entered = true;
             }
         });
+
+        if (!!this.inside !== !!wasInside) {
+            console.log('swap');
+            this.game.audio.house();
+        }
 
         if (!this.dog.locked) {
             const pp = this.dude.p;
