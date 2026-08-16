@@ -44,10 +44,10 @@ export class Game extends Entity {
         this.keyUpListeners.push(callback);
     }
 
-    public clearKeyListeners(): void {
-        this.keyDownListeners = [];
-        this.keyUpListeners = [];
-    }
+    // public clearKeyListeners(): void {
+    //     this.keyDownListeners = [];
+    //     this.keyUpListeners = [];
+    // }
 
     // public click(mouse: Mouse, touch: boolean = false): void {
     //     this.usingPad = false;
@@ -57,9 +57,9 @@ export class Game extends Entity {
     //     });
     // }
 
-    public getMouse(): Mouse {
-        return this.curMouse;
-    }
+    // public getMouse(): Mouse {
+    //     return this.curMouse;
+    // }
 
     public update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
@@ -67,8 +67,8 @@ export class Game extends Entity {
         this.camera.update();
         this.blinders.update(tick, mouse);
         // this.pitcher.update(this.delta);
-        mouse.pressing = false;
-        this.curMouse = { ...mouse };
+        // mouse.pressing = false;
+        // this.curMouse = { ...mouse };
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -83,16 +83,16 @@ export class Game extends Entity {
         this.blinders.draw(ctx);
     }
 
-    public changeScene(scene: Container): void {
-        this.blinders.close(() => {
-            this.scene?.end();
-            this.scene = scene;
-            scene.ratioChanged(window.innerHeight > window.innerWidth);
-            this.blinders.open();
-        });
-    }
+    // public changeScene(scene: Container): void {
+    //     this.blinders.close(() => {
+    //         this.scene?.end();
+    //         this.scene = scene;
+    //         scene.ratioChanged(window.innerHeight > window.innerWidth);
+    //         this.blinders.open();
+    //     });
+    // }
 
-    public getBlinders(): Blinders {
-        return this.blinders;
-    }
+    // public getBlinders(): Blinders {
+    //     return this.blinders;
+    // }
 }
