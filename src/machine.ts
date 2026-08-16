@@ -31,13 +31,14 @@ export class Machine extends Shadowed {
 
     private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
         { commands: ['uni'], act: s => s.free() },
-        { commands: ['gun', 'gin', 'keg', 'wine', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
+        { commands: ['gun', 'gin', 'keg', 'wine', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'milk'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
         { commands: ['kick', 'fuck', 'dick', 'dung', 'duel', 'nuke'], out: 'YOU BETTER WATCH OUT!' },
         { commands: ['in'], out: 'YES, AWAITING INPUT!' },
         { commands: ['ign'], out: 'HAHA, NO... ;)' },
         { commands: ['key'], act: s => this.addItem(s, ItemType.Key) },
         { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Letter, randomInt(1, 6).toString()) },
+        { commands: ['null', 'nil'], act: s => this.addItem(s, ItemType.Letter, '0') },
         { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'geek', 'punk', 'unc', 'elf', 'king'], act: s => this.addItem(s, ItemType.Dude) },
         { commands: ['dupe'], act: s => this.dupe(s) },
         { commands: ['flip'], act: () => this.flip() },
