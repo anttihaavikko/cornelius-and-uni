@@ -1,4 +1,3 @@
-import { drawEllipse } from './drawing';
 import { Entity } from './entity';
 import { Eye } from './eye';
 import { Game } from './game';
@@ -107,8 +106,12 @@ export class Face extends Entity {
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
-        drawEllipse(ctx, { x: -65 * this.options.width - this.options.blushOffset, y: 20 }, 15 * this.options.blushSize, 10 * this.options.blushSize, this.options.blush);
-        drawEllipse(ctx, { x: 65 * this.options.width + this.options.blushOffset, y: 20 }, 15 * this.options.blushSize, 10 * this.options.blushSize, this.options.blush);
+
+        ctx.fillStyle = this.options.blush;
+        ctx.beginPath();
+        ctx.ellipse(-65 * this.options.width - this.options.blushOffset, 20, 15 * this.options.blushSize, 10 * this.options.blushSize, 0, 0, 2 * Math.PI);
+        ctx.ellipse(65 * this.options.width + this.options.blushOffset, 20, 15 * this.options.blushSize, 10 * this.options.blushSize, 0, 0, 2 * Math.PI);
+        ctx.fill();
 
         ctx.fillStyle = '#000';
 
