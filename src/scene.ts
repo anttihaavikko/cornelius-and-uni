@@ -35,7 +35,7 @@ export class Scene extends Container {
     private puzzleCompleted = false;
 
     private puzzleStart: Vector = { x: 2097, y: 58 };
-    private puzzleEnd: Vector = { x: 2500, y: 300 };
+    private puzzleEnd: Vector = { x: 2520, y: 60 };
     private zoomed = false;
     private rafts: Raft[] = [];
 
@@ -133,6 +133,15 @@ export class Scene extends Container {
         // this.rafts[2].start();
 
         this.addTree(125, 478);
+        this.addTree(1018, 215);
+
+        this.addTree(-2039, -568);
+        this.addTree(-1896, -490);
+        this.addTree(-1795, -320);
+        this.addTree(-1960, -162);
+        this.addTree(-1854, -62);
+
+        this.addTree(1249, -832);
 
         this.addItem(844, 136, 0, 'u');
         this.addItem(891, 155, 0, 'g');
@@ -141,7 +150,7 @@ export class Scene extends Container {
 
         this.addItem(-1895, -537, 0, 'k');
         this.addItem(1101, -923, 0, 'e');
-        this.addItem(900, 440, 0, 'y');
+        this.addItem(-3149, 1502, 0, 'y');
 
         this.addItem(1768, -745, 0, 'd').raft = this.rafts[2];
         this.addItem(33, 1319, 0, 'l').raft = this.rafts[1];
@@ -151,108 +160,136 @@ export class Scene extends Container {
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
 
-        this.addTree(-10, 394);
-        this.addTree(-133, 324);
-        this.addTree(-102, 499);
-        this.addTree(-263, 385);
-        this.addTree(-207, 434);
+        this.addTreeCluster(-70, 297);
+        this.addTreeCluster(-629, 674);
+        this.addTreeCluster(-1185, -82);
+        this.addTreeCluster(-1618, 657);
+        this.addTreeCluster(2049, -1019);
+        this.addTreeCluster(1139, 777);
+        this.addTreeCluster(1734, -12);
+        this.addTreeCluster(402, -255);
+        this.addTreeCluster(-397, -287);
+        this.addTreeCluster(264, 1017);
+        this.addTreeCluster(-2577, 1065);
+        this.addTreeCluster(-2284, 1564);
 
-        this.addTree(100, 300);
-        this.addTree(1027, 207);
-        this.addTree(1090, 93);
-        this.addTree(1164, 165);
+        // this.addTreeCluster(300, 1156);
+        // this.addTreeCluster(1139, 1055);
+        // this.addTreeCluster(1672, 865);
+        // this.addTreeCluster(1723, 8);
+        // this.addTreeCluster(-382, 1014);
+        // this.addTreeCluster(-1652, 717);
+        // this.addTreeCluster(597, -823);
+        // this.addTreeCluster(253, -577);
+        // this.addTreeCluster(-187, -502);
+        // this.addTreeCluster(-1158, -193);
+        // this.addTreeCluster(-2469, 685);
+        // this.addTreeCluster(-3327, 1266);
+        // this.addTreeCluster(-2008, 1985);
+        // this.addTreeCluster(-1491, 1985);
+        // this.addTreeCluster(-1558, 1394);
+        // this.addTreeCluster(371, 1702);
 
-        this.addTree(1621, 95);
-        this.addTree(1717, 185);
-        this.addTree(1800, 103);
-        this.addTree(1866, 224);
+        // this.addTreeCluster(-3007, 841);
+        // this.addTreeCluster(-2730, 2221);
+        // this.addTreeCluster(965, 1605);
 
-        this.addTree(-2039, -568);
-        this.addTree(-1896, -490);
-        this.addTree(-1795, -320);
-        this.addTree(-1960, -162);
-        this.addTree(-1854, -62);
+        // this.addTree(-10, 394);
+        // this.addTree(-133, 324);
+        // this.addTree(-102, 499);
+        // this.addTree(-263, 385);
+        // this.addTree(-207, 434);
 
-        this.addTree(1561, 907);
-        this.addTree(1660, 849);
-        this.addTree(1683, 707);
-        this.addTree(1782, 772);
-        this.addTree(1555, 730);
-        this.addTree(1240, 1022);
-        this.addTree(1309, 921);
-        this.addTree(1087, 993);
-        this.addTree(1155, 869);
-        this.addTree(910, 982);
-        this.addTree(991, 944);
+        // this.addTree(100, 300);
+        // this.addTree(1027, 207);
+        // this.addTree(1090, 93);
+        // this.addTree(1164, 165);
 
-        this.addTree(-1214, 1297);
-        this.addTree(-499, 1078);
-        this.addTree(-139, 1038);
-        this.addTree(-362, 1038);
-        this.addTree(-244, 990);
+        // this.addTree(1621, 95);
+        // this.addTree(1717, 185);
+        // this.addTree(1800, 103);
+        // this.addTree(1866, 224);
 
-        this.addTree(-1996, 807);
-        this.addTree(-2035, 749);
-        this.addTree(-2133, 667);
-        this.addTree(-1989, 610);
-        this.addTree(-1913, 710);
-        this.addTree(-2340, 414);
-        this.addTree(-2252, 367);
+        // this.addTree(1561, 907);
+        // this.addTree(1660, 849);
+        // this.addTree(1683, 707);
+        // this.addTree(1782, 772);
+        // this.addTree(1555, 730);
+        // this.addTree(1240, 1022);
+        // this.addTree(1309, 921);
+        // this.addTree(1087, 993);
+        // this.addTree(1155, 869);
+        // this.addTree(910, 982);
+        // this.addTree(991, 944);
 
-        this.addTree(-932, -260);
-        this.addTree(-1084, -236);
-        this.addTree(-984, -170);
-        this.addTree(-1210, -237);
-        this.addTree(-648, -375);
-        this.addTree(-541, -425);
-        this.addTree(-419, -476);
-        this.addTree(-332, -403);
+        // this.addTree(-1214, 1297);
+        // this.addTree(-499, 1078);
+        // this.addTree(-139, 1038);
+        // this.addTree(-362, 1038);
+        // this.addTree(-244, 990);
 
-        this.addTree(526, -625);
-        this.addTree(410, -591);
-        this.addTree(255, -648);
-        this.addTree(301, -565);
-        this.addTree(360, -484);
+        // this.addTree(-1996, 807);
+        // this.addTree(-2035, 749);
+        // this.addTree(-2133, 667);
+        // this.addTree(-1989, 610);
+        // this.addTree(-1913, 710);
+        // this.addTree(-2340, 414);
+        // this.addTree(-2252, 367);
 
-        this.addTree(746, -846);
-        this.addTree(1232, -875);
+        // this.addTree(-932, -260);
+        // this.addTree(-1084, -236);
+        // this.addTree(-984, -170);
+        // this.addTree(-1210, -237);
+        // this.addTree(-648, -375);
+        // this.addTree(-541, -425);
+        // this.addTree(-419, -476);
+        // this.addTree(-332, -403);
 
-        this.addTree(2018, -869);
-        this.addTree(1925, -935);
-        this.addTree(1787, -1010);
-        this.addTree(1861, -1078);
-        this.addTree(1981, -1078);
-        this.addTree(2104, -1078);
-        this.addTree(2210, -949);
-        this.addTree(2379, -849);
+        // this.addTree(526, -625);
+        // this.addTree(410, -591);
+        // this.addTree(255, -648);
+        // this.addTree(301, -565);
+        // this.addTree(360, -484);
 
-        this.addTree(2224, -344);
-        this.addTree(3571, -418);
-        this.addTree(3469, -475);
-        this.addTree(3547, -330);
-        this.addTree(2969, -649);
-        this.addTree(3056, -611);
-        this.addTree(3314, -140);
-        this.addTree(3383, -49);
-        this.addTree(3643, 412);
+        // this.addTree(746, -846);
+        // this.addTree(1232, -875);
 
-        this.addTree(3355, 682);
-        this.addTree(3408, 622);
+        // this.addTree(2018, -869);
+        // this.addTree(1925, -935);
+        // this.addTree(1787, -1010);
+        // this.addTree(1861, -1078);
+        // this.addTree(1981, -1078);
+        // this.addTree(2104, -1078);
+        // this.addTree(2210, -949);
+        // this.addTree(2379, -849);
 
-        this.addTree(-267, 1325);
-        this.addTree(287, 1408);
-        this.addTree(173, 1402);
-        this.addTree(855, 1623);
-        this.addTree(419, 1716);
-        this.addTree(500, 1663);
-        this.addTree(-641, 1389);
-        this.addTree(-717, 1436);
+        // this.addTree(2224, -344);
+        // this.addTree(3571, -418);
+        // this.addTree(3469, -475);
+        // this.addTree(3547, -330);
+        // this.addTree(2969, -649);
+        // this.addTree(3056, -611);
+        // this.addTree(3314, -140);
+        // this.addTree(3383, -49);
+        // this.addTree(3643, 412);
 
-        this.addTree(-1794, 1996);
-        this.addTree(-1934, 2014);
-        this.addTree(-1868, 1952);
-        this.addTree(-1542, 2284);
-        this.addTree(-1437, 2258);
+        // this.addTree(3355, 682);
+        // this.addTree(3408, 622);
+
+        // this.addTree(-267, 1325);
+        // this.addTree(287, 1408);
+        // this.addTree(173, 1402);
+        // this.addTree(855, 1623);
+        // this.addTree(419, 1716);
+        // this.addTree(500, 1663);
+        // this.addTree(-641, 1389);
+        // this.addTree(-717, 1436);
+
+        // this.addTree(-1794, 1996);
+        // this.addTree(-1934, 2014);
+        // this.addTree(-1868, 1952);
+        // this.addTree(-1542, 2284);
+        // this.addTree(-1437, 2258);
 
         this.houses.push(new House(game, 350, 50, 600, 300));
         this.houses.push(new House(game, 1227, -100, 300, 300));
@@ -369,6 +406,21 @@ export class Scene extends Container {
                 this.checkPuzzle();
             }
         });
+
+        this.river.allPoints().forEach(p => {
+            if (!p[2] && Math.random() < 0.7) this.addTreeCluster(p[0] + random(-200, 200), p[1] + random(-200, 200));
+        });
+    }
+
+    private addTreeCluster(x: number, y: number,): void {
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                const p = { x: x + 100 * i, y: y + 100 * j };
+                if (!this.dude.collides(p) && Math.random() < 0.75) {
+                    this.addTree(p.x + random(-50, 50), p.y + random(-50, 50));
+                }
+            }
+        }
     }
 
     private addDoor(x: number, y: number, w: number, h: number) {
