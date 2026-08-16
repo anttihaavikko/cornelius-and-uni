@@ -29,7 +29,7 @@ export class Machine extends Shadowed {
     private solved: boolean;
     private reward: string;
 
-    private commands: { commands: string[]; out?: string; act?: (s: Scene) => void }[] = [
+    private commands: { commands: string[]; out?: string; act?: (s: Scene) => void, fn?: boolean }[] = [
         { commands: ['uni'], act: s => s.free() },
         { commands: ['gun', 'gin', 'keg', 'wine', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'milk'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
@@ -40,17 +40,17 @@ export class Machine extends Shadowed {
         { commands: ['dice', 'die'], act: s => this.addItem(s, ItemType.Letter, randomInt(1, 6).toString()) },
         { commands: ['null', 'nil'], act: s => this.addItem(s, ItemType.Letter, '0') },
         { commands: ['guy', 'wife', 'dyke', 'dude', 'duke', 'geek', 'punk', 'unc', 'elf', 'king'], act: s => this.addItem(s, ItemType.Dude) },
-        { commands: ['dupe'], act: s => this.dupe(s) },
-        { commands: ['flip'], act: () => this.flip() },
+        { commands: ['dupe'], act: s => this.dupe(s), fn: true },
+        { commands: ['flip'], act: () => this.flip(), fn: true },
         // { commands: ['held'], out: '!!!' },
         // { commands: ['find', 'clue', 'need', 'help'], out: '!!!' },
         // { commands: ['fun'], out: '!!!' },
         // { commands: ['ni', 'nu'], out: '!!!' },
-        { commands: ['win'], act: s => this.addItem(s, ItemType.Trophy, '1/5') },
-        { commands: ['end'], act: s => this.addItem(s, ItemType.Trophy, '2/5') },
-        { commands: ['fin'], act: s => this.addItem(s, ItemType.Trophy, '3/5') },
-        { commands: ['dye'], act: s => s.colorize(this.slots[0]) },
-        { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3') },
+        { commands: ['win'], act: s => this.addItem(s, ItemType.Trophy, '1/5'), fn: true },
+        { commands: ['end'], act: s => this.addItem(s, ItemType.Trophy, '2/5'), fn: true },
+        { commands: ['fin'], act: s => this.addItem(s, ItemType.Trophy, '3/5'), fn: true },
+        { commands: ['dye'], act: s => s.colorize(this.slots[0]), fn: true },
+        { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3'), fn: true },
         { commands: ['duck', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
@@ -66,6 +66,7 @@ export class Machine extends Shadowed {
     private dupe(scene: Scene): void {
         if (!this.slots[0]) {
             this.lines[3] = 'ERROR, TARGET MISSING!';
+            this.game.audio.nope();
             return;
         }
         const src = this.slots[0];
@@ -77,11 +78,13 @@ export class Machine extends Shadowed {
     private flip(): void {
         if (!this.slots[0]) {
             this.lines[3] = 'ERROR, TARGET MISSING!';
+            this.game.audio.nope();
             return;
         }
         const pairs = ['w', 'm', 'u', 'a', 'l', 't', '2', 'z', '5', 's', '6', 'g'];
         if (!pairs.includes(this.slots[0].letter)) {
             this.lines[3] = 'ERROR, INVALID TARGET!';
+            this.game.audio.nope();
             return;
         }
         const i = pairs.indexOf(this.slots[0].letter);
@@ -91,7 +94,7 @@ export class Machine extends Shadowed {
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
         if (this.slots[0] && !this.reward) {
             this.lines[3] = 'ERROR, OUTPUT BLOCKED!';
-            this.game.audio.bad();
+            this.game.audio.nope();
             return;
         }
         const p = this.getSpawnPos();
@@ -244,6 +247,12 @@ export class Machine extends Shadowed {
         //     this.lines[3] = 'SUCCESS!';
         //     scene.colorize(this.slots[0], this.word);
         // }
+
+        if (cmd && cmd.fn && !this.actModule) {
+            this.lines[3] = 'ACTION MODULE REQUIRED!';
+            this.game.audio.nope();
+            return;
+        }
 
         if (cmd && cmd.out) this.lines[3] = cmd.out;
         if (cmd && cmd.act) {
