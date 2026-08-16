@@ -143,8 +143,8 @@ export class House extends Entity {
 
         if (this.decorations.includes(2)) {
             ctx.beginPath();
-            ctx.translate(25, -60);
-            ctx.rect(0, 0, 190, 60);
+            ctx.translate(5, -60);
+            ctx.rect(0, 0, 240, 60);
             ctx.fillStyle = COLORS.skin;
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 2.5;
@@ -153,9 +153,9 @@ export class House extends Entity {
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.font = `20px ${font}`;
-            ctx.fillText('GAME NAME', 95, 38 - 5);
+            ctx.fillText('CORNELIUS & UNI', 120, 38 - 7);
             ctx.font = `12px ${font}`;
-            ctx.fillText('by Antti Haavikko', 95, 45);
+            ctx.fillText('by Antti Haavikko', 120, 46);
         }
 
         ctx.restore();
