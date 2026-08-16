@@ -9,7 +9,7 @@ export class River extends Entity {
     private points: number[][][] = [
         [
             [-166, -754],
-            [-788, -473],
+            [-788, -473, 1],
             [-1561, -277, 1],
             [-1765, -784, 1],
             [-2187, -781, 1],
