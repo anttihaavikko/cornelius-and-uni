@@ -209,7 +209,7 @@ export class Dude extends Shadowed {
         ctx.save();
         ctx.translate(this.face.p.x, this.face.p.y + phase);
         this.limbs.air = this.getHopOffset() * 0.25;
-        ctx.translate(0, this.getHopOffset() * -0.2);
+        ctx.translate(0, this.getHopOffset() * -0.2 + 3 + phase * 0.25);
         ctx.scale(0.1, 0.1);
         this.face.draw(ctx);
         ctx.restore();
@@ -219,6 +219,34 @@ export class Dude extends Shadowed {
             this.held.d = this.d + this.carryOffset;
         }
 
+        if (this.controlled) {
+            ctx.beginPath();
+            ctx.translate(0, -30 + phase);
+            ctx.moveTo(-15, 0);
+            ctx.lineTo(-15, -3);
+            ctx.lineTo(-10, -3);
+            ctx.lineTo(-8, -20);
+            ctx.lineTo(8, -20);
+            ctx.lineTo(10, -3);
+            ctx.lineTo(15, -3);
+            ctx.lineTo(15, 0);
+            ctx.closePath();
+            ctx.fillStyle = '#333';
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+            ctx.fill();
+
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(-9, -7);
+            ctx.lineTo(9, -7);
+            ctx.stroke();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = COLORS.purple;
+            ctx.stroke();
+        }
+
+        ctx.translate(0, 20 - phase);
         this.bubble.draw(ctx);
 
         ctx.restore();
