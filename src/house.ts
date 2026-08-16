@@ -7,6 +7,7 @@ export class House extends Entity {
     public entered = false;
     public walls: Collider[] = [];
     public decorations: number[] = [];
+    public roof = COLORS.red;
 
     createWalls(): void {
         this.walls.push(new Collider(this.game, this.p.x - 10, this.p.y, 20, this.s.y));
@@ -36,7 +37,7 @@ export class House extends Entity {
 
         ctx.beginPath();
         // ctx.rect(0, -50, this.s.x, this.s.y - 50);
-        ctx.fillStyle = COLORS.red;
+        ctx.fillStyle = this.roof;
         ctx.moveTo(0, -50);
         ctx.lineTo(this.s.x * 0.5, -150);
         ctx.lineTo(this.s.x, -50);

@@ -305,6 +305,9 @@ export class Scene extends Container {
 
         this.houses[1].decorations.push(0);
         this.houses[6].decorations.push(1);
+        this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = COLORS.brown;
+        this.houses[3].roof = COLORS.shadow;
+        this.houses[6].roof = this.houses[7].roof = COLORS.purple;
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);
