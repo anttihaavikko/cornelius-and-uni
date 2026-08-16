@@ -37,8 +37,8 @@ const defaultOptions: FaceOptions = {
 };
 
 export class Face extends Entity {
-    public angry: boolean;
-    public sleeping: boolean;
+    // public angry: boolean;
+    // public sleeping: boolean;
     // public thinking: boolean;
 
     private openess = 0;
@@ -48,7 +48,7 @@ export class Face extends Entity {
     private left: Eye;
     private right: Eye;
     private options: FaceOptions;
-    private mirrorer = 1;
+    // private mirrorer = 1;
 
     constructor(game: Game, options: FaceOptions) {
         super(game, 0, 0, 0, 0);
@@ -89,7 +89,7 @@ export class Face extends Entity {
         this.openess = moveTowards(this.openess, this.targetOpeness, 0.1);
         this.left.update(tick, mouse);
         this.right.update(tick, mouse);
-        if (Math.random() < 0.002) this.mirrorer *= -1;
+        // if (Math.random() < 0.002) this.mirrorer *= -1;
     }
 
     public setEyeSize(size: number): void {
@@ -112,8 +112,8 @@ export class Face extends Entity {
 
         ctx.fillStyle = '#000';
 
-        this.left.draw(ctx, this.sleeping);
-        this.right.draw(ctx, this.sleeping);
+        this.left.draw(ctx);
+        this.right.draw(ctx);
 
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -145,13 +145,14 @@ export class Face extends Entity {
 
         // mouth
         ctx.save();
-        ctx.scale(this.mirrorer, 1);
+        // ctx.scale(this.mirrorer, 1);
         ctx.beginPath();
         ctx.strokeStyle = this.options.mouthColor;
         ctx.fillStyle = this.options.mouthColor;
         const mw = this.options.width * this.options.mouthWidth;
         // const start = this.thinking ? 25 : 20;
-        const curve = this.angry ? -30 : 0;
+        // const curve = this.angry ? -30 : 0;
+        const curve = 0;
         // if (this.options.animal) {
         //     const start = 30;
         //     ctx.save();

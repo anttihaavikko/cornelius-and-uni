@@ -32,12 +32,12 @@ export class Eye extends Entity {
     }
 
     public draw(ctx: CanvasRenderingContext2D, sleeping?: boolean): void {
-        const prev = ctx.globalCompositeOperation;
-        ctx.globalCompositeOperation = 'source-over';
+        // const prev = ctx.globalCompositeOperation;
+        // ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = this.color;
         if (!sleeping) drawEllipse(ctx, this.p, this.s.x * Math.min(1.1, 1 / this.openess), this.s.y * this.openess, this.color);
-        if (sleeping) fillRect(ctx, this.p.x, this.p.y + 6, 20, 7);
-        ctx.globalCompositeOperation = prev;
+        // if (sleeping) fillRect(ctx, this.p.x, this.p.y + 6, 20, 7);
+        // ctx.globalCompositeOperation = prev;
     }
 
     public blink(blinkDuration: number): void {
