@@ -81,4 +81,8 @@ export class AudioManager {
     public rainbow(): void {
         this.play([.9, , 678, .08, .13, .32, 1, 2.3, 9, , -109, .06, .07, , , , , .52, .28, , 359]);
     }
+
+    public land(): void {
+        this.play([.6, , 396, .02, .08, .01, 5, 1.2, -1, , , , , 1.3, 13, .3, , .55, , , 1391]);
+    }
 }

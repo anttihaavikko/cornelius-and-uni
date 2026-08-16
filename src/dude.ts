@@ -156,7 +156,7 @@ export class Dude extends Shadowed {
     }
 
     getHopOffset(): number {
-        return -Math.sin(this.tween.time * Math.PI) * 20;
+        return -Math.sin(this.tween.time * Math.PI) * 30;
     }
 
     dismount(): void {
@@ -175,6 +175,7 @@ export class Dude extends Shadowed {
         this.lockFor();
         this.tween.setEase(quadEaseInOut);
         this.tween.move(pos, 0.3);
+        setTimeout(() => this.game.audio.land(), 300);
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -208,7 +209,7 @@ export class Dude extends Shadowed {
         ctx.save();
         ctx.translate(this.face.p.x, this.face.p.y + phase);
         this.limbs.air = this.getHopOffset() * 0.25;
-        ctx.translate(0, this.getHopOffset() * 0.25);
+        ctx.translate(0, this.getHopOffset() * -0.2);
         ctx.scale(0.1, 0.1);
         this.face.draw(ctx);
         ctx.restore();
