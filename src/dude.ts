@@ -56,7 +56,7 @@ export class Dude extends Shadowed {
     }
 
     carry(state: boolean): void {
-        this.limbs.armPos = state ? -16 : 10;
+        this.limbs.armPos = state ? -14 : 10;
     }
 
     moveWithMount(): void {

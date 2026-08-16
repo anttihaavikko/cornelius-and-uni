@@ -68,7 +68,7 @@ export class Scene extends Container {
 
         // this.addItem(588, 200, ItemType.Unit, 'act');
         // this.addItem(435, 267, ItemType.Trophy, '1/1');
-        this.addItem(853, 302, ItemType.Battery);
+        // this.addItem(853, 302, ItemType.Battery);
 
         // this.addItem(2725, -58, 0, 'm');
         // this.addItem(2725 + 50, -58, 0, 'i');
