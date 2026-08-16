@@ -1,5 +1,6 @@
 import { Collider } from './collider';
 import { COLORS } from './colors';
+import { font } from './engine/constants';
 import { Entity } from './engine/entity';
 
 export class House extends Entity {
@@ -138,6 +139,23 @@ export class House extends Entity {
             ctx.lineWidth = 2;
             ctx.strokeStyle = COLORS.gray;
             ctx.stroke();
+        }
+
+        if (this.decorations.includes(2)) {
+            ctx.beginPath();
+            ctx.translate(25, -60);
+            ctx.rect(0, 0, 190, 60);
+            ctx.fillStyle = COLORS.skin;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2.5;
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.font = `20px ${font}`;
+            ctx.fillText('GAME NAME', 95, 38 - 5);
+            ctx.font = `12px ${font}`;
+            ctx.fillText('by Antti Haavikko', 95, 45);
         }
 
         ctx.restore();

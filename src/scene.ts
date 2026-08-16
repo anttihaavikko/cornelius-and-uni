@@ -50,8 +50,8 @@ export class Scene extends Container {
 
         // eslint-disable-next-line no-sparse-arrays
 
-        this.dude = new Dude(game, 300, 500); // outside
-        // this.dude = new Dude(game, 1377, -50); // intro shed
+        // this.dude = new Dude(game, 300, 500); // outside
+        this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
@@ -306,7 +306,7 @@ export class Scene extends Container {
         this.houses.push(new House(game, -565, 1339, 200, 200));
         this.houses.push(new House(game, -3108, 1340, 500, 200));
 
-        this.houses[1].decorations.push(0);
+        this.houses[1].decorations.push(0, 2);
         this.houses[6].decorations.push(1);
         this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = COLORS.brown;
         this.houses[3].roof = COLORS.shadow;
