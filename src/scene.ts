@@ -317,11 +317,11 @@ export class Scene extends Container {
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
-            if (e.key == 'z') this.zoomed = !this.zoomed;
-            if (e.key == 'u') this.dog.locked = false;
-            if (e.key == 't') {
-                this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
-            }
+            // if (e.key == 'z') this.zoomed = !this.zoomed;
+            // if (e.key == 'u') this.dog.locked = false;
+            // if (e.key == 't') {
+            //     this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
+            // }
             if (e.key == ' ') {
                 if (this.dude.riding) {
                     const hop = this.hoppers.some(h => {
@@ -476,12 +476,13 @@ export class Scene extends Container {
         setTimeout(() => this.moveDog(), random(1000, 3000));
     }
 
-    private addTree(x: number, y: number, log: boolean = false): void {
-        if (log) {
-            const msg = `this.addTree(${x}, ${y});`;
-            console.log(msg);
-            navigator.clipboard.writeText(msg);
-        }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private addTree(x: number, y: number): void {
+        // if (log) {
+        //     const msg = `this.addTree(${x}, ${y});`;
+        //     console.log(msg);
+        //     navigator.clipboard.writeText(msg);
+        // }
         this.add(new Tree(this.game, x, y, 0, 0));
     }
 
