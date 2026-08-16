@@ -37,7 +37,7 @@ export class AudioManager {
     }
 
     public stepInside(vol: number): void {
-        this.play([5 * vol, , 76, , , .02, , 1.5, , , , , .16, , 126, , .42, .58, .01, .49]);
+        this.play([4 * vol, , 76, , , .02, , 1.5, , , , , .16, , 126, , .42, .58, .01, .49]);
     }
 
     public jump(): void {
@@ -67,11 +67,11 @@ export class AudioManager {
     }
 
     public talk(): void {
-        this.play([, , 469, , , .06, 1, 1.5, 4, -5, , , , , , , , .61, .03]);
+        this.play([0.7, , 469, , , .06, 1, 1.5, 4, -5, , , , , , , , .61, .03]);
     }
 
     public bubble(): void {
-        this.play([, , 321, .01, .13, .09, 1, .6, -2, -35, , , , , , .1, , .64, .09]);
+        this.play([0.8, , 321, .01, .13, .09, 1, .6, -2, -35, , , , , , .1, , .64, .09]);
     }
 
     public house(): void {

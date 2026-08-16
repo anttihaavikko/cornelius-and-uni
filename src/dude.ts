@@ -32,6 +32,7 @@ export class Dude extends Shadowed {
     public scene: Scene;
     public dashing: boolean;
     public cameraFocus: Entity;
+    public inside: boolean;
 
     private animating = false;
     private stepDelay = 0;
@@ -75,7 +76,12 @@ export class Dude extends Shadowed {
             this.stepDelay -= this.delta;
             this.bubble.setText('');
             if (Math.abs(this.limbs.walkPhase) > 0.9 && this.stepDelay < 0) {
-                this.game.audio.step(1 - clamp01(distance(this.p, this.cameraFocus.p) / 1000));
+                const vol = 1 - clamp01(distance(this.p, this.cameraFocus.p) / 1000);
+                if (this.inside) {
+                    this.game.audio.stepInside(vol);
+                } else {
+                    this.game.audio.step(vol);
+                }
                 this.stepDelay = 100;
             }
         }

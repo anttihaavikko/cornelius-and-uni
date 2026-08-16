@@ -172,7 +172,7 @@ export class Scene extends Container {
         this.addTreeCluster(2049, -1019);
         this.addTreeCluster(1139, 777);
         this.addTreeCluster(1734, -12);
-        this.addTreeCluster(352, -275);
+        this.addTreeCluster(322, -285);
         this.addTreeCluster(-397, -287);
         this.addTreeCluster(264, 1017);
         this.addTreeCluster(-2577, 1065);
@@ -549,6 +549,7 @@ export class Scene extends Container {
             this.puzzleCompleted = true;
 
             setTimeout(() => {
+                this.game.audio.bubble();
                 this.addItem(this.chicken.p.x, this.chicken.p.y, 0, 'c');
                 this.addItem(this.fox.p.x, this.fox.p.y, 0, 'f');
                 this.addItem(this.wheat.p.x, this.wheat.p.y, 0, 'w');
@@ -591,6 +592,8 @@ export class Scene extends Container {
                 h.entered = true;
             }
         });
+
+        this.dude.inside = !!this.inside;
 
         if (!!this.inside !== !!wasInside) {
             this.game.audio.house();
