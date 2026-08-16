@@ -50,6 +50,6 @@ export class Raft extends Entity {
             this.dx *= -1;
             this.dy *= -1;
         }
-        setTimeout(() => this.toggle(), 1000);
+        setTimeout(() => this.toggle(), this.moving ? 1000 : 2200);
     }
 }
