@@ -593,7 +593,6 @@ export class Scene extends Container {
         });
 
         if (!!this.inside !== !!wasInside) {
-            console.log('swap');
             this.game.audio.house();
         }
 
