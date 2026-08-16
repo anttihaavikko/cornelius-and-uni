@@ -160,12 +160,12 @@ export class River extends Entity {
         ctx.setLineDash([]);
         ctx.lineDashOffset = 0;
 
-        ctx.fillStyle = '#000';
-        ctx.font = '80px monospace';
-        this.points.forEach((s) => {
-            s.forEach((p, i) => {
-                ctx.fillText(i + '', p[0], p[1]);
-            });
-        });
+        // ctx.fillStyle = '#000';
+        // ctx.font = '80px monospace';
+        // this.points.forEach((s) => {
+        //     s.forEach((p, i) => {
+        //         ctx.fillText(i + '', p[0], p[1]);
+        //     });
+        // });
     }
 }
