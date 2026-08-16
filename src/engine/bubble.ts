@@ -1,4 +1,3 @@
-import { WIDTH } from '../index';
 import { Entity } from './entity';
 import { Game } from './game';
 import { Mouse } from './mouse';
@@ -39,7 +38,7 @@ export class Bubble extends Entity {
             bgColor: '#fff',
             lineWidth: 4,
             centerThreshold: 100,
-            sound: () => {},
+            sound: () => { },
             ...options
         };
         this.text = new MultilineTextEntity(game, content, 15, 0, 0, -1, ZERO, { color: this.options.color, align: 'left' });
@@ -78,16 +77,16 @@ export class Bubble extends Entity {
                 return 0;
             case 'center':
                 return width * 0.5 - 10;
-            default:
-                return this.getAutoOffset(width);
+            // default:
+            //     return this.getAutoOffset(width);
         }
     }
 
-    private getAutoOffset(width: number): number {
-        if (this.p.x < WIDTH * 0.5 - this.options.centerThreshold) return this.getOffset('right', width);
-        if (this.p.x > WIDTH * 0.5 + this.options.centerThreshold) return this.getOffset('left', width);
-        return this.getOffset('center', width);
-    }
+    // private getAutoOffset(width: number): number {
+    //     if (this.p.x < WIDTH * 0.5 - this.options.centerThreshold) return this.getOffset('right', width);
+    //     if (this.p.x > WIDTH * 0.5 + this.options.centerThreshold) return this.getOffset('left', width);
+    //     return this.getOffset('center', width);
+    // }
 
     public draw(ctx: CanvasRenderingContext2D): void {
         if (!this.text.content) return;
