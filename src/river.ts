@@ -26,8 +26,8 @@ export class River extends Entity {
             [1992, -532],
             [1428, -817, 1],
             [1239, -1123],
-            [771, -1119],
-            [532, -764],
+            [771, -1119, 1],
+            [532, -764, 1],
             [-50, -754],
         ],
         [
@@ -66,7 +66,7 @@ export class River extends Entity {
             [-1485, 2145],
             [-1099, 2004],
             [-793, 2142],
-            [-425, 1944],
+            [-425, 1944, 1],
             [-42, 1788],
             [446, 1834],
             [694, 1691],
@@ -160,12 +160,12 @@ export class River extends Entity {
         ctx.setLineDash([]);
         ctx.lineDashOffset = 0;
 
-        // ctx.fillStyle = '#000';
-        // ctx.font = '80px monospace';
-        // this.points.forEach((s) => {
-        //     s.forEach((p, i) => {
-        //         ctx.fillText(i + '', p[0], p[1]);
-        //     });
-        // });
+        ctx.fillStyle = '#000';
+        ctx.font = '80px monospace';
+        this.points.forEach((s) => {
+            s.forEach((p, i) => {
+                ctx.fillText(i + '', p[0], p[1]);
+            });
+        });
     }
 }

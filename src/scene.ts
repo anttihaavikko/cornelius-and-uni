@@ -132,7 +132,10 @@ export class Scene extends Container {
         // this.rafts[2].start();
 
         this.addTree(125, 478);
+
         this.addTree(1018, 215);
+        this.addTree(1249, -832);
+        this.addTree(1039, -1);
 
         this.addTree(-2039, -568);
         this.addTree(-1896, -490);
@@ -140,7 +143,9 @@ export class Scene extends Container {
         this.addTree(-1960, -162);
         this.addTree(-1854, -62);
 
-        this.addTree(1249, -832);
+        this.addTree(1122, 147);
+        this.addTree(761, -763);
+        this.addTree(725, -836);
 
         this.addItem(891, 155, 0, 'g');
         this.addItem(844, 136, 0, 'u');
@@ -169,6 +174,7 @@ export class Scene extends Container {
         this.addTreeCluster(264, 1017);
         this.addTreeCluster(-2577, 1065);
         this.addTreeCluster(-2284, 1564);
+        this.addTreeCluster(1945, 549);
 
         // this.addTreeCluster(300, 1156);
         // this.addTreeCluster(1139, 1055);
