@@ -49,13 +49,13 @@ export class Game extends Entity {
         this.keyUpListeners = [];
     }
 
-    public click(mouse: Mouse, touch: boolean = false): void {
-        this.usingPad = false;
-        if (!touch) return;
-        this.scene?.getButtons().forEach(b => {
-            if (b.visible && b.isInside(mouse)) b.trigger();
-        });
-    }
+    // public click(mouse: Mouse, touch: boolean = false): void {
+    //     this.usingPad = false;
+    //     if (!touch) return;
+    //     this.scene?.getButtons().forEach(b => {
+    //         if (b.visible && b.isInside(mouse)) b.trigger();
+    //     });
+    // }
 
     public getMouse(): Mouse {
         return this.curMouse;

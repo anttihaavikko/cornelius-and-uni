@@ -2,11 +2,12 @@ import { Collider } from './collider';
 import { COLORS } from './colors';
 import { Bubble } from './engine/bubble';
 import { quadEaseInOut } from './engine/easings';
+import { Entity } from './engine/entity';
 import { Face } from './engine/face';
 import { Game } from './engine/game';
 import { clamp01 } from './engine/math';
 import { Mouse } from './engine/mouse';
-import { magnitude, normalize, offset, Vector } from './engine/vector';
+import { distance, magnitude, normalize, offset, Vector } from './engine/vector';
 import { Item, ItemType } from './item';
 import { Limbs } from './limbs';
 import { Scene } from './scene';
@@ -30,8 +31,10 @@ export class Dude extends Shadowed {
     public bubble: Bubble;
     public scene: Scene;
     public dashing: boolean;
+    public cameraFocus: Entity;
 
     private animating = false;
+    private stepDelay = 0;
 
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 5, 5);
@@ -39,11 +42,13 @@ export class Dude extends Shadowed {
         this.face.setEyeColor('#000');
         this.face.p.y = -18;
         this.bubble = new Bubble(game, '', 0, -50, { direction: 'center' });
+        this.bubble.setSound(() => this.game.audio.talk());
     }
 
     talk(text: string): void {
         this.bubble.setText('');
         this.bubble.continueText(text);
+        this.game.audio.bubble();
     }
 
     carry(state: boolean): void {
@@ -67,7 +72,12 @@ export class Dude extends Shadowed {
         this.limbs.walking = magnitude(this.velocity) > 0 && !this.mount;
 
         if (this.limbs.walking) {
+            this.stepDelay -= this.delta;
             this.bubble.setText('');
+            if (Math.abs(this.limbs.walkPhase) > 0.9 && this.stepDelay < 0) {
+                this.game.audio.step(1 - clamp01(distance(this.p, this.cameraFocus.p) / 1000));
+                this.stepDelay = 100;
+            }
         }
 
         const next = offset(this.p, this.velocity.x * this.maxSpeed * this.speed, this.velocity.y * this.maxSpeed * this.speed);

@@ -85,6 +85,9 @@ export class Scene extends Container {
         this.dog = new Dog(game, 214, 510);
         this.add(this.dude, this.dog);
 
+        this.dude.cameraFocus = this.dude;
+        this.dog.cameraFocus = this.dude;
+
         for (let x = 0; x < 50; x++) {
             for (let y = 0; y < 50; y++) {
                 if (Math.random() < 0.1) continue;
@@ -323,6 +326,7 @@ export class Scene extends Container {
                 if (this.dude.riding) {
                     const hop = this.hoppers.some(h => {
                         if (h.isInside(this.dog.p)) {
+                            this.game.audio.jump();
                             this.rainbow.push(this.dog.p);
                             this.dog.hop(h.pair.p);
                             h.start();
@@ -361,6 +365,7 @@ export class Scene extends Container {
                     } else {
                         this.dude.held.drop(pos);
                     }
+                    this.game.audio.drop();
                     this.dude.held = null;
                     this.dude.carry(false);
                     this.machine.evaluate();
@@ -375,6 +380,7 @@ export class Scene extends Container {
                     if (!this.dude.riding) {
                         this.dude.hop(offset(this.dog.p, 0, -40));
                     }
+                    this.game.audio.jump();
                     this.dog.lockFor();
                     this.dude.riding = !this.dude.riding;
                     this.dog.riding = !this.dog.riding;
@@ -401,6 +407,7 @@ export class Scene extends Container {
                     closest.raft.start();
                     closest.raft = null;
                 }
+                this.game.audio.pick();
                 this.machine.remove(closest);
                 this.wordles.forEach(w => w.remove(closest));
                 this.dude.held = closest;
@@ -534,6 +541,10 @@ export class Scene extends Container {
         const wp = getPos(this.wheat);
         const pp = getPos(this.dude);
 
+        if (cp == 1 && fp == 1 && wp == 1) {
+            return;
+        }
+
         if (cp == 2 && fp == 2 && wp == 2) {
             this.puzzleCompleted = true;
 
@@ -553,6 +564,7 @@ export class Scene extends Container {
                 if (!this.chicken.held) this.chicken.reset();
                 if (!this.fox.held) this.fox.reset();
                 if (!this.wheat.held) this.wheat.reset();
+                this.game.audio.bad();
             }, 200);
             return;
         }

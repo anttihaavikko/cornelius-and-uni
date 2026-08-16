@@ -27,8 +27,8 @@ export class Raft extends Entity {
 
     public move(entities: Entity[]): void {
         if (!this.moving) return;
-        const dirx = this.dx * this.delta * -0.15;
-        const diry = this.dy * this.delta * -0.15;
+        const dirx = this.dx * 15 * -0.15;
+        const diry = this.dy * 15 * -0.15;
         this.p.x += dirx;
         this.p.y += diry;
         for (const e of entities) {

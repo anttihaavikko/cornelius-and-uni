@@ -209,11 +209,13 @@ export class Machine extends Shadowed {
     }
 
     addBattery(): void {
+        this.game.audio.boot();
         this.battery = new Item(this.game, 12, -20, ItemType.Battery);
         this.evaluate();
     }
 
     addActModule(): void {
+        this.game.audio.boot();
         this.actModule = new Item(this.game, 0, -40, ItemType.Unit, 'act');
         this.evaluate();
     }
@@ -225,6 +227,7 @@ export class Machine extends Shadowed {
     // }
 
     operate(scene: Scene): void {
+        this.game.audio.beep();
         if (!this.battery) return;
 
         this.lines = ['IN:~> ' + this.word.toUpperCase(), 'EXECUTING!', '---', 'ERROR, UNKNOWN COMMAND!'];
@@ -239,6 +242,7 @@ export class Machine extends Shadowed {
         if (cmd && cmd.act) {
             this.lines[3] = 'SUCCESS!';
             cmd.act(scene);
+            this.game.audio.boot();
         }
     }
 }
