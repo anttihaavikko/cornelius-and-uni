@@ -64,18 +64,17 @@ export class Scene extends Container {
         this.river = new River(game);
         this.game.colliders.push(this.river);
 
-        this.addItem(588, 200, ItemType.Unit, 'act');
         this.addItem(3115, -29, ItemType.Unit, 'act');
 
-        this.addItem(435, 267, ItemType.Trophy, '1/1');
-
-        this.addItem(2725, -58, 0, 'm');
-        this.addItem(2725 + 50, -58, 0, 'i');
-        this.addItem(2725 + 100, -58, 0, 'l');
-        this.addItem(2725 + 150, -58, 0, 'k');
-        this.addItem(2725 + 200, -58, 0, 'e');
-
+        // this.addItem(588, 200, ItemType.Unit, 'act');
+        // this.addItem(435, 267, ItemType.Trophy, '1/1');
         this.addItem(853, 302, ItemType.Battery);
+
+        // this.addItem(2725, -58, 0, 'm');
+        // this.addItem(2725 + 50, -58, 0, 'i');
+        // this.addItem(2725 + 100, -58, 0, 'l');
+        // this.addItem(2725 + 150, -58, 0, 'k');
+        // this.addItem(2725 + 200, -58, 0, 'e');
 
         this.addHopSpots(-1873, 961, -2100, 1118);
         this.addHopSpots(1238, 1298, 1409, 1048);
@@ -118,8 +117,8 @@ export class Scene extends Container {
         this.add(...this.wordles);
         this.wordles.forEach(w => this.game.colliders.push(new Collider(game, w.p.x - 40, w.p.y - 30, 80, 30)));
 
-        this.wordles[0].makeWordle('milk', 'flip', 'e');
-        this.wordles[1].makeWordle('null', 'dupe', 'h');
+        this.wordles[0].makeWordle('milk', 'flip', '4/5');
+        this.wordles[1].makeWordle('null', 'dupe', '5/5');
 
         this.addDoor(1376, 147, 300, 30);
         this.addDoor(-763, -73, 200, 30);
@@ -143,19 +142,17 @@ export class Scene extends Container {
 
         this.addTree(1249, -832);
 
-        this.addItem(844, 136, 0, 'u');
         this.addItem(891, 155, 0, 'g');
+        this.addItem(844, 136, 0, 'u');
         this.addItem(313, 323, 0, 'n');
         this.addItem(1027, 189, 0, 'i');
-
         this.addItem(-1895, -537, 0, 'k');
         this.addItem(1101, -923, 0, 'e');
-        this.addItem(-3149, 1502, 0, 'y');
+        this.addItem(-2580, 1533, 0, 'y');
+        this.addItem(-759, -137, 0, 'p');
 
         this.addItem(1768, -745, 0, 'd').raft = this.rafts[2];
         this.addItem(33, 1319, 0, 'l').raft = this.rafts[1];
-
-        this.addItem(-759, -137, 0, 'p');
 
         this.addItem(1258, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
