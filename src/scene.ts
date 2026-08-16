@@ -50,11 +50,11 @@ export class Scene extends Container {
 
         // eslint-disable-next-line no-sparse-arrays
 
-        this.dude = new Dude(game, 300, 500); // outside
+        // this.dude = new Dude(game, 300, 500); // outside
         // this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
-        // this.dude = new Dude(game, 2872, -100); // milk wordle
+        this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
 
@@ -70,11 +70,11 @@ export class Scene extends Container {
         // this.addItem(435, 267, ItemType.Trophy, '1/1');
         this.addItem(853, 302, ItemType.Battery);
 
-        // this.addItem(2725, -58, 0, 'm');
-        // this.addItem(2725 + 50, -58, 0, 'i');
-        // this.addItem(2725 + 100, -58, 0, 'l');
-        // this.addItem(2725 + 150, -58, 0, 'k');
-        // this.addItem(2725 + 200, -58, 0, 'e');
+        this.addItem(2725, -58, 0, 'm');
+        this.addItem(2725 + 50, -58, 0, 'i');
+        this.addItem(2725 + 100, -58, 0, 'l');
+        this.addItem(2725 + 150, -58, 0, 'k');
+        this.addItem(2725 + 200, -58, 0, 'e');
 
         this.addHopSpots(-1873, 961, -2100, 1118);
         this.addHopSpots(1238, 1298, 1409, 1048);
