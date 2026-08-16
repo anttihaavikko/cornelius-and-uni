@@ -45,6 +45,8 @@ export class House extends Entity {
         ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
         ctx.lineTo(-10, this.s.y - 100);
         ctx.closePath();
+        ctx.moveTo(this.s.x * 0.5, -150);
+        ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
         ctx.fill();
         ctx.stroke();
 
