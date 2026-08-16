@@ -24,7 +24,7 @@ export class Limbs {
         this.arms.forEach(l => {
             const voff = this.air * 0.5 * Math.sign(l[0]);
             ctx.moveTo(l[0] - voff, l[1] + this.mid + this.root + this.armPos);
-            ctx.quadraticCurveTo(l[0] - voff, l[1] + this.mid * 1.2 + this.root, 0, this.root + this.mid);
+            ctx.quadraticCurveTo(l[0] - voff - (this.armPos - 10) * 0.25 * Math.sign(l[0]), l[1] + this.mid * 1.2 + this.root, 0, this.root + this.mid);
         });
         ctx.stroke();
     }

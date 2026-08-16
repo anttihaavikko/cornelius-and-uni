@@ -182,6 +182,7 @@ export class Dude extends Shadowed {
         ctx.save();
         ctx.translate(this.p.x, this.p.y + this.getHopOffset());
         // console.log(this.tween.time);
+        //
 
         if (this.mount && !this.animating) {
             ctx.rotate(this.mount.limbs.walking ? -this.mount.limbs.walkPhase * 0.075 : 0);
@@ -196,6 +197,21 @@ export class Dude extends Shadowed {
 
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000';
+
+        if (this.controlled) {
+            ctx.save();
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.translate(1, phase - 6);
+            ctx.rotate(Math.PI * 0.35 + phase * 0.01 - (this.held ? 0.1 : 0));
+            ctx.ellipse(0, 0, 10, 19, 0, 0, Math.PI * 2);
+            ctx.rect(-1.5, -40, 3, 40);
+            ctx.rect(-4, -45, 8, 10);
+            ctx.fillStyle = COLORS.brown;
+            ctx.stroke();
+            ctx.fill();
+            ctx.restore();
+        }
 
         ctx.lineWidth = 8;
         this.limbs.draw(ctx);
@@ -243,6 +259,16 @@ export class Dude extends Shadowed {
             ctx.stroke();
             ctx.lineWidth = 4;
             ctx.strokeStyle = COLORS.purple;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = '#000';
+            ctx.moveTo(13 - (this.held ? 3 : 0), 15 - (this.held ? 3 : 0));
+            ctx.quadraticCurveTo(0, 30, -10, 30);
+            ctx.stroke();
+            ctx.strokeStyle = COLORS.purple;
+            ctx.lineWidth = 2;
             ctx.stroke();
         }
 
