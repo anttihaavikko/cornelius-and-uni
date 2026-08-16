@@ -17,14 +17,14 @@ export interface FaceOptions {
     mouthThickness?: number;
     color?: string;
     blushOffset?: number;
-    animal?: boolean;
-    noBlink?: boolean;
+    // animal?: boolean;
+    // noBlink?: boolean;
     mouthColor?: string;
 }
 
 const defaultOptions: FaceOptions = {
     blush: '#FE6847',
-    eyeSize: 10,
+    eyeSize: 11,
     width: 1,
     blinkDiff: 150,
     blinkDuration: 200,
@@ -55,8 +55,8 @@ export class Face extends Entity {
         this.options = { ...defaultOptions };
         this.setOptions(options);
         this.blink(this.options.blinkDuration, this.options.blinkDiff);
-        this.left = new Eye(game, -30 * this.options.width, 5, this.options.eyeSize);
-        this.right = new Eye(game, 30 * this.options.width, 5, this.options.eyeSize);
+        this.left = new Eye(game, -30 * this.options.width, 0, this.options.eyeSize);
+        this.right = new Eye(game, 30 * this.options.width, 0, this.options.eyeSize);
     }
 
     public getOptions(): FaceOptions {
@@ -73,14 +73,14 @@ export class Face extends Entity {
     }
 
     private blink(blinkDuration: number, blinkDiff: number): void {
-        if (this.options.noBlink) return;
+        // if (this.options.noBlink) return;
         setTimeout(() => this.blinkEye(this.left, blinkDuration, blinkDiff), random(0, blinkDiff));
         setTimeout(() => this.blinkEye(this.right, blinkDuration, blinkDiff), random(0, blinkDiff));
         setTimeout(() => this.blink(blinkDuration, blinkDiff), random(1000, 4000));
     }
 
     private blinkEye(eye: Eye, duration: number, diff: number): void {
-        if (this.options.noBlink) return;
+        // if (this.options.noBlink) return;
         eye.blink(duration), random(0, diff);
     }
 
@@ -106,7 +106,7 @@ export class Face extends Entity {
         return this.left.getColor();
     }
 
-    public draw(ctx: CanvasRenderingContext2D, drawBrows = true): void {
+    public draw(ctx: CanvasRenderingContext2D): void {
         drawEllipse(ctx, { x: -65 * this.options.width - this.options.blushOffset, y: 20 }, 15 * this.options.blushSize, 10 * this.options.blushSize, this.options.blush);
         drawEllipse(ctx, { x: 65 * this.options.width + this.options.blushOffset, y: 20 }, 15 * this.options.blushSize, 10 * this.options.blushSize, this.options.blush);
 
@@ -121,16 +121,16 @@ export class Face extends Entity {
         ctx.strokeStyle = this.options.color;
         ctx.fillStyle = this.options.color;
 
-        if (this.angry && drawBrows) {
-            ctx.beginPath();
-            ctx.moveTo(-50 * this.options.width + 10, -5);
-            ctx.lineTo(-50 * this.options.width - 20, -20);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(50 * this.options.width - 10, -5);
-            ctx.lineTo(50 * this.options.width + 20, -20);
-            ctx.stroke();
-        }
+        // if (this.angry && drawBrows) {
+        //     ctx.beginPath();
+        //     ctx.moveTo(-50 * this.options.width + 10, -5);
+        //     ctx.lineTo(-50 * this.options.width - 20, -20);
+        //     ctx.stroke();
+        //     ctx.beginPath();
+        //     ctx.moveTo(50 * this.options.width - 10, -5);
+        //     ctx.lineTo(50 * this.options.width + 20, -20);
+        //     ctx.stroke();
+        // }
 
         // if (this.thinking && !this.angry) {
         //     ctx.beginPath();
@@ -148,32 +148,33 @@ export class Face extends Entity {
         ctx.scale(this.mirrorer, 1);
         ctx.beginPath();
         ctx.strokeStyle = this.options.mouthColor;
+        ctx.fillStyle = this.options.mouthColor;
         const mw = this.options.width * this.options.mouthWidth;
         // const start = this.thinking ? 25 : 20;
         const curve = this.angry ? -30 : 0;
-        if (this.options.animal) {
-            const start = 30;
-            ctx.save();
-            ctx.translate(0, 5);
-            // drawCircle(ctx, { x: 0, y: 12 }, 8, '#000', '#000');
-            // ctx.moveTo(0, 10);
-            // ctx.lineTo(-20, 0);
-            // ctx.lineTo(20, 0);
-            // ctx.closePath();
-            // ctx.fill();
-            ctx.lineWidth = this.options.mouthThickness * 0.01;
-            ctx.beginPath();
-            ctx.moveTo(-40 * mw, start);
-            // this.openess = 1;
-            ctx.quadraticCurveTo(-10, 40 + 10 * mw, 0, 15);
-            ctx.quadraticCurveTo(10, 40 + 10 * mw, 40 * mw, start);
-            ctx.restore();
-        } else {
-            const start = 20;
-            ctx.moveTo(-40 * mw, start);
-            ctx.quadraticCurveTo(0, 40 - 60 * mw * this.openess + curve, 40 * mw, 20);
-            ctx.quadraticCurveTo(0, 40 + 60 * mw * this.openess + curve, -40 * mw, start);
-        }
+        // if (this.options.animal) {
+        //     const start = 30;
+        //     ctx.save();
+        //     ctx.translate(0, 5);
+        //     // drawCircle(ctx, { x: 0, y: 12 }, 8, '#000', '#000');
+        //     // ctx.moveTo(0, 10);
+        //     // ctx.lineTo(-20, 0);
+        //     // ctx.lineTo(20, 0);
+        //     // ctx.closePath();
+        //     // ctx.fill();
+        //     ctx.lineWidth = this.options.mouthThickness * 0.01;
+        //     ctx.beginPath();
+        //     ctx.moveTo(-40 * mw, start);
+        //     // this.openess = 1;
+        //     ctx.quadraticCurveTo(-10, 40 + 10 * mw, 0, 15);
+        //     ctx.quadraticCurveTo(10, 40 + 10 * mw, 40 * mw, start);
+        //     ctx.restore();
+        // } else {
+        const start = 20;
+        ctx.moveTo(-40 * mw, start);
+        ctx.quadraticCurveTo(0, 45 - 60 * mw * this.openess + curve, 40 * mw, start);
+        ctx.quadraticCurveTo(0, 45 + 60 * mw * this.openess + curve, -40 * mw, start);
+        // }
         ctx.stroke();
         ctx.fill();
         ctx.restore();

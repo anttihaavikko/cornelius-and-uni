@@ -77,4 +77,8 @@ export class AudioManager {
     public house(): void {
         this.play([.5, , 176, .37, .01, .01, 1, 0, 10, -21, , , .09, , 11, , .07, .84, .01, .02, 735]);
     }
+
+    public rainbow(): void {
+        this.play([.9, , 678, .08, .13, .32, 1, 2.3, 9, , -109, .06, .07, , , , , .52, .28, , 359]);
+    }
 }

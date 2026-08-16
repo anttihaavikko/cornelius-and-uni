@@ -327,6 +327,7 @@ export class Scene extends Container {
                     const hop = this.hoppers.some(h => {
                         if (h.isInside(this.dog.p)) {
                             this.game.audio.jump();
+                            this.game.audio.rainbow();
                             this.rainbow.push(this.dog.p);
                             this.dog.hop(h.pair.p);
                             h.start();

@@ -43,7 +43,10 @@ export class Dude extends Shadowed {
         this.face.setEyeColor('#000');
         this.face.p.y = -18;
         this.bubble = new Bubble(game, '', 0, -50, { direction: 'center' });
-        this.bubble.setSound(() => this.game.audio.talk());
+        this.bubble.setSound(() => {
+            this.game.audio.talk();
+            this.face.openMouth(0.25, 0.1);
+        });
     }
 
     talk(text: string): void {
@@ -167,6 +170,7 @@ export class Dude extends Shadowed {
     }
 
     hop(pos: Vector): void {
+        this.face.openMouth(this.controlled ? 0.1 : 0.5, 0.2);
         this.dashing = true;
         this.lockFor();
         this.tween.setEase(quadEaseInOut);
