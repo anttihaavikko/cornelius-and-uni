@@ -85,4 +85,8 @@ export class AudioManager {
     public land(): void {
         this.play([.6, , 396, .02, .08, .01, 5, 1.2, -1, , , , , 1.3, 13, .3, , .55, , , 1391]);
     }
+
+    public nope(): void {
+        this.play([.6, , 236, .03, .26, .34, , , , , -70, .18, , , , .1, , .82, .28, , -1500]);
+    }
 }

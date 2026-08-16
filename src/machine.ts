@@ -90,6 +90,7 @@ export class Machine extends Shadowed {
     private addItem(scene: Scene, type: ItemType, letter?: string): void {
         if (this.slots[0] && !this.reward) {
             this.lines[3] = 'ERROR, OUTPUT BLOCKED!';
+            this.game.audio.bad();
             return;
         }
         const p = this.getSpawnPos();
@@ -118,12 +119,16 @@ export class Machine extends Shadowed {
         this.unit.letter = '0/4';
     }
 
-    public evaluateWordle(scene: Scene): void {
+    public evaluateWordle(scene: Scene, item?: Item): void {
         if (this.solved) return;
         let correct = 0;
         this.slots.slice(1).forEach((s, i) => {
+            if (s) s.color = COLORS.light;
             if (this.target.includes(s?.letter)) {
+                if (item == s) this.game.audio.beep();
                 s.color = '#F6D7CB';
+            } else {
+                if (s && item == s) this.game.audio.nope();
             }
             if (s?.letter == this.target[i]) {
                 s.color = COLORS.yellow;
@@ -134,6 +139,7 @@ export class Machine extends Shadowed {
         if (correct == 4) {
             this.solved = true;
             this.lines = ['ROUTINE COMPLETED!', '---', 'SHUTTING DOWN...'];
+            this.game.audio.boot();
             this.addItem(scene, ItemType.Trophy, this.reward);
         }
     }
