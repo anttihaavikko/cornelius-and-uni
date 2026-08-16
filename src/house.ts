@@ -38,12 +38,12 @@ export class House extends Entity {
         ctx.beginPath();
         // ctx.rect(0, -50, this.s.x, this.s.y - 50);
         ctx.fillStyle = this.roof;
-        ctx.moveTo(0, -50);
+        ctx.moveTo(-10, -50);
         ctx.lineTo(this.s.x * 0.5, -150);
-        ctx.lineTo(this.s.x, -50);
-        ctx.lineTo(this.s.x, this.s.y - 100);
+        ctx.lineTo(this.s.x + 10, -50);
+        ctx.lineTo(this.s.x + 10, this.s.y - 100);
         ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
-        ctx.lineTo(0, this.s.y - 100);
+        ctx.lineTo(-10, this.s.y - 100);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
