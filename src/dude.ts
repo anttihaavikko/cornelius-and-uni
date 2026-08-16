@@ -170,7 +170,7 @@ export class Dude extends Shadowed {
     }
 
     hop(pos: Vector): void {
-        this.face.openMouth(this.controlled ? 0.1 : 0.5, 0.2);
+        this.face.openMouth(this.controlled ? 0.2 : 0.5, 0.2);
         this.dashing = true;
         this.lockFor();
         this.tween.setEase(quadEaseInOut);
@@ -207,6 +207,8 @@ export class Dude extends Shadowed {
 
         ctx.save();
         ctx.translate(this.face.p.x, this.face.p.y + phase);
+        this.limbs.air = this.getHopOffset() * 0.25;
+        ctx.translate(0, this.getHopOffset() * 0.25);
         ctx.scale(0.1, 0.1);
         this.face.draw(ctx);
         ctx.restore();
