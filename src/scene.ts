@@ -64,7 +64,7 @@ export class Scene extends Container {
         this.river = new River(game);
         this.game.colliders.push(this.river);
 
-        this.addItem(3115, -29, ItemType.Unit, 'act');
+        this.addItem(3155, -29, ItemType.Unit, 'act');
 
         // this.addItem(588, 200, ItemType.Unit, 'act');
         // this.addItem(435, 267, ItemType.Trophy, '1/1');
@@ -175,7 +175,7 @@ export class Scene extends Container {
         this.addTreeCluster(322, -285);
         this.addTreeCluster(-397, -287);
         this.addTreeCluster(264, 1017);
-        this.addTreeCluster(-2577, 1065);
+        this.addTreeCluster(-2507, 1025);
         this.addTreeCluster(-2284, 1564);
         this.addTreeCluster(1945, 549);
 
@@ -297,14 +297,14 @@ export class Scene extends Container {
         // this.addTree(-1542, 2284);
         // this.addTree(-1437, 2258);
 
-        this.houses.push(new House(game, 350, 50, 600, 300));
-        this.houses.push(new House(game, 1227, -100, 300, 300));
-        this.houses.push(new House(game, 841, -966, 300, 300));
-        this.houses.push(new House(game, 2670, -198, 550, 200));
-        this.houses.push(new House(game, -1389, 560, 550, 400));
-        this.houses.push(new House(game, -861, -164, 200, 200));
-        this.houses.push(new House(game, -565, 1339, 200, 200));
-        this.houses.push(new House(game, -3108, 1340, 500, 200));
+        this.houses.push(new House(game, 350, 50, 600, 300)); // main 0
+        this.houses.push(new House(game, 1227, -100, 300, 300)); // shed 1
+        this.houses.push(new House(game, 841, -966, 300, 300)); // top mini 2
+        this.houses.push(new House(game, 2670, -198, 550, 200)); // milk wordle 3
+        this.houses.push(new House(game, -1389, 560, 550, 400)); // null wordle 4
+        this.houses.push(new House(game, -861, -164, 200, 200)); // top locked 5
+        this.houses.push(new House(game, -565, 1339, 200, 200)); // bottom mini 6
+        this.houses.push(new House(game, -3108, 1340, 500, 200)); // empty 7
 
         this.houses[1].decorations.push(0, 2);
         this.houses[6].decorations.push(1);
@@ -314,6 +314,13 @@ export class Scene extends Container {
 
         this.houses[0].rug = [300, 175, 210, COLORS.red, COLORS.brown, 0];
         this.houses[1].rug = [120, 200, 190, COLORS.yellow, COLORS.shadow, Math.PI * 0.5];
+        this.houses[2].rug = [150, 150, 190, COLORS.light, COLORS.purple, Math.PI * 0.5];
+        this.houses[3].rug = [275, 110, 310, COLORS.skin, COLORS.yellow, 0];
+        this.houses[4].rug = [275, 175, 310, COLORS.red, COLORS.brown, 0];
+        this.houses[6].rug = [75, 170, 120, COLORS.brown, COLORS.yellow, Math.PI * 0.5];
+        this.houses[7].rug = [250, 85, 310, COLORS.red, COLORS.brown, 0];
+
+        // this.dude.p = offset(this.houses[7].p, 100, 100);
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);
@@ -587,8 +594,9 @@ export class Scene extends Container {
         ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25);
         // if (this.zoomed) ctx.scale(0.25, 0.25);
         // if (this.zoomed) ctx.scale(0.1, 0.1);
-        this.game.camera.pan = { x: this.dude.p.x, y: -this.dude.p.y + 20 };
-        // ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
+        // ctx.scale(0.1, 0.1);
+        // this.game.camera.pan = { x: this.dude.p.x, y: -this.dude.p.y + 20 };
+        ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
 
         const wasInside = this.inside;
         this.inside = null;
