@@ -4,10 +4,12 @@ import { Game } from './engine/game';
 import { clamp01 } from './engine/math';
 import { lerp, offset, Vector } from './engine/vector';
 
+const SPEED = 0.0008;
+
 export class Raft extends Entity {
     private moving = false;
     private origin: Vector;
-    private time = -Math.PI * 0.25 * 2000;
+    private time = -Math.PI * 0.25 * 1 / SPEED;
 
     constructor(game: Game, x: number, y: number, private dx: number, private dy: number) {
         super(game, x, y, 60, 60);
@@ -37,7 +39,7 @@ export class Raft extends Entity {
 
     public move(entities: Entity[]): void {
         if (!this.moving) return;
-        const next = lerp(this.origin, offset(this.origin, -this.dx * 150, -this.dy * 150), clamp01(1.25 * Math.sin(this.time * 0.0005) + 0.5));
+        const next = lerp(this.origin, offset(this.origin, -this.dx * 150, -this.dy * 150), clamp01(1.25 * Math.sin(this.time * SPEED) + 0.5));
         this.time += this.delta;
         const dirx = next.x - this.p.x;
         const diry = next.y - this.p.y;
