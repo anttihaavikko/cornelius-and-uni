@@ -59,6 +59,7 @@ document.onfullscreenchange = () => isFull = !isFull;
 window.onkeydown = (e: KeyboardEvent) => {
     // audio.startMusic();
     // game.pressed(e);
+    e.preventDefault();
     game.held.push(e.key);
     game.audio.playMusic();
 };
