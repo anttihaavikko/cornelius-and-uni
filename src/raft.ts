@@ -37,7 +37,7 @@ export class Raft extends Entity {
 
     public move(entities: Entity[]): void {
         if (!this.moving) return;
-        const next = lerp(this.origin, offset(this.origin, -this.dx * 150, -this.dy * 150), clamp01(1.5 * Math.sin(this.time * 0.0005) + 0.5));
+        const next = lerp(this.origin, offset(this.origin, -this.dx * 150, -this.dy * 150), clamp01(1.25 * Math.sin(this.time * 0.0005) + 0.5));
         this.time += this.delta;
         const dirx = next.x - this.p.x;
         const diry = next.y - this.p.y;
