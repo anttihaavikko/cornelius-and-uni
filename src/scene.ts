@@ -51,9 +51,9 @@ export class Scene extends Container {
         // eslint-disable-next-line no-sparse-arrays
 
         // this.dude = new Dude(game, 300, 500); // outside
-        // this.dude = new Dude(game, 1377, -50); // intro shed
+        this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
-        this.dude = new Dude(game, 2173, 172); // river puzzle
+        // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
@@ -311,6 +311,9 @@ export class Scene extends Container {
         this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = COLORS.brown;
         this.houses[3].roof = COLORS.shadow;
         this.houses[6].roof = this.houses[7].roof = COLORS.purple;
+
+        this.houses[0].rug = [300, 175, 210, COLORS.red, COLORS.brown, 0];
+        this.houses[1].rug = [120, 200, 190, COLORS.yellow, COLORS.shadow, Math.PI * 0.5];
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);

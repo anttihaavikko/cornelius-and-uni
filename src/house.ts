@@ -8,6 +8,7 @@ export class House extends Entity {
     public walls: Collider[] = [];
     public decorations: number[] = [];
     public roof = COLORS.red;
+    public rug: [number, number, number, string, string, number] = null;
 
     createWalls(): void {
         this.walls.push(new Collider(this.game, this.p.x - 10, this.p.y, 20, this.s.y));
@@ -91,14 +92,16 @@ export class House extends Entity {
         ctx.fill();
 
         if (this.decorations.includes(0)) {
+            ctx.save();
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.translate(-5, -20);
+            ctx.scale(0.8, 0.8);
             ctx.rect(50, 50, 20, 20);
             ctx.rect(20, 80, 20, 20);
             ctx.rect(50, 80, 20, 20);
             ctx.rect(80, 80, 20, 20);
-            ctx.translate(30, 0);
+            ctx.translate(10, 0);
             ctx.rect(20, 120, 80, 20);
             ctx.moveTo(40, 127);
             ctx.lineTo(40, 132);
@@ -106,6 +109,7 @@ export class House extends Entity {
             ctx.lineTo(80, 127);
             ctx.strokeStyle = '#00000022';
             ctx.stroke();
+            ctx.restore();
         }
 
         if (this.decorations.includes(1)) {
@@ -143,7 +147,7 @@ export class House extends Entity {
 
         if (this.decorations.includes(2)) {
             ctx.beginPath();
-            ctx.translate(5, -60);
+            ctx.translate(30, -80);
             ctx.rect(0, 0, 240, 60);
             ctx.fillStyle = COLORS.skin;
             ctx.strokeStyle = '#000';
@@ -156,6 +160,30 @@ export class House extends Entity {
             ctx.fillText('CORNELIUS & UNI', 120, 38 - 7);
             ctx.font = `12px ${font}`;
             ctx.fillText('by Antti Haavikko', 120, 46);
+        }
+
+        if (this.rug) {
+            ctx.lineCap = 'butt';
+            ctx.translate(this.rug[0], this.rug[1]);
+            ctx.rotate(this.rug[5]);
+            ctx.beginPath();
+            ctx.strokeStyle = '#ffffff33';
+            ctx.setLineDash([2, 5]);
+            ctx.lineWidth = this.rug[2];
+            ctx.moveTo(0, -50);
+            ctx.lineTo(0, 50);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(-this.rug[2] * 0.5 + 10, 0);
+            ctx.lineTo(this.rug[2] * 0.5 - 10, 0);
+            ctx.strokeStyle = this.rug[3];
+            ctx.lineWidth = 100;
+            ctx.stroke();
+            ctx.setLineDash([10, 10]);
+            ctx.strokeStyle = this.rug[4];
+            ctx.stroke();
+            ctx.lineCap = 'round';
         }
 
         ctx.restore();
