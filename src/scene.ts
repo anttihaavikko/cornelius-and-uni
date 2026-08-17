@@ -308,9 +308,9 @@ export class Scene extends Container {
 
         this.houses[1].decorations.push(0, 2);
         this.houses[6].decorations.push(1);
-        this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = COLORS.brown;
-        this.houses[3].roof = COLORS.shadow;
-        this.houses[6].roof = this.houses[7].roof = COLORS.purple;
+        this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = [COLORS.brown, COLORS.red];
+        this.houses[3].roof = [COLORS.shadow, COLORS.purple];
+        this.houses[6].roof = this.houses[7].roof = [COLORS.purple, COLORS.shadow];
 
         this.houses[0].rug = [300, 175, 210, COLORS.red, COLORS.brown, 0];
         this.houses[1].rug = [120, 200, 190, COLORS.yellow, COLORS.shadow, Math.PI * 0.5];

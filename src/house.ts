@@ -8,7 +8,7 @@ export class House extends Entity {
     public entered = false;
     public walls: Collider[] = [];
     public decorations: number[] = [];
-    public roof = COLORS.red;
+    public roof = [COLORS.red, COLORS.brown];
     public rug: [number, number, number, string, string, number] = null;
 
     createWalls(): void {
@@ -46,7 +46,7 @@ export class House extends Entity {
 
         ctx.beginPath();
         // ctx.rect(0, -50, this.s.x, this.s.y - 50);
-        ctx.fillStyle = this.roof;
+        ctx.fillStyle = this.roof[0];
         ctx.moveTo(-10, -50);
         ctx.lineTo(this.s.x * 0.5, -150);
         ctx.lineTo(this.s.x + 10, -50);
@@ -58,14 +58,14 @@ export class House extends Entity {
         ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
         ctx.fill();
         ctx.stroke();
-        drawFrame(ctx, '#fff');
+        drawFrame(ctx, this.roof[1]);
 
         ctx.strokeStyle = '#000';
         ctx.beginPath();
         ctx.rect(this.s.x * 0.5 - 30, this.s.y - 80 - 2, 60, 80);
         ctx.fillStyle = '#000';
         ctx.fill();
-        drawFrame(ctx, this.roof);
+        drawFrame(ctx, this.roof[1]);
         ctx.restore();
     }
 
