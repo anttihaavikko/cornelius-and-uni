@@ -59,13 +59,13 @@ document.onfullscreenchange = () => isFull = !isFull;
 window.onkeydown = (e: KeyboardEvent) => {
     // audio.startMusic();
     // game.pressed(e);
-    game.held[e.key] = true;
+    game.held.push(e.key);
     game.audio.playMusic();
 };
 
 window.onkeyup = (e: KeyboardEvent) => {
     game.released(e);
-    game.held[e.key] = false;
+    game.held = game.held.filter(k => k !== e.key);
 };
 
 // document.onmousedown = (e: MouseEvent) => {

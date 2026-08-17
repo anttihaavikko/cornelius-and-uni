@@ -51,7 +51,7 @@ export class Machine extends Shadowed {
         { commands: ['fin'], act: s => this.addItem(s, ItemType.Trophy, '3/5'), fn: true },
         { commands: ['dye'], act: s => s.colorize(this.slots[0]), fn: true },
         { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3'), fn: true },
-        { commands: ['duck', 'egg'], act: s => this.addItem(s, ItemType.Chicken) },
+        { commands: ['duck', 'egg', 'fly'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
     ];

@@ -12,7 +12,7 @@ export class Game extends Entity {
     public camera = new Camera();
     public usingPad: boolean;
     public usingTouch: boolean;
-    public held = {};
+    public held: string[] = [];
     public colliders: Entity[] = [];
     public platforms: Entity[] = [];
 

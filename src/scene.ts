@@ -51,9 +51,9 @@ export class Scene extends Container {
         // eslint-disable-next-line no-sparse-arrays
 
         // this.dude = new Dude(game, 300, 500); // outside
-        this.dude = new Dude(game, 1377, -50); // intro shed
+        // this.dude = new Dude(game, 1377, -50); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
-        // this.dude = new Dude(game, 2173, 172); // river puzzle
+        this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
@@ -318,7 +318,7 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             // if (e.key == 'z') this.zoomed = !this.zoomed;
-            // if (e.key == 'u') this.dog.locked = false;
+            if (e.key == 'u') this.dog.locked = false;
             // if (e.key == 't') {
             //     this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             // }

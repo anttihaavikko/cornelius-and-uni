@@ -1,12 +1,17 @@
 import { COLORS } from './colors';
 import { Entity } from './engine/entity';
 import { Game } from './engine/game';
+import { clamp01 } from './engine/math';
+import { lerp, offset, Vector } from './engine/vector';
 
 export class Raft extends Entity {
     private moving = false;
+    private origin: Vector;
+    private time = -Math.PI * 0.25 * 2000;
 
     constructor(game: Game, x: number, y: number, private dx: number, private dy: number) {
         super(game, x, y, 60, 60);
+        this.origin = this.p;
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -22,15 +27,21 @@ export class Raft extends Entity {
         ctx.strokeStyle = '#000';
         ctx.fill();
         ctx.stroke();
+
+        // ctx.fillStyle = '#fff';
+        // ctx.font = '30px Arial';
+        // ctx.fillText(clamp01(1.5 * Math.sin(this.time * 0.0005) + 0.5).toString(), 0, 0);
+
         ctx.restore();
     }
 
     public move(entities: Entity[]): void {
         if (!this.moving) return;
-        const dirx = this.dx * this.delta * -0.15;
-        const diry = this.dy * this.delta * -0.15;
-        this.p.x += dirx;
-        this.p.y += diry;
+        const next = lerp(this.origin, offset(this.origin, -this.dx * 150, -this.dy * 150), clamp01(1.5 * Math.sin(this.time * 0.0005) + 0.5));
+        this.time += this.delta;
+        const dirx = next.x - this.p.x;
+        const diry = next.y - this.p.y;
+        this.p = next;
         for (const e of entities) {
             if (this.isInside(e.p)) {
                 e.p.x += dirx;
@@ -40,16 +51,6 @@ export class Raft extends Entity {
     }
 
     public start(): void {
-        // this.moving = false;
-        setTimeout(() => this.toggle(), 1000);
-    }
-
-    private toggle(): void {
-        this.moving = !this.moving;
-        if (!this.moving) {
-            this.dx *= -1;
-            this.dy *= -1;
-        }
-        setTimeout(() => this.toggle(), this.moving ? 1000 : 2200);
+        this.moving = true;
     }
 }

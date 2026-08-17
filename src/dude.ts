@@ -97,10 +97,10 @@ export class Dude extends Shadowed {
         if (this.controlled === this.riding) return;
 
         this.velocity = { x: 0, y: 0 };
-        if (this.game.held['ArrowLeft'] || this.game.held['a']) this.velocity.x -= 1;
-        if (this.game.held['ArrowRight'] || this.game.held['d']) this.velocity.x += 1;
-        if (this.game.held['ArrowUp'] || this.game.held['w']) this.velocity.y -= 1;
-        if (this.game.held['ArrowDown'] || this.game.held['s']) this.velocity.y += 1;
+        if (this.game.held.includes('ArrowLeft') || this.game.held.includes('a')) this.velocity.x -= 1;
+        if (this.game.held.includes('ArrowRight') || this.game.held.includes('d')) this.velocity.x += 1;
+        if (this.game.held.includes('ArrowUp') || this.game.held.includes('w')) this.velocity.y -= 1;
+        if (this.game.held.includes('ArrowDown') || this.game.held.includes('s')) this.velocity.y += 1;
 
         if (magnitude(this.velocity) > 0) {
             this.velocity = normalize(this.velocity);
