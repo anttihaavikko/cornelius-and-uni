@@ -58,7 +58,9 @@ export class House extends Entity {
         ctx.lineTo(this.s.x * 0.5, this.s.y - 200);
         ctx.fill();
         ctx.stroke();
+        drawFrame(ctx, '#fff');
 
+        ctx.strokeStyle = '#000';
         ctx.beginPath();
         ctx.rect(this.s.x * 0.5 - 30, this.s.y - 80 - 2, 60, 80);
         ctx.fillStyle = '#000';
