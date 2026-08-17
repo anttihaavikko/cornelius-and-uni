@@ -154,7 +154,12 @@ export class Machine extends Shadowed {
             return;
         }
         this.word = this.slots.slice(1).filter(s => s?.itemType === ItemType.Letter).map(s => s?.letter).join('').trim();
-        this.lines = [this.actModule ? 'MULTIPLE MODULES ONLINE!' : 'FABRICATOR MODULE ONLINE!', 'AWAITING INPUT...', 'IN:~> ' + this.word.toUpperCase()];
+        this.lines = [
+            this.actModule ? 'MULTIPLE MODULES ONLINE!' : 'FABRICATOR MODULE ONLINE!',
+            'AWAITING INPUT...',
+            'IN:~> ' + this.word.toUpperCase(),
+            this.word.length >= 2 ? 'INTERACT TO EXECUTE!' : ''
+        ];
     }
 
     public remove(item: Item): void {

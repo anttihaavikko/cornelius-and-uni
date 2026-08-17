@@ -321,7 +321,7 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             // if (e.key == 'z') this.zoomed = !this.zoomed;
-            if (e.key == 'u') this.dog.locked = false;
+            // if (e.key == 'u') this.dog.locked = false;
             // if (e.key == 't') {
             //     this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             // }
