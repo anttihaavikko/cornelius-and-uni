@@ -36,6 +36,13 @@ export class House extends Entity {
         ctx.fill();
         ctx.stroke();
 
+        // ctx.lineWidth = 10;
+        // ctx.stroke();
+        // ctx.strokeStyle = COLORS.light;
+        // ctx.lineWidth = 5;
+        // ctx.stroke();
+        // ctx.strokeStyle = '#000';
+
         ctx.beginPath();
         // ctx.rect(0, -50, this.s.x, this.s.y - 50);
         ctx.fillStyle = this.roof;
@@ -52,9 +59,14 @@ export class House extends Entity {
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.rect(this.s.x * 0.5 - 30, this.s.y - 80, 60, 80);
+        ctx.rect(this.s.x * 0.5 - 30, this.s.y - 80 - 2, 60, 80);
         ctx.fillStyle = '#000';
         ctx.fill();
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.strokeStyle = this.roof;
+        ctx.lineWidth = 5;
+        ctx.stroke();
 
         ctx.restore();
     }
