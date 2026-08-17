@@ -1,6 +1,7 @@
 import { Collider } from './collider';
 import { COLORS } from './colors';
 import { font } from './engine/constants';
+import { drawFrame } from './engine/drawing';
 import { Entity } from './engine/entity';
 
 export class House extends Entity {
@@ -62,12 +63,7 @@ export class House extends Entity {
         ctx.rect(this.s.x * 0.5 - 30, this.s.y - 80 - 2, 60, 80);
         ctx.fillStyle = '#000';
         ctx.fill();
-        ctx.lineWidth = 10;
-        ctx.stroke();
-        ctx.strokeStyle = this.roof;
-        ctx.lineWidth = 5;
-        ctx.stroke();
-
+        drawFrame(ctx, this.roof);
         ctx.restore();
     }
 
@@ -165,7 +161,8 @@ export class House extends Entity {
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 2.5;
             ctx.fill();
-            ctx.stroke();
+            // ctx.stroke();
+            drawFrame(ctx, COLORS.brown, 3);
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.font = `20px ${font}`;

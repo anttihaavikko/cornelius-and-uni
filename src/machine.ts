@@ -1,4 +1,5 @@
 import { COLORS } from './colors';
+import { drawFrame } from './engine/drawing';
 import { Game } from './engine/game';
 import { randomInt } from './engine/random';
 import { distance, offset, Vector } from './engine/vector';
@@ -179,9 +180,7 @@ export class Machine extends Shadowed {
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 8;
         ctx.stroke();
-        ctx.strokeStyle = COLORS.gray;
-        ctx.lineWidth = 3;
-        ctx.stroke();
+        drawFrame(ctx, COLORS.gray, 3);
 
         ctx.fillStyle = '#fff';
         ctx.font = '12px monospace';

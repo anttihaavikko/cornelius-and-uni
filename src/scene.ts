@@ -51,7 +51,7 @@ export class Scene extends Container {
         // eslint-disable-next-line no-sparse-arrays
 
         // this.dude = new Dude(game, 300, 500); // outside
-        this.dude = new Dude(game, 1377, -50); // intro shed
+        this.dude = new Dude(game, 1377, -45); // intro shed
         // this.dude = new Dude(game, 650, 200); // main house
         // this.dude = new Dude(game, 2173, 172); // river puzzle
         // this.dude = new Dude(game, 2872, -100); // milk wordle
@@ -576,16 +576,19 @@ export class Scene extends Container {
         }
     }
 
+    public getBgColor(): string {
+        return COLORS.green;
+    }
+
     draw(ctx: CanvasRenderingContext2D): void {
-        ctx.fillStyle = COLORS.green;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
         ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25);
         // if (this.zoomed) ctx.scale(0.25, 0.25);
-        if (this.zoomed) ctx.scale(0.1, 0.1);
-        ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
+        // if (this.zoomed) ctx.scale(0.1, 0.1);
+        this.game.camera.pan = { x: this.dude.p.x, y: -this.dude.p.y + 20 };
+        // ctx.translate(-this.dude.p.x, -this.dude.p.y + 20);
 
         const wasInside = this.inside;
         this.inside = null;

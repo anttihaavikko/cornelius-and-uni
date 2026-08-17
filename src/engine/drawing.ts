@@ -65,3 +65,11 @@ export const doubleStroke = (ctx: CanvasRenderingContext2D, width: number = 5, c
     ctx.lineWidth = width;
     ctx.stroke();
 };
+
+export const drawFrame = (ctx: CanvasRenderingContext2D, color: string, thickness: number = 5) => {
+    ctx.lineWidth = thickness + 5;
+    ctx.stroke();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
+    ctx.stroke();
+};

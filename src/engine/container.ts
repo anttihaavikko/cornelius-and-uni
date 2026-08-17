@@ -11,11 +11,11 @@ export class Container extends Entity {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public ratioChanged(portrait: boolean): void {
-    }
+    // public ratioChanged(portrait: boolean): void {
+    // }
 
     public getBgColor(): string {
-        return '#ccc';
+        return '#000';
     }
 
     public update(tick: number, mouse: Mouse): void {
