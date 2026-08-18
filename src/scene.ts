@@ -309,6 +309,8 @@ export class Scene extends Container {
         this.houses.push(new House(game, -565, 1339, 200, 200)); // bottom mini 6
         this.houses.push(new House(game, -3108, 1340, 500, 200)); // empty 7
 
+        this.inside = this.houses[1];
+
         this.houses[1].decorations.push(0, 2);
         this.houses[6].decorations.push(1);
         this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = [COLORS.brown, COLORS.red];
@@ -331,7 +333,7 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             // if (e.key == 'z') this.zoomed = !this.zoomed;
-            // if (e.key == 'u') this.dog.locked = false;
+            if (e.key == 'u') this.dog.locked = false;
             // if (e.key == 't') {
             //     this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             // }
@@ -529,7 +531,8 @@ export class Scene extends Container {
             r.move([this.dude, this.dog]);
         });
         if (distance(this.dog.target, this.dude.p) > 60 && !this.dog.locked) {
-            this.dog.target = this.dude.p;
+            this.dog.target = offset(this.dude.p, 0, 0);
+            if (this.inside) this.dog.target.y = this.inside.getCenter().y + 50;
         }
         if (this.dude.mount) {
             this.dude.moveWithMount();
