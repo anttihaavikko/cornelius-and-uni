@@ -32,7 +32,7 @@ export class Machine extends Shadowed {
 
     private commands: { commands: string[]; out?: string; act?: (s: Scene) => void, fn?: boolean }[] = [
         { commands: ['uni'], act: s => s.free() },
-        { commands: ['gun', 'gin', 'keg', 'wine', 'kiwi', 'kink', 'ink', 'yen', 'ice', 'glue', 'gel', 'milk'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
+        { commands: ['gun', 'gin', 'keg', 'wine', 'ink', 'yen', 'ice', 'glue', 'gel', 'milk'], act: (s: Scene) => this.addItem(s, ItemType.Package, this.word) },
         { commands: ['ui', 'gui'], out: 'ONLY TEXT INTERFACE FOUND!' },
         { commands: ['kick', 'fuck', 'dick', 'dung', 'duel', 'nuke'], out: 'YOU BETTER WATCH OUT!' },
         { commands: ['in'], out: 'YES, AWAITING INPUT!' },
@@ -52,7 +52,7 @@ export class Machine extends Shadowed {
         { commands: ['fin'], act: s => this.addItem(s, ItemType.Trophy, '3/5'), fn: true },
         { commands: ['dye'], act: s => s.colorize(this.slots[0]), fn: true },
         { commands: ['pink'], act: s => s.colorize(this.slots[0], '#F2A6B3'), fn: true },
-        { commands: ['duck', 'egg', 'fly'], act: s => this.addItem(s, ItemType.Chicken) },
+        { commands: ['duck', 'egg', 'fly', 'kiwi'], act: s => this.addItem(s, ItemType.Chicken) },
         { commands: ['wild', 'wily'], act: s => this.addItem(s, ItemType.Fox) },
         { commands: ['fen', 'weed', 'puke', 'feed', 'fuel'], act: s => this.addItem(s, ItemType.Wheat) },
     ];

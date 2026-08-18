@@ -325,6 +325,11 @@ export class Scene extends Container {
         this.houses[6].rug = [75, 170, 120, COLORS.brown, COLORS.yellow, Math.PI * 0.5];
         this.houses[7].rug = [250, 85, 310, COLORS.red, COLORS.brown, 0];
 
+        // this.createItem(new Sign(game, -2858, 1490, 'These signs include some hints\nfor progressing in the game.\nThe lowest ones are SPOILER FREE\nbut they get more obvious\nthe further up they go.'));
+        // this.createItem(new Sign(game, -2858, 1490 - 60, 'aaa'));
+        // this.createItem(new Sign(game, -2858, 1490 - 100, 'aaa'));
+        // this.createItem(new Sign(game, -2858, 1490 - 140, 'aaa'));
+
         // this.dude.p = offset(this.houses[7].p, 100, 100);
 
         this.houses.forEach(h => h.createWalls());
@@ -333,7 +338,7 @@ export class Scene extends Container {
 
         this.game.onKeyUp(e => {
             // if (e.key == 'z') this.zoomed = !this.zoomed;
-            if (e.key == 'u') this.dog.locked = false;
+            // if (e.key == 'u') this.dog.locked = false;
             // if (e.key == 't') {
             //     this.addTree(Math.round(this.dude.p.x), Math.round(this.dude.p.y), true);
             // }
