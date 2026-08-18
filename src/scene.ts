@@ -624,6 +624,7 @@ export class Scene extends Container {
 
         if (!!this.inside !== !!wasInside) {
             this.game.audio.house();
+            this.game.blink();
         }
 
         if (!this.dog.locked) {

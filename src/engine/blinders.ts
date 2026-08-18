@@ -8,13 +8,14 @@ export class Blinders extends Entity {
         setTimeout(() => this.open(), delay);
     }
 
-    public open(after = () => {}): void {
-        this.tween.scale({ x: 0, y: 0}, 0.5);
+    public open(after = () => { }): void {
+        this.scale = { x: 1, y: 1 };
+        this.tween.scale({ x: 0, y: 0 }, 0.5);
         setTimeout(after, 500);
     }
 
-    public close(after = () => {}): void {
-        this.tween.scale({ x: 1, y: 1}, 0.4);
+    public close(after = () => { }): void {
+        this.tween.scale({ x: 1, y: 1 }, 0.4);
         setTimeout(after, 500);
     }
 

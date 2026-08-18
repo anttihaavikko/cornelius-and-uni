@@ -60,6 +60,10 @@ export class Game extends Entity {
     //     return this.curMouse;
     // }
 
+    public blink(): void {
+        this.blinders.open();
+    }
+
     public update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
         this.scene?.update(tick, mouse);
