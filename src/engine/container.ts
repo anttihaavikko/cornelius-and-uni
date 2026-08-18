@@ -1,8 +1,10 @@
 import { Entity } from './entity';
 import { Mouse } from './mouse';
 import { Game } from './game';
+import { distance } from './vector';
 
 export class Container extends Entity {
+    public centerEntity: Entity;
     private children: Entity[] = [];
 
     constructor(game: Game, x: number = 0, y: number = 0, entities: Entity[] = []) {
@@ -36,7 +38,7 @@ export class Container extends Entity {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        [...this.children].sort((a, b) => a.d - b.d).forEach(c => c.draw(ctx));
+        [...this.children].filter(e => !this.centerEntity || distance(this.centerEntity.p, e.p) < 1200).sort((a, b) => a.d - b.d).forEach(c => c.draw(ctx));
         ctx.restore();
     }
 

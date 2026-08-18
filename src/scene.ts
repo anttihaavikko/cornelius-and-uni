@@ -58,6 +58,8 @@ export class Scene extends Container {
         // this.dude = new Dude(game, -1113, 721); // other wordle
         // this.dude = new Dude(game, 996, -770); // map house
 
+        this.centerEntity = this.dude;
+
         // const rng = new SeedableRandom(123);
         // console.log(rng.randomInt(0, 100));
 
@@ -591,6 +593,10 @@ export class Scene extends Container {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
 
+        // ctx.fillStyle = '#fff';
+        // ctx.font = '50px monospace';
+        // ctx.fillText(Math.round(this.delta).toString(), 10, 50);
+
         ctx.translate(ctx.canvas.width * 0.25, ctx.canvas.height * 0.25);
         // if (this.zoomed) ctx.scale(0.25, 0.25);
         // if (this.zoomed) ctx.scale(0.1, 0.1);
@@ -631,7 +637,7 @@ export class Scene extends Container {
         ctx.fillStyle = COLORS.shadow;
         ctx.strokeStyle = COLORS.shadow;
         ctx.lineWidth = 3;
-        this.grass.forEach(g => {
+        this.grass.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 500).forEach(g => {
             ctx.moveTo(g[0], g[1]);
             ctx.ellipse(g[0], g[1], 6 * g[2], 2 * g[2], 0, 0, 2 * Math.PI);
             ctx.moveTo(g[0], g[1]);
@@ -649,7 +655,7 @@ export class Scene extends Container {
         ctx.strokeStyle = COLORS.yellow;
         ctx.lineWidth = 30;
         ctx.setLineDash([0, 20]);
-        this.dirt.forEach(g => {
+        this.dirt.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 550).forEach(g => {
             ctx.moveTo(g[0], g[1]);
             ctx.ellipse(g[0], g[1], 80 * g[2], 20 * g[2], 0, 0, 2 * Math.PI);
         });
