@@ -109,12 +109,12 @@ export class Dude extends Shadowed {
         }
     }
 
-    collides(pos: Vector): boolean {
+    collides(pos: Vector, radius: number = 20): boolean {
         // return false;
         if (this.game.platforms.some(p => p.isInside(pos))) return false;
 
         return this.game.colliders.some(c => {
-            const hit = c.isInside(pos, 20);
+            const hit = c.isInside(pos, radius);
             const coll = c as Collider;
             if (hit && coll.door && !coll.opened && this.held.some(h => h.itemType === ItemType.Key)) {
                 this.game.audio.house();

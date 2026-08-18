@@ -454,7 +454,7 @@ export class Scene extends Container {
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
                 const p = { x: x + 100 * i, y: y + 100 * j };
-                if (!this.dude.collides(p) && Math.random() < 0.75) {
+                if (!this.dude.collides(p, 50) && Math.random() < 0.75) {
                     this.addTree(p.x + random(-50, 50), p.y + random(-50, 50));
                 }
             }
@@ -652,9 +652,22 @@ export class Scene extends Container {
         }
 
         ctx.beginPath();
+        ctx.fillStyle = COLORS.yellow;
+        ctx.strokeStyle = COLORS.yellow;
+        ctx.lineWidth = 30;
+        ctx.setLineDash([0, 20]);
+        this.dirt.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 550).forEach(g => {
+            ctx.moveTo(g[0], g[1]);
+            ctx.ellipse(g[0], g[1], 80 * g[2], 20 * g[2], 0, 0, 2 * Math.PI);
+        });
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
         ctx.fillStyle = COLORS.shadow;
         ctx.strokeStyle = COLORS.shadow;
         ctx.lineWidth = 3;
+        ctx.setLineDash([]);
         this.grass.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 500).forEach(g => {
             ctx.moveTo(g[0], g[1]);
             ctx.ellipse(g[0], g[1], 6 * g[2], 2 * g[2], 0, 0, 2 * Math.PI);
@@ -667,18 +680,6 @@ export class Scene extends Container {
         });
         ctx.stroke();
         ctx.fill();
-
-        ctx.beginPath();
-        ctx.fillStyle = COLORS.yellow;
-        ctx.strokeStyle = COLORS.yellow;
-        ctx.lineWidth = 30;
-        ctx.setLineDash([0, 20]);
-        this.dirt.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 550).forEach(g => {
-            ctx.moveTo(g[0], g[1]);
-            ctx.ellipse(g[0], g[1], 80 * g[2], 20 * g[2], 0, 0, 2 * Math.PI);
-        });
-        ctx.fill();
-        ctx.stroke();
 
         this.river.draw(ctx);
         this.inside?.drawInterior(ctx);
