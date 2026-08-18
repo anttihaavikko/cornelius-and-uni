@@ -4,7 +4,7 @@ import { Tween } from './tween';
 import { Vector } from './vector';
 
 export abstract class Entity {
-    public scale: Vector = { x: 1, y: 1};
+    public scale: Vector = { x: 1, y: 1 };
     public d = 0;
     public dead: boolean;
     public p: Vector;
@@ -16,7 +16,7 @@ export abstract class Entity {
     protected animationPhaseAbs = 0;
     protected animationSpeed = 0.005;
     protected delta = 0;
-    
+
     protected s: Vector;
 
     protected tween: Tween;
@@ -30,7 +30,7 @@ export abstract class Entity {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public update(tick: number, mouse: Mouse): void {
-        this.delta = tick - this.previousTick;
+        this.delta = this.previousTick < 0 ? 0 : tick - this.previousTick;
         this.previousTick = tick;
         this.tween.update(tick);
         this.animationPhase = Math.sin(tick * this.animationSpeed + this.animationOffset);
@@ -54,7 +54,7 @@ export abstract class Entity {
 
     public isInside(point: Vector, radius = 0): boolean {
         const c = this.getCenter();
-        return point.x > c.x - this.s.x * 0.5 * this.scale.x - radius * 0.5 && 
+        return point.x > c.x - this.s.x * 0.5 * this.scale.x - radius * 0.5 &&
             point.x < c.x + this.s.x * 0.5 * this.scale.x + radius * 0.5 &&
             point.y > c.y - this.s.y * 0.5 * this.scale.y - radius * 0.5 &&
             point.y < c.y + this.s.y * 0.5 * this.scale.y + radius * 0.5;
