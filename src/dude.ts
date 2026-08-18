@@ -264,7 +264,8 @@ export class Dude extends Shadowed {
             ctx.beginPath();
             ctx.lineWidth = 6;
             ctx.strokeStyle = '#000';
-            ctx.moveTo(13 - (this.held ? 3 : 0), 15 - (this.held ? 3 : 0));
+            const diff = this.held.length > 0 ? 2 : 0;
+            ctx.moveTo(12 - diff, 15 - diff);
             ctx.quadraticCurveTo(0, 30, -10, 30);
             ctx.stroke();
             ctx.strokeStyle = COLORS.purple;
