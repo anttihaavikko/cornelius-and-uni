@@ -394,7 +394,7 @@ export class Scene extends Container {
                 const closest = this.items.reduce((a, b) => {
                     return distance(this.dude.p, a.p) < distance(this.dude.p, b.p) ? a : b;
                 });
-                if (distance(this.dude.p, this.dog.p) < 50 && !this.dog.held && !this.dog.locked) {
+                if (distance(this.dude.p, this.dog.p) < 50 && this.dog.held.length === 0 && !this.dog.locked) {
                     if (!this.dude.riding) {
                         this.dude.hop(offset(this.dog.p, 0, -40));
                     }
@@ -408,7 +408,7 @@ export class Scene extends Container {
                     return;
                 }
                 if (distance(closest.p, this.dude.p) > 50) {
-                    if (operating && !this.dude.held) {
+                    if (operating && this.dude.held.length === 0) {
                         this.machine.operate(this);
                         return;
                     }
