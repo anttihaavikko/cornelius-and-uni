@@ -1,6 +1,5 @@
 import { AudioManager } from './audio';
 import { Blinders } from './blinders';
-import { Camera } from './camera';
 import { Container } from './container';
 import { Entity } from './entity';
 import { Mouse } from './mouse';

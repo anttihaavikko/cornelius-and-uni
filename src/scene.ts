@@ -44,6 +44,7 @@ export class Scene extends Container {
 
     private hoppers: Hopper[] = [];
     private rainbow: Vector[] = [];
+    // private effect: number[] = [2, 0, 0];
 
     constructor(game: Game) {
         super(game);
@@ -589,6 +590,10 @@ export class Scene extends Container {
         return COLORS.green;
     }
 
+    // poof(pos: Vector): void {
+    //     this.effect = [0, pos.x, pos.y];
+    // }
+
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
@@ -726,5 +731,23 @@ export class Scene extends Container {
 
         super.draw(ctx);
         this.inside?.drawExterior(ctx);
+
+        // if (this.effect[0] <= 1) {
+        //     ctx.fillStyle = '#ffffff11';
+        //     const phase = (1 + Math.sin(this.effect[0] * Math.PI)) * 0.5;
+        //     ctx.beginPath();
+        //     ctx.ellipse(this.effect[1], this.effect[2], phase * 40, phase * 40, 0, 0, Math.PI * 2);
+        //     ctx.fill();
+        //     ctx.lineCap = 'butt';
+        //     ctx.lineDashOffset = -20 * this.effect[0];
+        //     ctx.setLineDash([3, 20 + 10 * this.effect[0]]);
+        //     ctx.lineWidth = 20 * phase;
+        //     ctx.strokeStyle = '#ffffff33';
+        //     ctx.beginPath();
+        //     ctx.ellipse(this.effect[1], this.effect[2], this.effect[0] * 20, this.effect[0] * 20, 0, 0, Math.PI * 2);
+        //     ctx.stroke();
+        // }
+
+        // this.effect[0] += this.delta * 0.0025;
     }
 }

@@ -121,6 +121,7 @@ export class Dude extends Shadowed {
             if (hit && coll.door && !coll.opened && this.held?.itemType === ItemType.Key) {
                 this.game.audio.house();
                 this.game.audio.beep();
+                // (this.game.scene as Scene).poof(coll.getCenter());
                 coll.opened = true;
                 this.held.drop(pos);
                 this.carry(false);
