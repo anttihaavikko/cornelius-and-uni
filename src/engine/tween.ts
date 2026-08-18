@@ -1,7 +1,7 @@
+import { quadEaseInOut } from './easings';
 import { Entity } from './entity';
 import { clamp01 } from './math';
 import { Vector, lerp } from './vector';
-import { bounce } from './easings';
 
 type TweenType = 'none' | 'move' | 'scale' | 'rotate';
 
@@ -13,7 +13,7 @@ export class Tween {
     private duration: number;
     private active: boolean;
     private type: TweenType = 'none';
-    private easeFn = (val: number) => bounce(val);
+    private easeFn = quadEaseInOut;
 
     constructor(private entity: Entity) {
     }
@@ -43,9 +43,9 @@ export class Tween {
     //     this.startTween({ x: target, y: target }, duration);
     // }
 
-    public setEase(ease: (val: number) => number): void {
-        this.easeFn = ease;
-    }
+    // public setEase(ease: (val: number) => number): void {
+    //     this.easeFn = ease;
+    // }
 
     private startTween(target: Vector, duration: number): void {
         this.target = target;
@@ -68,7 +68,7 @@ export class Tween {
         this.time = clamp01((tick - this.startTime) / this.duration);
         if (!this.start || !this.target) return;
         const p = lerp(this.start, this.target, this.time, this.easeFn);
-        
+
         if (this.type == 'move') this.entity.p = { x: p.x, y: p.y };
         if (this.type == 'scale') this.entity.scale = { x: p.x, y: p.y };
         // if (this.type == 'rotate') this.entity.rotation = p.x;

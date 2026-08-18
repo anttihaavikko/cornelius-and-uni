@@ -175,7 +175,7 @@ export class Dude extends Shadowed {
         this.face.openMouth(this.controlled ? 0.2 : 0.5, 0.2);
         this.dashing = true;
         this.lockFor();
-        this.tween.setEase(quadEaseInOut);
+        // this.tween.setEase(quadEaseInOut);
         this.tween.move(pos, 0.3);
         setTimeout(() => this.game.audio.land(), 300);
     }
