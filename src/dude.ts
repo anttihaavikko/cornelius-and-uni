@@ -1,7 +1,6 @@
 import { Collider } from './collider';
 import { COLORS } from './colors';
 import { Bubble } from './engine/bubble';
-import { quadEaseInOut } from './engine/easings';
 import { Entity } from './engine/entity';
 import { Face } from './engine/face';
 import { Game } from './engine/game';
@@ -40,7 +39,6 @@ export class Dude extends Shadowed {
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 5, 5);
         this.face = new Face(game, { width: 1, mouthColor: '#000', mouthThickness: 12, blush: COLORS.red });
-        this.face.setEyeColor('#000');
         this.face.p.y = -18;
         this.bubble = new Bubble(game, '', 0, -50, { direction: 'center' });
         this.bubble.setSound(() => {

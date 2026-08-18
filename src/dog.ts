@@ -18,7 +18,6 @@ export class Dog extends Dude {
         this.maxSpeed = 4.5;
         this.skin = '#fff';
         this.limbs = new Limbs([[10, 0], [20, 0], [-20, 0], [-10, 0]], []);
-        this.face.setEyeColor('#000');
         this.face.p.y = -8;
         this.shadowWidth = 33;
         this.holdPos = -25;

@@ -7,7 +7,7 @@ export class Eye extends Entity {
     protected openess = 1;
     protected targetOpeness = 1;
     protected timer: NodeJS.Timeout;
-    protected color = '#fff';
+    protected color = '#000';
 
     constructor(game: Game, x: number, y: number, size: number) {
         super(game, x, y, size, size);
@@ -18,17 +18,17 @@ export class Eye extends Entity {
         this.openess = moveTowards(this.openess, this.targetOpeness, 0.075);
     }
 
-    public getColor(): string {
-        return this.color;
-    }
+    // public getColor(): string {
+    //     return this.color;
+    // }
 
-    public setColor(color: string): void {
-        this.color = color;
-    }
+    // public setColor(color: string): void {
+    //     this.color = color;
+    // }
 
-    public setSize(size: number): void {
-        this.s = { x: size, y: size };
-    }
+    // public setSize(size: number): void {
+    //     this.s = { x: size, y: size };
+    // }
 
     public draw(ctx: CanvasRenderingContext2D): void {
         // const prev = ctx.globalCompositeOperation;

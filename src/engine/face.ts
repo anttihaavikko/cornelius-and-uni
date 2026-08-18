@@ -58,17 +58,17 @@ export class Face extends Entity {
         this.right = new Eye(game, 30 * this.options.width, 0, this.options.eyeSize);
     }
 
-    public getOptions(): FaceOptions {
-        return this.options;
-    }
+    // public getOptions(): FaceOptions {
+    //     return this.options;
+    // }
 
     public setOptions(options: FaceOptions): void {
         this.options = {
             ...this.options,
             ...options
         };
-        this.left?.setColor(options.color);
-        this.right?.setColor(options.color);
+        // this.left?.setColor(options.color);
+        // this.right?.setColor(options.color);
     }
 
     private blink(blinkDuration: number, blinkDiff: number): void {
@@ -91,22 +91,21 @@ export class Face extends Entity {
         // if (Math.random() < 0.002) this.mirrorer *= -1;
     }
 
-    public setEyeSize(size: number): void {
-        this.left.setSize(size);
-        this.right.setSize(size);
-    }
+    // public setEyeSize(size: number): void {
+    //     this.left.setSize(size);
+    //     this.right.setSize(size);
+    // }
 
-    public setEyeColor(color: string): void {
-        this.left.setColor(color);
-        this.right.setColor(color);
-    }
+    // public setEyeColor(color: string): void {
+    //     this.left.setColor(color);
+    //     this.right.setColor(color);
+    // }
 
-    public getEyeColor(): string {
-        return this.left.getColor();
-    }
+    // public getEyeColor(): string {
+    //     return this.left.getColor();
+    // }
 
     public draw(ctx: CanvasRenderingContext2D): void {
-
         ctx.fillStyle = this.options.blush;
         ctx.beginPath();
         ctx.ellipse(-65 * this.options.width - this.options.blushOffset, 20, 15 * this.options.blushSize, 10 * this.options.blushSize, 0, 0, 2 * Math.PI);
@@ -194,13 +193,13 @@ export class Face extends Entity {
         this.targetOpeness = 0;
     }
 
-    public setColor(color: string): void {
-        this.options.color = color;
-        this.left.setColor(color);
-        this.right.setColor(color);
-    }
+    // public setColor(color: string): void {
+    //     this.options.color = color;
+    //     this.left.setColor(color);
+    //     this.right.setColor(color);
+    // }
 
-    public setBlushColor(color: string): void {
-        this.options.blush = color;
-    }
+    // public setBlushColor(color: string): void {
+    //     this.options.blush = color;
+    // }
 }
