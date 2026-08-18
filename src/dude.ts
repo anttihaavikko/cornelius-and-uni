@@ -25,7 +25,7 @@ export class Dude extends Shadowed {
     public skin = COLORS.skin;
     public controlled = false;
     public riding = false;
-    public held: Item;
+    public held: Item[] = [];
     public aim: Vector = { x: 0, y: 0 };
     public mount: Dude;
     public bubble: Bubble;
@@ -118,15 +118,16 @@ export class Dude extends Shadowed {
         return this.game.colliders.some(c => {
             const hit = c.isInside(pos, 20);
             const coll = c as Collider;
-            if (hit && coll.door && !coll.opened && this.held?.itemType === ItemType.Key) {
+            if (hit && coll.door && !coll.opened && this.held.some(h => h.itemType === ItemType.Key)) {
                 this.game.audio.house();
                 this.game.audio.beep();
                 // (this.game.scene as Scene).poof(coll.getCenter());
                 coll.opened = true;
-                this.held.drop(pos);
+                const h = this.held.find(h => h.itemType === ItemType.Key);
+                h.drop(pos);
                 this.carry(false);
-                this.scene.remove(this.held);
-                this.held = null;
+                this.scene.remove(h);
+                this.held = [];
             }
             return hit && !coll.opened;
         });
@@ -231,10 +232,10 @@ export class Dude extends Shadowed {
         this.face.draw(ctx);
         ctx.restore();
 
-        if (this.held) {
-            this.held.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase);
-            this.held.d = this.d + this.carryOffset;
-        }
+        this.held.forEach((h, i) => {
+            h.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase - i * 30);
+            h.d = this.d + this.carryOffset;
+        });
 
         if (this.controlled) {
             ctx.beginPath();

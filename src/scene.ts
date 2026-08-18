@@ -356,34 +356,36 @@ export class Scene extends Container {
                     this.dude.bubble.setText('');
                     return;
                 }
-                if (this.dude.held) {
-                    const pos = this.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), this.dude.held);
-                    if (operating && this.dude.held.itemType == ItemType.Battery) {
+                if (this.dude.held.length > 0) {
+                    const held = this.dude.held[0];
+                    const pos = this.snap(offset(this.dude.p, this.dude.aim.x * 40, this.dude.aim.y * 40), held);
+                    if (operating && held.itemType == ItemType.Battery) {
                         this.machine.addBattery();
-                        this.remove(this.dude.held);
-                        this.dude.held = null;
+                        this.remove(held);
+                        this.dude.held = [];
                         this.dude.carry(false);
                         return;
                     }
-                    if (operating && this.dude.held.itemType == ItemType.Unit) {
+                    if (operating && held.itemType == ItemType.Unit) {
                         this.machine.addActModule();
-                        this.remove(this.dude.held);
-                        this.dude.held = null;
+                        this.remove(held);
+                        this.dude.held = [];
                         this.dude.carry(false);
                         return;
                     }
                     if (this.dude.collides(pos)) {
                         return;
                     }
-                    if (distance(pos, this.dog.p) < 50 && !this.dog.held) {
-                        this.dog.held = this.dude.held;
-                        this.dog.held.shadowShown = false;
+                    if (distance(pos, this.dog.p) < 50) {
+                        this.dog.held.push(held);
+                        this.dog.held = this.dog.held.filter(h => !!h);
+                        held.shadowShown = false;
                     } else {
-                        this.dude.held.drop(pos);
+                        held.drop(pos);
                     }
                     this.game.audio.drop();
-                    this.wordles.forEach(w => w.evaluateWordle(this, this.dude.held));
-                    this.dude.held = null;
+                    this.wordles.forEach(w => w.evaluateWordle(this, held));
+                    this.dude.held = [];
                     this.dude.carry(false);
                     this.machine.evaluate();
                     this.checkPuzzle();
@@ -412,8 +414,8 @@ export class Scene extends Container {
                     }
                     return;
                 }
-                if (this.dog.held == closest) {
-                    this.dog.held = null;
+                if (this.dog.held.includes(closest)) {
+                    this.dog.held = this.dog.held.filter(h => h !== closest);
                 }
                 if (closest.locked) {
                     closest.act(this.dude);
@@ -426,7 +428,7 @@ export class Scene extends Container {
                 this.game.audio.pick();
                 this.machine.remove(closest);
                 this.wordles.forEach(w => w.remove(closest));
-                this.dude.held = closest;
+                this.dude.held[0] = closest;
                 closest.held = true;
                 closest.shadowShown = false;
                 this.dude.carry(true);
