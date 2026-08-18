@@ -91,11 +91,13 @@ export class Scene extends Container {
         this.dude.cameraFocus = this.dude;
         this.dog.cameraFocus = this.dude;
 
-        for (let x = 0; x < 50; x++) {
-            for (let y = 0; y < 50; y++) {
+        const amt = 75;
+        const gap = 8000 / amt;
+        for (let x = 0; x < amt; x++) {
+            for (let y = 0; y < amt; y++) {
                 if (Math.random() < 0.1) continue;
-                const spot = [x * 200 - 5000 + random(-100, 100), y * 200 - 5000 + random(-100, 100), random(0.7, 1.2)];
-                if (Math.random() < 0.9) {
+                const spot = [x * gap - 4000 + random(-100, 100), y * gap - 4000 + random(-100, 100), random(0.7, 1.2)];
+                if (Math.random() < 0.92) {
                     this.grass.push(spot);
                 } else {
                     this.dirt.push(spot);
