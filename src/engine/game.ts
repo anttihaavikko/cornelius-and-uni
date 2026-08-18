@@ -9,7 +9,7 @@ import { Mouse } from './mouse';
 export class Game extends Entity {
     // public pitcher: Pitcher;
     public scene: Container;
-    public camera = new Camera();
+    // public camera = new Camera();
     public usingPad: boolean;
     public usingTouch: boolean;
     public held: string[] = [];
@@ -64,7 +64,7 @@ export class Game extends Entity {
     public update(tick: number, mouse: Mouse): void {
         super.update(tick, mouse);
         this.scene?.update(tick, mouse);
-        this.camera.update();
+        // this.camera.update();
         this.blinders.update(tick, mouse);
         // this.pitcher.update(this.delta);
         // mouse.pressing = false;
@@ -77,7 +77,7 @@ export class Game extends Entity {
         ctx.save();
         // ctx.rotate(this.camera.rotation);
         // ctx.scale(this.camera.zoom, this.camera.zoom);
-        ctx.translate(this.camera.offset.x - this.camera.pan.x, this.camera.offset.y + this.camera.pan.y);
+        // ctx.translate(this.camera.offset.x - this.camera.pan.x, this.camera.offset.y + this.camera.pan.y);
         this.scene?.draw(ctx);
         ctx.restore();
         this.blinders.draw(ctx);
