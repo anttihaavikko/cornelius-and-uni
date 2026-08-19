@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Dude } from './dude';
 import { Game } from './engine/game';
 import { Item } from './item';
@@ -20,7 +19,7 @@ export class Sign extends Item {
         ctx.save();
         ctx.beginPath();
         ctx.strokeStyle = '#000';
-        ctx.fillStyle = COLORS.brown;
+        ctx.fillStyle = '#E9A186';
         ctx.lineWidth = 2;
         ctx.translate(this.p.x, this.p.y);
         ctx.rect(-3, -35, 6, 35);

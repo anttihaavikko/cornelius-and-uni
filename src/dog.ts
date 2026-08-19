@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Dude } from './dude';
 import { roundRect } from './engine/drawing';
 import { Game } from './engine/game';
@@ -71,7 +70,7 @@ export class Dog extends Dude {
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle = COLORS.red;
+        ctx.fillStyle = '#E85D75';
         drawEar(1, 0.5);
         drawEar(-1, 0.5);
         ctx.fill();

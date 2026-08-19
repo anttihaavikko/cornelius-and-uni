@@ -1,5 +1,4 @@
 import { Collider } from './collider';
-import { COLORS } from './colors';
 import { Dog } from './dog';
 import { Dude } from './dude';
 import { Container } from './engine/container';
@@ -318,17 +317,17 @@ export class Scene extends Container {
 
         this.houses[1].decorations.push(0, 2);
         this.houses[6].decorations.push(1);
-        this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = [COLORS.brown, COLORS.red];
-        this.houses[3].roof = [COLORS.shadow, COLORS.purple];
-        this.houses[6].roof = this.houses[7].roof = [COLORS.purple, COLORS.shadow];
+        this.houses[2].roof = this.houses[4].roof = this.houses[5].roof = ['#E9A186', '#E85D75'];
+        this.houses[3].roof = ['#3bd1a6', '#9D69A3'];
+        this.houses[6].roof = this.houses[7].roof = ['#9D69A3', '#3bd1a6'];
 
-        this.houses[0].rug = [300, 175, 210, COLORS.red, COLORS.brown, 0];
-        this.houses[1].rug = [120, 200, 190, COLORS.yellow, COLORS.shadow, Math.PI * 0.5];
-        this.houses[2].rug = [150, 150, 190, COLORS.light, COLORS.purple, Math.PI * 0.5];
-        this.houses[3].rug = [275, 110, 310, COLORS.skin, COLORS.yellow, 0];
-        this.houses[4].rug = [275, 175, 310, COLORS.red, COLORS.brown, 0];
-        this.houses[6].rug = [75, 170, 120, COLORS.brown, COLORS.yellow, Math.PI * 0.5];
-        this.houses[7].rug = [250, 85, 310, COLORS.green, COLORS.shadow, 0];
+        this.houses[0].rug = [300, 175, 210, '#E85D75', '#E9A186', 0];
+        this.houses[1].rug = [120, 200, 190, '#CCEBAD', '#3bd1a6', Math.PI * 0.5];
+        this.houses[2].rug = [150, 150, 190, '#97A4AF', '#9D69A3', Math.PI * 0.5];
+        this.houses[3].rug = [275, 110, 310, '#F5FBEF', '#CCEBAD', 0];
+        this.houses[4].rug = [275, 175, 310, '#E85D75', '#E9A186', 0];
+        this.houses[6].rug = [75, 170, 120, '#E9A186', '#CCEBAD', Math.PI * 0.5];
+        this.houses[7].rug = [250, 85, 310, '#40F99B', '#3bd1a6', 0];
 
         // this.createItem(new Sign(game, -2858, 1490, 'These signs include some hints\nfor progressing in the game.\nThe lowest ones are SPOILER FREE\nbut they get more obvious\nthe further up they go.'));
         // this.createItem(new Sign(game, -2858, 1490 - 60, 'aaa'));
@@ -529,7 +528,7 @@ export class Scene extends Container {
     }
 
     public colorize(item?: Item, color?: string): void {
-        const options = [COLORS.red, COLORS.shadow, COLORS.green, COLORS.yellow, COLORS.skin, COLORS.brown, COLORS.purple];
+        const options = ['#E85D75', '#3bd1a6', '#40F99B', '#CCEBAD', '#F5FBEF', '#E9A186', '#9D69A3'];
         color = color ?? options[randomInt(0, options.length - 1)];
         if (item) {
             item.colorize(color);
@@ -612,7 +611,7 @@ export class Scene extends Container {
     }
 
     public getBgColor(): string {
-        return COLORS.green;
+        return '#40F99B';
     }
 
     // poof(pos: Vector): void {
@@ -666,8 +665,8 @@ export class Scene extends Container {
         }
 
         ctx.beginPath();
-        ctx.fillStyle = COLORS.yellow;
-        ctx.strokeStyle = COLORS.yellow;
+        ctx.fillStyle = '#CCEBAD';
+        ctx.strokeStyle = '#CCEBAD';
         ctx.lineWidth = 30;
         ctx.setLineDash([0, 20]);
         this.dirt.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 550).forEach(g => {
@@ -678,8 +677,8 @@ export class Scene extends Container {
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle = COLORS.shadow;
-        ctx.strokeStyle = COLORS.shadow;
+        ctx.fillStyle = '#3bd1a6';
+        ctx.strokeStyle = '#3bd1a6';
         ctx.lineWidth = 3;
         ctx.setLineDash([]);
         this.grass.filter(g => distance(this.dude.p, { x: g[0], y: g[1] }) < 500).forEach(g => {
@@ -704,16 +703,16 @@ export class Scene extends Container {
             ctx.moveTo(this.rainbow[0].x, this.rainbow[0].y);
             this.rainbow.forEach(p => ctx.lineTo(p.x, p.y));
             ctx.lineWidth = 40;
-            ctx.strokeStyle = COLORS.red;
+            ctx.strokeStyle = '#E85D75';
             ctx.stroke();
             ctx.lineWidth = 30;
-            ctx.strokeStyle = COLORS.gray;
+            ctx.strokeStyle = '#61707D';
             ctx.stroke();
             ctx.lineWidth = 20;
-            ctx.strokeStyle = COLORS.shadow;
+            ctx.strokeStyle = '#3bd1a6';
             ctx.stroke();
             ctx.lineWidth = 10;
-            ctx.strokeStyle = COLORS.yellow;
+            ctx.strokeStyle = '#CCEBAD';
             ctx.stroke();
             ctx.lineCap = 'round';
         }
@@ -752,7 +751,7 @@ export class Scene extends Container {
             ctx.quadraticCurveTo(mid.x, mid.y, this.dog.p.x, this.dog.p.y - 20);
             ctx.lineWidth = 7;
             ctx.stroke();
-            ctx.strokeStyle = COLORS.red;
+            ctx.strokeStyle = '#E85D75';
             ctx.lineWidth = 3;
             ctx.stroke();
         }

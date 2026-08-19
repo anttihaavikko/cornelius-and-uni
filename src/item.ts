@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Dude } from './dude';
 import { font } from './engine/constants';
 import { Game } from './engine/game';
@@ -100,14 +99,14 @@ export class Item extends Shadowed {
             ctx.stroke();
             ctx.fill();
             ctx.beginPath();
-            ctx.fillStyle = COLORS.red;
+            ctx.fillStyle = '#E85D75';
             ctx.ellipse(0, -45, 2, 5, 0, 0, 2 * Math.PI);
             ctx.moveTo(0, -20);
             ctx.ellipse(0, -18, 2, 5, 0, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.fill();
             ctx.beginPath();
-            ctx.fillStyle = COLORS.brown;
+            ctx.fillStyle = '#E9A186';
             ctx.moveTo(-3, -28);
             ctx.lineTo(0, -20);
             ctx.lineTo(3, -28);
@@ -118,12 +117,12 @@ export class Item extends Shadowed {
 
         if (this.itemType == ItemType.Fox) {
             ctx.lineWidth = 10;
-            ctx.fillStyle = COLORS.red;
+            ctx.fillStyle = '#E85D75';
             ctx.moveTo(12, -5);
             ctx.quadraticCurveTo(12, -20, 20, -30);
             ctx.stroke();
             ctx.lineWidth = 5;
-            ctx.strokeStyle = COLORS.red;
+            ctx.strokeStyle = '#E85D75';
             ctx.stroke();
             ctx.lineWidth = 5;
             ctx.beginPath();
@@ -145,7 +144,7 @@ export class Item extends Shadowed {
 
         if (this.itemType == ItemType.Wheat) {
             ctx.lineWidth = 5;
-            ctx.fillStyle = COLORS.yellow;
+            ctx.fillStyle = '#CCEBAD';
             ctx.moveTo(-14, 0);
             ctx.lineTo(-7, -20);
             ctx.lineTo(0, -25);
@@ -181,14 +180,14 @@ export class Item extends Shadowed {
             ctx.lineTo(22, -5);
             ctx.stroke();
             ctx.lineWidth = 3.5;
-            ctx.strokeStyle = COLORS.light;
+            ctx.strokeStyle = '#97A4AF';
             ctx.stroke();
         }
 
         if (this.itemType == ItemType.Battery) {
             ctx.rect(-20, -20, 40, 20);
             ctx.rect(20, -15, 5, 10);
-            ctx.fillStyle = COLORS.light;
+            ctx.fillStyle = '#97A4AF';
             ctx.fill();
             ctx.stroke();
         }
@@ -196,12 +195,12 @@ export class Item extends Shadowed {
         if (this.itemType == ItemType.Unit) {
             ctx.fillStyle = '#000';
             ctx.rect(-25, -30, 50, 30);
-            ctx.fillStyle = COLORS.gray;
+            ctx.fillStyle = '#61707D';
             ctx.fill();
             ctx.stroke();
             ctx.beginPath();
             ctx.rect(-25, -15 - 30, 50, 20);
-            ctx.fillStyle = COLORS.light;
+            ctx.fillStyle = '#97A4AF';
             ctx.fill();
             ctx.stroke();
             ctx.beginPath();
@@ -215,7 +214,7 @@ export class Item extends Shadowed {
 
         if (this.itemType == ItemType.Letter || this.itemType == ItemType.Package) {
             const size = this.itemType == ItemType.Letter ? 30 : 50;
-            ctx.fillStyle = this.color ?? (this.itemType == ItemType.Letter ? '#fff' : COLORS.brown);
+            ctx.fillStyle = this.color ?? (this.itemType == ItemType.Letter ? '#fff' : '#E9A186');
             ctx.rect(-size * 0.5, -size + 2, size, size);
             ctx.fill();
             ctx.stroke();
@@ -239,7 +238,7 @@ export class Item extends Shadowed {
                 ctx.moveTo(dir * 18, -35);
                 ctx.quadraticCurveTo(dir * 40, -35, 0, -20);
             };
-            ctx.fillStyle = this.color ?? COLORS.brown;
+            ctx.fillStyle = this.color ?? '#E9A186';
 
             ctx.lineWidth = 8;
             drawHandle(1);
@@ -261,7 +260,7 @@ export class Item extends Shadowed {
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.strokeStyle = this.color ?? COLORS.brown;
+            ctx.strokeStyle = this.color ?? '#E9A186';
             ctx.lineWidth = 3;
             drawHandle(1);
             drawHandle(-1);

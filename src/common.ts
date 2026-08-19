@@ -1,7 +1,5 @@
-import { COLORS } from './colors';
-
 export const drawBg = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = COLORS.green;
+    ctx.fillStyle = '#40F99B';
     ctx.fillRect(-100, -100, ctx.canvas.width + 200, ctx.canvas.height + 200);
 
     ctx.strokeStyle = '#000';

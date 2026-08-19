@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 import { clamp01 } from './engine/math';
@@ -24,7 +23,7 @@ export class Raft extends Entity {
         for (let i = 0; i < 5; i++) {
             ctx.rect(-10 + i * w, -10, w, this.s.y + 20);
         }
-        ctx.fillStyle = COLORS.brown;
+        ctx.fillStyle = '#E9A186';
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#000';
         ctx.fill();

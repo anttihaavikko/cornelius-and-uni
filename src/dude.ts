@@ -1,5 +1,4 @@
 import { Collider } from './collider';
-import { COLORS } from './colors';
 import { Bubble } from './engine/bubble';
 import { Entity } from './engine/entity';
 import { Face } from './engine/face';
@@ -21,7 +20,7 @@ export class Dude extends Shadowed {
     protected holdPos = -30;
     protected carryOffset = 7;
 
-    public skin = COLORS.skin;
+    public skin = '#F5FBEF';
     public controlled = false;
     public riding = false;
     public held: Item[] = [];
@@ -38,7 +37,7 @@ export class Dude extends Shadowed {
 
     constructor(game: Game, x: number, y: number) {
         super(game, x, y, 5, 5);
-        this.face = new Face(game, { width: 1, mouthColor: '#000', mouthThickness: 12, blush: COLORS.red });
+        this.face = new Face(game, { width: 1, mouthColor: '#000', mouthThickness: 12, blush: '#E85D75' });
         this.face.p.y = -18;
         this.bubble = new Bubble(game, '', 0, -50, { direction: 'center' });
         this.bubble.setSound(() => {
@@ -207,7 +206,7 @@ export class Dude extends Shadowed {
             ctx.ellipse(0, 0, 10, 19, 0, 0, Math.PI * 2);
             ctx.rect(-1.5, -40, 3, 40);
             ctx.rect(-4, -45, 8, 10);
-            ctx.fillStyle = COLORS.brown;
+            ctx.fillStyle = '#E9A186';
             ctx.stroke();
             ctx.fill();
             ctx.restore();
@@ -258,7 +257,7 @@ export class Dude extends Shadowed {
             ctx.lineTo(9, -7);
             ctx.stroke();
             ctx.lineWidth = 4;
-            ctx.strokeStyle = COLORS.purple;
+            ctx.strokeStyle = '#9D69A3';
             ctx.stroke();
 
             ctx.beginPath();
@@ -268,7 +267,7 @@ export class Dude extends Shadowed {
             ctx.moveTo(12 - diff, 15 - diff);
             ctx.quadraticCurveTo(0, 30, -10, 30);
             ctx.stroke();
-            ctx.strokeStyle = COLORS.purple;
+            ctx.strokeStyle = '#9D69A3';
             ctx.lineWidth = 2;
             ctx.stroke();
         }

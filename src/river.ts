@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { Entity } from './engine/entity';
 import { Game } from './engine/game';
 import { lerp } from './engine/math';
@@ -130,7 +129,7 @@ export class River extends Entity {
         });
 
         ctx.setLineDash([0, 50, 0, 30]);
-        ctx.strokeStyle = COLORS.brown;
+        ctx.strokeStyle = '#E9A186';
         ctx.lineWidth = 150;
         ctx.stroke();
         ctx.setLineDash([0, 150, 20, 70]);

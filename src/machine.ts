@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { drawFrame } from './engine/drawing';
 import { Game } from './engine/game';
 import { randomInt } from './engine/random';
@@ -130,7 +129,7 @@ export class Machine extends Shadowed {
         if (this.solved) return;
         let correct = 0;
         this.slots.slice(1).forEach((s, i) => {
-            if (s) s.color = COLORS.light;
+            if (s) s.color = '#97A4AF';
             if (this.target.includes(s?.letter)) {
                 if (item == s) this.game.audio.beep();
                 s.color = '#F6D7CB';
@@ -138,7 +137,7 @@ export class Machine extends Shadowed {
                 if (s && item == s) this.game.audio.nope();
             }
             if (s?.letter == this.target[i]) {
-                s.color = COLORS.yellow;
+                s.color = '#CCEBAD';
                 correct++;
             }
         });
@@ -182,7 +181,7 @@ export class Machine extends Shadowed {
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 8;
         ctx.stroke();
-        drawFrame(ctx, COLORS.gray, 3);
+        drawFrame(ctx, '#61707D', 3);
 
         ctx.fillStyle = '#fff';
         ctx.font = '12px monospace';
@@ -207,11 +206,11 @@ export class Machine extends Shadowed {
         ctx.rotate(this.rotation);
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2.5;
-        ctx.fillStyle = COLORS.brown;
+        ctx.fillStyle = '#E9A186';
         ctx.rect(-this.s.x * 0.5, -this.s.y, this.s.x, this.s.y);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = COLORS.yellow;
+        ctx.fillStyle = '#CCEBAD';
         ctx.beginPath();
         ctx.rect(-this.s.x * 0.5, -this.s.y, this.s.x, this.s.y - 9);
         ctx.fill();

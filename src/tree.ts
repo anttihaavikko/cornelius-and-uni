@@ -1,4 +1,3 @@
-import { COLORS } from './colors';
 import { random } from './engine/random';
 import { Vector } from './engine/vector';
 import { Shadowed } from './shadowed';
@@ -16,13 +15,13 @@ export class Tree extends Shadowed {
         ctx.beginPath();
         ctx.rotate(this.animationPhase * 0.01);
         ctx.rect(-5, -60, 10, 60);
-        ctx.fillStyle = COLORS.purple;
+        ctx.fillStyle = '#9D69A3';
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
         ctx.fill();
         ctx.stroke();
         ctx.translate(0, this.s.y * 0.5 - 30);
-        ctx.fillStyle = COLORS.shadow;
+        ctx.fillStyle = '#3bd1a6';
 
         for (let i = 0; i < this.levels; i++) {
             const size = 1 - 0.1 * i;
