@@ -28,6 +28,7 @@ export class Scene extends Container {
     private machine: Machine;
     private wordles: Machine[] = [];
     private river: River;
+    private teleportTarget: House;
 
     private chicken: Item;
     private fox: Item;
@@ -45,6 +46,8 @@ export class Scene extends Container {
     private hoppers: Hopper[] = [];
     private rainbow: Vector[] = [];
     // private effect: number[] = [2, 0, 0];
+
+    private presses: string[] = [];
 
     constructor(game: Game) {
         super(game);
@@ -339,6 +342,11 @@ export class Scene extends Container {
         this.game.colliders.push(...this.houses.flatMap(h => h.walls));
 
         this.game.onKeyUp(e => {
+            if (e.key == 'w' || e.key == 'ArrowUp') this.addPress('w');
+            if (e.key == 's' || e.key == 'ArrowDown') this.addPress('s');
+            if (e.key == 'a' || e.key == 'ArrowLeft') this.addPress('a');
+            if (e.key == 'd' || e.key == 'ArrowRight') this.addPress('d');
+            // if (e.key === 't') this.teleport();
             // if (e.key == 'z') this.zoomed = !this.zoomed;
             // if (e.key == 'u') this.dog.locked = false;
             // if (e.key == 't') {
@@ -629,6 +637,7 @@ export class Scene extends Container {
             if (h.isInside(this.dude.p, 10)) {
                 this.inside = h;
                 h.entered = true;
+                if (h !== this.houses[0]) this.teleportTarget = h;
             }
         });
 
@@ -763,5 +772,20 @@ export class Scene extends Container {
         // }
 
         // this.effect[0] += this.delta * 0.0025;
+    }
+
+    teleport(): void {
+        this.game.audio.boot();
+        const target = this.inside === this.teleportTarget ? this.houses[0] : this.teleportTarget;
+        this.dude.p = offset(target.getCenter(), 0, 50);
+        this.inside = null;
+    }
+
+    private addPress(key: string): void {
+        this.presses.push(key);
+        if (this.presses.length > 8) this.presses.shift();
+        if (this.presses.join('') === 'wwssadad') {
+            this.teleport();
+        }
     }
 }
