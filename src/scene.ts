@@ -396,7 +396,7 @@ export class Scene extends Container {
                     if (this.dude.collides(pos)) {
                         return;
                     }
-                    if (distance(pos, this.dog.p) < 50) {
+                    if (distance(pos, this.dog.p) < 50 && (this.dog.held.length < 1 || this.dog.held[this.dog.held.length - 1].itemType === ItemType.Letter)) {
                         this.dog.held.push(held);
                         this.dog.held = this.dog.held.filter(h => !!h);
                         held.shadowShown = false;
