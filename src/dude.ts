@@ -272,9 +272,6 @@ export class Dude extends Shadowed {
             ctx.stroke();
         }
 
-        ctx.translate(0, 20 - phase);
-        this.bubble.draw(ctx);
-
         ctx.restore();
     }
 }

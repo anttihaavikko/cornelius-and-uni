@@ -759,6 +759,9 @@ export class Scene extends Container {
         super.draw(ctx);
         this.inside?.drawExterior(ctx);
 
+        ctx.translate(this.dude.p.x, this.dude.p.y - 10);
+        this.dude.bubble.draw(ctx);
+
         // if (this.effect[0] <= 1) {
         //     ctx.fillStyle = '#ffffff11';
         //     const phase = (1 + Math.sin(this.effect[0] * Math.PI)) * 0.5;
