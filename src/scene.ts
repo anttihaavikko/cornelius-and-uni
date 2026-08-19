@@ -328,14 +328,19 @@ export class Scene extends Container {
         this.houses[3].rug = [275, 110, 310, COLORS.skin, COLORS.yellow, 0];
         this.houses[4].rug = [275, 175, 310, COLORS.red, COLORS.brown, 0];
         this.houses[6].rug = [75, 170, 120, COLORS.brown, COLORS.yellow, Math.PI * 0.5];
-        this.houses[7].rug = [250, 85, 310, COLORS.red, COLORS.brown, 0];
+        this.houses[7].rug = [250, 85, 310, COLORS.green, COLORS.shadow, 0];
 
         // this.createItem(new Sign(game, -2858, 1490, 'These signs include some hints\nfor progressing in the game.\nThe lowest ones are SPOILER FREE\nbut they get more obvious\nthe further up they go.'));
         // this.createItem(new Sign(game, -2858, 1490 - 60, 'aaa'));
         // this.createItem(new Sign(game, -2858, 1490 - 100, 'aaa'));
         // this.createItem(new Sign(game, -2858, 1490 - 140, 'aaa'));
 
-        // this.dude.p = offset(this.houses[7].p, 100, 100);
+        this.dude.p = offset(this.houses[7].p, 100, 100);
+
+        this.addItem(-2858 - 100, 1430, ItemType.Package, 'UU');
+        this.addItem(-2858 - 32, 1430, ItemType.Package, 'DD');
+        this.addItem(-2858 + 32, 1430, ItemType.Package, 'LR');
+        this.addItem(-2858 + 100, 1430, ItemType.Package, 'LR');
 
         this.houses.forEach(h => h.createWalls());
         this.add(...this.houses);
