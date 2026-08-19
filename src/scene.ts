@@ -142,21 +142,21 @@ export class Scene extends Container {
         // this.rafts[1].start();
         // this.rafts[2].start();
 
-        this.addTree(125, 478);
+        this.addTree(120, 480);
 
-        this.addTree(1018, 215);
-        this.addTree(1249, -832);
-        this.addTree(1039, -1);
+        this.addTree(1020, 220);
+        this.addTree(1260, -840);
+        this.addTree(1020, 0);
 
-        this.addTree(-2039, -568);
-        this.addTree(-1896, -490);
-        this.addTree(-1795, -320);
-        this.addTree(-1960, -162);
-        this.addTree(-1854, -62);
+        this.addTree(-2040, -560);
+        this.addTree(-1900, -480);
+        this.addTree(-1800, -320);
+        this.addTree(-1960, -160);
+        this.addTree(-1840, -60);
 
-        this.addTree(1122, 147);
-        this.addTree(761, -763);
-        this.addTree(725, -836);
+        this.addTree(1140, 160);
+        this.addTree(760, -760);
+        this.addTree(720, -840);
 
         this.addItem(891, 155, 0, 'g');
         this.addItem(844, 136, 0, 'u');
@@ -173,19 +173,19 @@ export class Scene extends Container {
         this.addItem(1278, 92, ItemType.Battery, 'b');
         this.addItem(1481, -28, ItemType.Key, 'k');
 
-        this.addTreeCluster(-70, 297);
-        this.addTreeCluster(-629, 674);
-        this.addTreeCluster(-1185, -82);
-        this.addTreeCluster(-1618, 657);
-        this.addTreeCluster(2049, -1019);
-        this.addTreeCluster(1139, 777);
-        this.addTreeCluster(1734, -12);
-        this.addTreeCluster(322, -285);
-        this.addTreeCluster(-397, -287);
-        this.addTreeCluster(264, 1017);
-        this.addTreeCluster(-2507, 1025);
-        this.addTreeCluster(-2284, 1564);
-        this.addTreeCluster(1945, 549);
+        this.addTreeCluster(-60, 300);
+        this.addTreeCluster(-620, 680);
+        this.addTreeCluster(-1180, -80);
+        this.addTreeCluster(-1620, 660);
+        this.addTreeCluster(2040, -1020);
+        this.addTreeCluster(1140, 780);
+        this.addTreeCluster(1740, 0);
+        this.addTreeCluster(320, -280);
+        this.addTreeCluster(-400, -280);
+        this.addTreeCluster(260, 1020);
+        this.addTreeCluster(-2500, 1020);
+        this.addTreeCluster(-2280, 1560);
+        this.addTreeCluster(1940, 560);
 
         // this.addTreeCluster(300, 1156);
         // this.addTreeCluster(1139, 1055);
@@ -335,7 +335,7 @@ export class Scene extends Container {
         // this.createItem(new Sign(game, -2858, 1490 - 100, 'aaa'));
         // this.createItem(new Sign(game, -2858, 1490 - 140, 'aaa'));
 
-        this.dude.p = offset(this.houses[7].p, 100, 100);
+        // this.dude.p = offset(this.houses[7].p, 100, 100);
 
         this.addItem(-2858 - 100, 1430, ItemType.Package, 'UU');
         this.addItem(-2858 - 32, 1430, ItemType.Package, 'DD');
