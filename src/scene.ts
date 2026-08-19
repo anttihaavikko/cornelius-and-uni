@@ -111,7 +111,7 @@ export class Scene extends Container {
         this.moveDog();
 
         this.createItem(new Sign(game, 155, 490, 'Uni needs to be fastened tight.\nThe leash is adjustable from\nthe fabricator machine inside.'));
-        this.createItem(new Sign(game, 1280, 239, 'This shed can be used as an emergency jail.\nKeep the key safe and away from any prisoners.'));
+        this.createItem(new Sign(game, 1280, 239, 'This shed can be used\nas an emergency jail.'));
         this.createItem(new Sign(game, 2200, 101, 'Everything needs to cross safely!'));
         this.createItem(new Sign(game, -1937, 919, 'A well nourished mount could easily\nleap to the other side from here.'));
 
@@ -781,8 +781,9 @@ export class Scene extends Container {
 
     teleport(): void {
         this.game.audio.boot();
-        const target = this.inside === this.teleportTarget ? this.houses[0] : this.teleportTarget;
-        this.dude.p = offset(target.getCenter(), 0, 50);
+        const target = this.inside === this.teleportTarget || !this.inside ? this.houses[0] : this.teleportTarget;
+        const teleporter = this.dude.riding ? this.dog : this.dude;
+        teleporter.p = offset(target.getCenter(), 0, 50);
         this.inside = null;
     }
 
