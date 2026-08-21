@@ -113,6 +113,7 @@ export class Scene extends Container {
         this.createItem(new Sign(game, 1280, 239, 'This shed can be used\nas an emergency jail.'));
         this.createItem(new Sign(game, 2200, 101, 'Everything needs to cross safely!'));
         this.createItem(new Sign(game, -1937, 919, 'A well nourished mount could easily\nleap to the other side from here.'));
+        this.createItem(new Sign(game, -759, -137, 'Lose?\nStart?\nWing!?'));
 
         this.wheat = this.addItem(2145 - 100, 60, ItemType.Wheat);
         this.chicken = this.addItem(2145 - 50, 60, ItemType.Chicken);
@@ -164,7 +165,7 @@ export class Scene extends Container {
         this.addItem(-1895, -537, 0, 'k');
         this.addItem(1101, -923, 0, 'e');
         this.addItem(-2580, 1533, 0, 'y');
-        this.addItem(-759, -137, 0, 'p');
+        this.addItem(-829, -117, 0, 'p');
 
         this.addItem(1768, -745, 0, 'd').raft = this.rafts[2];
         this.addItem(33, 1319, 0, 'l').raft = this.rafts[1];
