@@ -787,6 +787,7 @@ export class Scene extends Container {
         const target = this.inside === this.teleportTarget || !this.inside ? this.houses[0] : this.teleportTarget;
         const teleporter = this.dude.riding ? this.dog : this.dude;
         teleporter.p = offset(target.getCenter(), 0, 50);
+        teleporter.hop(teleporter.p);
         this.inside = null;
     }
 
