@@ -230,7 +230,7 @@ export class Dude extends Shadowed {
         ctx.restore();
 
         this.held.forEach((h, i) => {
-            h.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase - i * 30);
+            h.p = offset(this.p, this.limbs.walking ? this.limbs.walkPhase * -5 : 0, this.holdPos + phase - i * 30 + this.getHopOffset());
             h.d = this.d + this.carryOffset;
         });
 
