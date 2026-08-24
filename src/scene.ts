@@ -789,6 +789,13 @@ export class Scene extends Container {
         teleporter.p = offset(target.getCenter(), 0, 50);
         teleporter.hop(teleporter.p);
         this.inside = null;
+
+        teleporter.dashing = false;
+
+        for (let i = 0; i < 20; i++) {
+            const mod = 1 - i / 20;
+            this.rainbow.push(offset(teleporter.p, random(-50, 50) * mod, -400 + i * 20 - 10));
+        }
     }
 
     private addPress(key: string): void {
