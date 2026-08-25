@@ -45,8 +45,8 @@ const resize = () => {
 resize();
 window.onresize = resize;
 
-let isFull = false;
-document.onfullscreenchange = () => isFull = !isFull;
+// let isFull = false;
+// document.onfullscreenchange = () => isFull = !isFull;
 
 // const move = (x: number, y: number): void => {
 //     mouse.x = (isFull ? (x - x) / ratio : x) / upScale;
