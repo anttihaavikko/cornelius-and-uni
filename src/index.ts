@@ -87,12 +87,19 @@ window.onkeyup = (e: KeyboardEvent) => {
 //     mouse.holding = false;
 // };
 
+let prev = performance.now();
+
 const tick = (t: number) => {
     requestAnimationFrame(tick);
-    ctx.resetTransform();
-    game.update(t, mouse);
-    ctx.scale(upScale, upScale);
-    game.draw(ctx);
+    const fpsInterval = 1000 / 60;
+    const elapsed = t - prev;
+    if (elapsed > fpsInterval) {
+        prev = t - (elapsed % fpsInterval);
+        ctx.resetTransform();
+        game.update(t, mouse);
+        ctx.scale(upScale, upScale);
+        game.draw(ctx);
+    }
 };
 
 requestAnimationFrame(tick);
